@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot name="four-wheeled" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="pi" value="3.1415" />
+    <xacro:property name="scale" value="5.0" />
+    <xacro:property name="caseWidth" value="${0.2032 * scale}" />
+    <xacro:property name="caseLength" value="${0.24765 * scale}" />
+    <xacro:property name="caseHeight" value="${0.1016 * scale}" />
+    <xacro:property name="wheelDiam" value="${0.12065 * scale}" />
+    <xacro:property name="wheelWidth" value="${0.05 * scale}"/>
+    <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
+    <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
+    <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.03 * scale}"/>
+
+
+    <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+    <material name="green">
+        <color rgba="0 1 0 1"/>
+    </material>
+
+    <xacro:macro name="default_inertial" params="mass">
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </xacro:macro>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="${caseLength} ${caseWidth} ${caseHeight}"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <xacro:default_inertial mass="2"/>
+    </link>
+
+    <xacro:macro name="wheel" params="prefix suffix origX origY origZ">
+        <link name="${prefix}_${suffix}_wheel">
+            <visual>
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="${wheelWidth}" radius="${wheelDiam/2}"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+        </link>
+        <joint name="${prefix}_${suffix}_wheel_to_base" type="continuous">
+            <axis rpy="0 0 0" xyz="0 1 0"/>
+            <parent link="base_link"/>
+            <child link="${prefix}_${suffix}_wheel"/>
+            <origin rpy="0 0 0" xyz="${origX} ${origY} ${origZ}"/>
+        </joint>
+        <xacro:default_inertial mass="0.15"/>
+    </xacro:macro>
+
+    <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0"/>
+    <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0"/>
+    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0"/>
+    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0"/>
+
+</robot>
