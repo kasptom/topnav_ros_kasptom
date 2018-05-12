@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="four-wheeled" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:property name="scale" value="5.0" />
+    <xacro:property name="scale" value="1.0" />
     <xacro:property name="caseWidth" value="${0.2032 * scale}" />
     <xacro:property name="caseLength" value="${0.24765 * scale}" />
     <xacro:property name="caseHeight" value="${0.1016 * scale}" />
