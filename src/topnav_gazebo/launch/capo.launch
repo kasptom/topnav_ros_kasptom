@@ -17,8 +17,7 @@
 
     <node name="capo_controller_spawner" pkg="controller_manager" type="spawner"
           args="capo_joint_state_controller
-          capo_diff_drive_controller
-          --shutdown-timeout 3"/>
+          capo_diff_drive_controller"/>
 
     <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
         <param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>
