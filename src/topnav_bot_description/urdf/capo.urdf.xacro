@@ -63,12 +63,30 @@
             </collision>
             <xacro:default_inertial mass="0.15"/>
         </link>
-        <joint name="${prefix}_${suffix}_wheel_to_base" type="continuous">
+        <joint name="${prefix}_${suffix}_wheel_joint" type="continuous">
             <axis rpy="0 0 0" xyz="0 1 0"/>
             <parent link="base_link"/>
             <child link="${prefix}_${suffix}_wheel"/>
             <origin rpy="0 0 0" xyz="${origX} ${origY} ${origZ}"/>
         </joint>
+
+        <transmission name="${prefix}_${suffix}_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="${prefix}_${suffix}_wheel_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+            <joint name="${prefix}_${suffix}_wheel_joint">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
+
+        <gazebo reference="${prefix}_${suffix}_wheel">
+            <mu1 value="200.0"/>
+            <mu2 value="100.0"/>
+            <kp value="10000000.0" />
+            <kd value="1.0" />
+            <material>Gazebo/Black</material>
+        </gazebo>
     </xacro:macro>
 
     <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0"/>

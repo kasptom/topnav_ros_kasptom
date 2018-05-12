@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-  <arg name="model" default="$(find topnav_bot_description)/urdf/four-wheeled.urdf"/>
-  <arg name="rvizconfig" default="$(find topnav_bot_description)/rviz/urdf.rviz"/>
-  <!--<param name="robot_description" command="$(find xacro)/xacro.py '$(find topnav_bot_description)/urdf/four-wheeled.launch'"/>-->
-</launch>
