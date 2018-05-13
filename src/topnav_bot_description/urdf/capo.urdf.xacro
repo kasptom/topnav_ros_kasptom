@@ -27,7 +27,9 @@
     <xacro:macro name="default_inertial" params="mass">
         <inertial>
             <mass value="${mass}" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
     </xacro:macro>
 
@@ -46,7 +48,7 @@
         </collision>
     </link>
 
-    <xacro:macro name="wheel" params="prefix suffix origX origY origZ">
+    <xacro:macro name="wheel" params="prefix suffix origX origY origZ mass">
         <link name="${prefix}_${suffix}_wheel">
             <visual>
                 <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
@@ -61,7 +63,15 @@
                     <cylinder length="${wheelWidth}" radius="${wheelDiam/2}"/>
                 </geometry>
             </collision>
-            <xacro:default_inertial mass="0.15"/>
+            <inertial>
+                <xacro:property name="r" value="${wheelDiam/2}" />
+                <xacro:property name="h" value="${wheelWidth}" />
+
+                <mass value="${mass}" />
+                <inertia ixx="${(1/12)*mass*(3*r*r+h*h)}" ixy="0.0" ixz="0.0"
+                         iyy="${(1/12)*mass*(3*r*r+h*h)}" iyz="0.0"
+                         izz="${0.5*mass*r*r}" />
+            </inertial>
         </link>
         <joint name="${prefix}_${suffix}_wheel_joint" type="continuous">
             <axis rpy="0 0 0" xyz="0 1 0"/>
@@ -89,10 +99,10 @@
         </gazebo>
     </xacro:macro>
 
-    <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0"/>
-    <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0"/>
-    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0"/>
-    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0"/>
+    <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="0.15"/>
+    <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="0.15"/>
+    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="0.15"/>
+    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="0.15"/>
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
