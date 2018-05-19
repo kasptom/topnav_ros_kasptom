@@ -9,6 +9,10 @@
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
     <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
     <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.03 * scale}"/>
+    <xacro:property name="headDiam" value="${0.1 * scale}" />
+    <xacro:property name="headHeight" value="${0.08 * scale}" />
+    <xacro:property name="headWeight" value="${0.2 * scale}" />
+
 
 
     <material name="gray">
@@ -47,6 +51,62 @@
             </geometry>
         </collision>
     </link>
+
+    <!-- head -->
+    <link name="head">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${headHeight}" radius="${headDiam/2}"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${headHeight}" radius="${headDiam/2}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <xacro:property name="r" value="${headDiam/2}" />
+            <xacro:property name="h" value="${headHeight}" />
+            <xacro:property name="mass" value="${headWeight}" />
+
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12)*mass*(3*r*r+h*h)}" ixy="0.0" ixz="0.0"
+                     iyy="${(1/12)*mass*(3*r*r+h*h)}" iyz="0.0"
+                     izz="${0.5*mass*r*r}" />
+        </inertial>
+
+    </link>
+
+    <joint name="head_swivel" type="continuous">
+        <parent link="base_link"/>
+        <child link="head"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 0 ${caseHeight / 2 + headHeight / 2}"/>
+        <limit effort="30" velocity="1.0"/>
+        <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+    <!-- gazebo - head -->
+    <transmission name="head_swivel_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="$head_swivel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="head_swivel">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <gazebo reference="head">
+        <mu1 value="200.0"/>
+        <mu2 value="100.0"/>
+        <kp value="10000000.0" />
+        <kd value="1.0" />
+        <material>Gazebo/Gray</material>
+    </gazebo>
+    <!-- /head -->
 
     <xacro:macro name="wheel" params="prefix suffix origX origY origZ mass">
         <link name="${prefix}_${suffix}_wheel">
