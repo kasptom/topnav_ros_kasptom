@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>topnav_bot_description</name>
+    <version>0.0.0</version>
+    <description>The topnav_bot_description package</description>
+
+    <maintainer email="kasptom@gmail.com">kasptom</maintainer>
+    <license>MIT</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <exec_depend>rviz</exec_depend>
+    <exec_depend>xacro</exec_depend>
+    <exec_depend>urdf_tutorial</exec_depend>
+    <exec_depend>gazebo_ros</exec_depend>
+
+    <exec_depend>gazebo_ros_control</exec_depend>
+
+
+
+</package>
