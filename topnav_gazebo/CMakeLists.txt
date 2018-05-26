@@ -7,10 +7,10 @@ catkin_package(CATKIN_DEPENDS message_runtime)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
-add_executable(world_reset_publisher world_reset/src/world_reset_publisher.cpp)
+add_executable(world_reset_publisher world_reset/src/world_reset_publisher.cpp world_reset/src/topnav_world_reset.h)
 target_link_libraries(world_reset_publisher ${catkin_LIBRARIES})
 #add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 
-add_executable(world_reset_subscriber world_reset/src/world_reset_subscriber.cpp)
+add_executable(world_reset_subscriber world_reset/src/world_reset_subscriber.cpp world_reset/src/topnav_world_reset.h)
 target_link_libraries(world_reset_subscriber ${catkin_LIBRARIES})
 #add_dependencies(listener beginner_tutorials_generate_messages_cpp)
