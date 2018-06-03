@@ -27,12 +27,19 @@
     <build_depend>std_msgs</build_depend>
     <!-- msg and srv -->
     <build_depend>message_generation</build_depend>
+    <!-- gazebo services call -->
+    <build_depend>gazebo_msgs</build_depend>
+    <build_depend>gazebo</build_depend>
+
 
     <exec_depend>roscpp</exec_depend>
     <exec_depend>rospy</exec_depend>
     <exec_depend>std_msgs</exec_depend>
     <!-- msg and srv -->
     <exec_depend>message_runtime</exec_depend>
+    <!-- gazebo services call -->
+    <exec_depend>gazebo_msgs</exec_depend>
+    <exec_depend>gazebo</exec_depend>
 
     <!-- The export tag contains other, unspecified, tags -->
     <export>

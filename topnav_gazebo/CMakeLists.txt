@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
         roscpp
         rospy
         std_msgs
+        gazebo_msgs
         message_generation
 )
 
@@ -28,6 +29,7 @@ generate_messages(
 catkin_package(
         CATKIN_DEPENDS
         message_runtime
+        gazebo_msgs
 )
 
 include_directories(${catkin_INCLUDE_DIRS})

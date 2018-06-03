@@ -18,6 +18,9 @@ int main(int argc, char **argv) {
 
     int count = 0;
     while (ros::ok()) {
+        ROS_INFO("Press enter to send the reset signal");
+
+        getchar();
 
         std_msgs::Empty msg;
 
