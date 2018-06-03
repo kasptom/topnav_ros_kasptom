@@ -4,7 +4,7 @@
     <xacro:property name="caseWidth" value="${0.2032 * scale}" />
     <xacro:property name="caseLength" value="${0.24765 * scale}" />
     <xacro:property name="caseHeight" value="${0.1016 * scale}" />
-    <xacro:property name="caseWeight" value="${3 * scale}"/>
+    <xacro:property name="caseWeight" value="${4 * scale}"/>
     <xacro:property name="wheelDiam" value="${0.12065 * scale}" />
     <xacro:property name="wheelWidth" value="${0.05 * scale}"/>
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
@@ -167,10 +167,11 @@
         </transmission>
 
         <gazebo reference="${prefix}_${suffix}_wheel">
-            <mu1 value="200.0"/>
-            <mu2 value="100.0"/>
-            <kp value="10000000.0" />
+            <mu value="4.0"/>
+            <mu2 value="1.0"/>
+            <kp value="1000000.0" />
             <kd value="1.0" />
+            <!--<fdir1>0 0 1</fdir1>-->
             <material>Gazebo/Black</material>
         </gazebo>
     </xacro:macro>
