@@ -1,5 +1,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <!-- head -->
+    <xacro:property name="camera_link" value="0.05" />
+
     <link name="head">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -38,4 +40,6 @@
         <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- gazebo - head -->
+
+   <xacro:include filename="camera.xacro"/>
 </robot>

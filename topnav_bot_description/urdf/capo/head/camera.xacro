@@ -1,0 +1,32 @@
+<robot>
+    <joint name="camera_joint" type="fixed">
+        <axis xyz="0 1 0"/>
+        <origin xyz="${headDiam/2 - cameraDepth/2} 0 ${headHeight/2 + cameraHeight/2}" rpy="0 0 0"/>
+        <parent link="head"/>
+        <child link="camera_link"/>
+    </joint>
+
+    <!--Camera-->
+    <link name="camera_link">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${cameraDepth} ${cameraWidth} ${cameraHeight}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${cameraDepth} ${cameraWidth} ${cameraHeight}"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+
+        <inertial>
+            <mass value="1e-5"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+        </inertial>
+    </link>
+</robot>
