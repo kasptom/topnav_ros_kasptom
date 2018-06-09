@@ -1,5 +1,5 @@
 <launch>
-    <arg name="model" default="$(find topnav_bot_description)/urdf/capo.urdf.xacro"/>
+    <arg name="model" default="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro"/>
     <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz"/>
 
     <include file="$(find topnav_gazebo)/launch/gazebo.launch">

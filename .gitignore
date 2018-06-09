@@ -146,3 +146,6 @@ qtcreator-*
 CATKIN_IGNORE
 
 .catkin_workspace
+
+# Custom
+hokuyo.dae
