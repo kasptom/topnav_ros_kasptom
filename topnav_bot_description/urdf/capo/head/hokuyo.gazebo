@@ -1,8 +1,9 @@
+<robot>
 <!-- hokuyo -->
 <gazebo reference="hokuyo_link">
     <sensor type="gpu_ray" name="head_hokuyo_sensor">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>false</visualize>
+        <visualize>true</visualize>
         <update_rate>40</update_rate>
         <ray>
             <scan>
@@ -34,3 +35,4 @@
         </plugin>
     </sensor>
 </gazebo>
+</robot>

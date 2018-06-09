@@ -1,4 +1,4 @@
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <joint name="hokuyo_joint" type="fixed">
         <axis xyz="0 1 0"/>
         <origin xyz="0 0 ${headHeight/2 + hokuyoHeight/2}" rpy="0 0 0"/>
@@ -28,4 +28,6 @@
             <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
         </inertial>
     </link>
+
+    <xacro:include filename="hokuyo.gazebo"/>
 </robot>
