@@ -1,5 +1,5 @@
 <launch>
-    <arg name="model" default="$(find topnav_bot_description)/urdf/capo.urdf.xacro"/>
+    <arg name="model" default="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro"/>
     <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz"/>
 
     <include file="$(find topnav_gazebo)/launch/gazebo.launch">
@@ -14,10 +14,14 @@
     <rosparam command="load"
               file="$(find topnav_bot_description)/config/diffdrive.yaml"
               ns="capo_diff_drive_controller"/>
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/head.yaml"
+              ns="capo_head_rotation_controller"/>
 
     <node name="capo_controller_spawner" pkg="controller_manager" type="spawner"
           args="capo_joint_state_controller
-          capo_diff_drive_controller"/>
+          capo_diff_drive_controller
+          capo_head_rotation_controller"/>
 
     <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
         <param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>
