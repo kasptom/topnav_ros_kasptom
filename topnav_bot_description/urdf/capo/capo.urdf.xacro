@@ -17,6 +17,8 @@
     <xacro:property name="cameraWidth" value="${0.095 * scale}" />
     <xacro:property name="cameraHeight" value="${0.03 * scale}" />
     <xacro:property name="cameraDepth" value="${0.03 * scale}" />
+    <xacro:property name="hokuyoSide" value="${0.05 * scale}" />
+    <xacro:property name="hokuyoHeight" value="${0.07 * scale}" />
 
 
     <material name="gray">
