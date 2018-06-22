@@ -39,3 +39,6 @@ target_link_libraries(world_reset_publisher ${catkin_LIBRARIES})
 
 add_executable(world_reset_subscriber src/world_reset/world_reset_subscriber.cpp src/world_reset/topnav_world_reset.h)
 target_link_libraries(world_reset_subscriber ${catkin_LIBRARIES})
+
+add_executable(capo_line_follower src/capo_line_follower/capo_line_follower.cpp)
+target_link_libraries(capo_line_follower ${catkin_LIBRARIES})
