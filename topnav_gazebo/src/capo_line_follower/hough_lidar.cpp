@@ -7,8 +7,8 @@
 void print_accumulator(std::vector<std::vector<int>> accumulator);
 
 std::vector<std::vector<int>>
-create_accumulator(double min_angle, double max_angle, double min_range, double max_range, double range_step,
-                   double angle_step) {
+create_accumulator(double min_angle, double max_angle, double min_range, double max_range, double angle_step,
+                   double range_step) {
     auto rangeBucketsCount = static_cast<int>(ceil((max_range - min_range) / range_step));
     auto angleBucketsCount = static_cast<int>(ceil((max_angle - min_angle) / angle_step));
 
@@ -21,19 +21,25 @@ create_accumulator(double min_angle, double max_angle, double min_range, double 
     return accumulator;
 }
 
-int **hough_space(std::vector<std::pair<double, double>> polarCoordinates, double min_range, double max_range,
-                  double min_angle, double max_angle, double range_step, double angle_step) {
+int **hough_space(std::vector<std::pair<double, double>> polarCoordinates, double min_angle, double max_angle,
+                  double min_range, double max_range, double angle_step, double range_step) {
     std::vector<std::vector<int>> accumulator = create_accumulator(min_angle, max_angle, min_range, max_range,
-                                                                   range_step, angle_step);
+                                                                   angle_step, range_step);
 
     print_accumulator(accumulator);
 }
 
 void print_accumulator(std::vector<std::vector<int>> accumulator) {
+    std::stringstream string_stream("", std::ios_base::app | std::ios_base::out);
+
+    ROS_INFO("----------------------------------------------------------------------");
     for (auto row : accumulator) {
         for (int j : row) {
-            ROS_INFO("%d ", j);
+            string_stream << boost::format("%1% ") % j;
         }
-        ROS_INFO("\n");
+        ROS_INFO("%s", string_stream.str().c_str());
+        string_stream.str(std::string());
+        string_stream.clear();
     }
+    ROS_INFO("----------------------------------------------------------------------");
 }

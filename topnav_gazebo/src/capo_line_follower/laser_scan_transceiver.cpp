@@ -10,8 +10,9 @@
 size_t beamCount = 0;
 float angleStep = 0;
 
+static const int RANGE_STEPS = 10;
+
 void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
-    ROS_INFO("%f", msg->ranges[100]);
     beamCount = msg->ranges.size();
 
     std::vector<std::pair<double, double>> radiusAngles;
@@ -20,10 +21,10 @@ void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
         radiusAngles.emplace_back(i * angleStep, msg->ranges[i]);
     }
 
-    double range_step = (msg->range_max - msg->range_min) / 100;
+    double range_step = (msg->range_max - msg->range_min) / (double)RANGE_STEPS;
 
     //TODO
-    hough_space(radiusAngles, msg->range_min, msg->range_max, msg->angle_min, msg->angle_max, angleStep, range_step);
+    hough_space(radiusAngles, msg->angle_min, msg->angle_max, msg->range_min, msg->range_max, angleStep, range_step);
     ROS_INFO("testing ...");
 //    ros::NodeHandle n;
 
