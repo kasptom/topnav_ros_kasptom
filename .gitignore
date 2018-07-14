@@ -100,14 +100,14 @@ bin/
 lib/
 msg_gen/
 srv_gen/
-msg/*Action.msg
-msg/*ActionFeedback.msg
-msg/*ActionGoal.msg
-msg/*ActionResult.msg
-msg/*Feedback.msg
-msg/*Goal.msg
-msg/*Result.msg
-msg/_*.py
+topnav_msgs/msg/*Action.msg
+topnav_msgs/msg/*ActionFeedback.msg
+topnav_msgs/msg/*ActionGoal.msg
+topnav_msgs/msg/*ActionResult.msg
+topnav_msgs/msg/*Feedback.msg
+topnav_msgs/msg/*Goal.msg
+topnav_msgs/msg/*Result.msg
+topnav_msgs/msg/_*.py
 build_isolated/
 devel_isolated/
 

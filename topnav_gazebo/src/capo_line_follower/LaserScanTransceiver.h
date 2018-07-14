@@ -12,18 +12,18 @@ class LaserScanTransceiver {
 public:
     LaserScanTransceiver();
 
-    void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr &msg);
+    void laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg);
 
 private:
-    ros::Publisher houghSpacePublisher;
-    ros::Subscriber laserScanSubscriber;
+    ros::Publisher hough_space_publisher;
+    ros::Subscriber laser_scan_subscriber;
     size_t beamCount = 0;
     float angleStep = 0;
 
     /**
      * Call it in the constructor
      */
-    void readLaserParameters(const sensor_msgs::LaserScan::ConstPtr &msg);
+    void read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg);
 };
 
 

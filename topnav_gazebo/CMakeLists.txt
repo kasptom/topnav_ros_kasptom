@@ -8,14 +8,8 @@ find_package(catkin REQUIRED COMPONENTS
         std_msgs
         gazebo_msgs
         message_generation
+        topnav_msgs
         )
-
-add_message_files(
-        DIRECTORY msg
-        FILES
-        _HoughAccRow.msg
-        HoughAcc.msg
-)
 
 add_service_files(
         DIRECTORY srv
@@ -32,6 +26,7 @@ catkin_package(
         CATKIN_DEPENDS
         message_runtime
         gazebo_msgs
+        topnav_msgs
 )
 
 include_directories(${catkin_INCLUDE_DIRS})
