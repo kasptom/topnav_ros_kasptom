@@ -10,6 +10,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <topnav_msgs/HoughAcc.h>
 
+static const int PREVIEW_WIDTH = 480;
+static const int PREVIEW_HEIGHT = 480;
+
 class HoughLinesPreview {
 public:
     HoughLinesPreview();
