@@ -8,7 +8,7 @@
 #include <topnav_msgs/HoughAcc.h>
 #include "LaserParameters.h"
 
-static const int RANGE_STEPS = 10;
+static const std::string TOPIC_NAME_LASER_TRANSCEIVER = "/capo/laser/hough"; // NOLINT
 
 class LaserScanTransceiver {
 public:

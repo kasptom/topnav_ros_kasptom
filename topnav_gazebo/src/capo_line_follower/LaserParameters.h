@@ -1,6 +1,7 @@
 #ifndef TOPNAV_GAZEBO_LASERPARAMETERS_H
 #define TOPNAV_GAZEBO_LASERPARAMETERS_H
 
+static const int RANGE_STEPS = 10;
 
 class LaserParameters {
 public:

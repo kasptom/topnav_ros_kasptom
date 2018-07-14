@@ -10,7 +10,7 @@ LaserScanTransceiver::LaserScanTransceiver() {
     parameters = read_laser_parameters(ptr);
     laser_scan_subscriber = handle.subscribe("/capo/laser/scan", 1000, &LaserScanTransceiver::laser_scan_callback,
                                              this);
-    hough_space_publisher = handle.advertise<topnav_msgs::HoughAcc>("/capo/laser/hough", 1000);
+    hough_space_publisher = handle.advertise<topnav_msgs::HoughAcc>(TOPIC_NAME_LASER_TRANSCEIVER, 1000);
 }
 
 LaserParameters LaserScanTransceiver::read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg) {

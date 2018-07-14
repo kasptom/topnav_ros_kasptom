@@ -7,7 +7,7 @@ LaserParameters::LaserParameters(float angle_min, float angle_max, float range_m
     this->range_max = range_max;
     this->beam_count = beam_count;
     this->angle_step = (angle_max - angle_min) / beam_count;
-    this->range_step = (range_max - range_min) / beam_count;
+    this->range_step = (range_max - range_min) / RANGE_STEPS;
 }
 
 float LaserParameters::get_angle_min() {
