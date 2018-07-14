@@ -1,4 +1,4 @@
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 cmake_minimum_required(VERSION 2.8.3)
 project(topnav_gazebo)
 
@@ -42,6 +42,8 @@ add_executable(capo_line_follower
         src/capo_line_follower/hough_lidar.cpp
         src/capo_line_follower/LaserScanTransceiver.h
         src/capo_line_follower/LaserScanTransceiver.cpp
+        src/capo_line_follower/LaserParameters.cpp
+        src/capo_line_follower/LaserParameters.h
         src/capo_line_follower/laser_scan_transceiver.cpp
         )
 target_link_libraries(capo_line_follower ${catkin_LIBRARIES})

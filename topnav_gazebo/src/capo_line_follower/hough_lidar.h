@@ -2,12 +2,13 @@
 #define TOPNAV_GAZEBO_HOUGH_LIDAR_H
 
 #include <vector>
+#include "LaserParameters.h"
 
-void hough_space(const std::vector<std::pair<double, double>> &polarCoordinates, double min_angle, double max_angle,
-                 double min_range, double max_range, double angle_step, double range_step);
+void
+hough_space(const std::vector<std::pair<double, double>> &polarCoordinates, std::vector<std::vector<int>> accumulator,
+            LaserParameters parameters);
 
 std::vector<std::vector<int>>
-create_accumulator(double min_angle, double max_angle, double min_range, double max_range, double angle_step,
-                         double range_step);
+create_accumulator(LaserParameters parameters);
 
 #endif //TOPNAV_GAZEBO_HOUGH_LIDAR_H

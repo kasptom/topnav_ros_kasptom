@@ -47,10 +47,11 @@ find_package(catkin REQUIRED
 
 ## Generate messages in the 'msg' folder
 add_message_files(
-        DIRECTORY ../topnav_msgs/msg
+        DIRECTORY msg
         FILES
-        _HoughAccRow.msg
+        HoughAccRow.msg
         HoughAcc.msg
+        TestMessage.msg
 )
 
 generate_messages(

@@ -1,1 +1,1 @@
-topnav_msgs/_HoughAccRow[] accumulator
+topnav_msgs/HoughAccRow[] accumulator

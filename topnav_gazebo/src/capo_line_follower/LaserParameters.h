@@ -4,7 +4,14 @@
 
 class LaserParameters {
 public:
-    LaserParameters(float angle_min, float angle_max, float range_min, float range_max, int beam_count);
+    LaserParameters(float angle_min, float angle_max, float range_min, float range_max, long beam_count);
+    float get_angle_min();
+    float get_angle_max();
+    float get_range_min();
+    float get_range_max();
+    long get_beam_count();
+    float get_angle_step();
+    float get_range_step();
 
 private:
 
@@ -12,9 +19,11 @@ private:
     float angle_max;
     float range_min;
     float range_max;
-    int beam_count;
+    long beam_count;
     float angle_step;
     float range_step;
+
+
 };
 
 
