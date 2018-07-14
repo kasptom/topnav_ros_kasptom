@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <rosconsole/macros_generated.h>
 #include <ros/ros.h>
+#include "hough_lidar.h"
 
 void print_accumulator(std::vector<std::vector<int>> accumulator);
 
@@ -18,15 +19,19 @@ create_accumulator(double min_angle, double max_angle, double min_range, double 
         accumulator.emplace_back(angleBucketsCount);
     }
 
+    accumulator[2][3] = 10;
+
     return accumulator;
 }
 
-int **hough_space(std::vector<std::pair<double, double>> polarCoordinates, double min_angle, double max_angle,
+std::vector<std::vector<int>> hough_space(const std::vector<std::pair<double, double>> &polarCoordinates, double min_angle, double max_angle,
                   double min_range, double max_range, double angle_step, double range_step) {
     std::vector<std::vector<int>> accumulator = create_accumulator(min_angle, max_angle, min_range, max_range,
                                                                    angle_step, range_step);
 
     print_accumulator(accumulator);
+
+    return accumulator;
 }
 
 void print_accumulator(std::vector<std::vector<int>> accumulator) {
