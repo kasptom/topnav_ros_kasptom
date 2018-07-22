@@ -2,7 +2,7 @@
 #define TOPNAV_GAZEBO_TOPNAV_CHARTS_H
 
 #include <iostream>
-#include "topnav_lines_preview_node.h"
+#include "hough_space_preview_node.h"
 #include <SFML/Graphics.hpp>
 #include <topnav_msgs/HoughAcc.h>
 

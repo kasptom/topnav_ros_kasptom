@@ -1,11 +1,11 @@
 #include <topnav_msgs/HoughAcc.h>
-#include "HoughLinesPreview.h"
+#include "HoughSpacePreview.h"
 
-HoughLinesPreview::HoughLinesPreview() {
-    houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000, &HoughLinesPreview::drawerCallback, this);
+HoughSpacePreview::HoughSpacePreview() {
+    houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000, &HoughSpacePreview::drawerCallback, this);
 }
 
-void HoughLinesPreview::drawerCallback(const topnav_msgs::HoughAcc::ConstPtr &msg) {
+void HoughSpacePreview::drawerCallback(const topnav_msgs::HoughAcc::ConstPtr &msg) {
     grid.clear();
     float tile_height = PREVIEW_HEIGHT / (float) msg->accumulator.size();
     float tile_width = PREVIEW_WIDTH / (float) msg->accumulator[0].acc_row.size();
@@ -33,6 +33,6 @@ void HoughLinesPreview::drawerCallback(const topnav_msgs::HoughAcc::ConstPtr &ms
 
 }
 
-std::vector<sf::RectangleShape> HoughLinesPreview::get_grid() {
+std::vector<sf::RectangleShape> HoughSpacePreview::get_grid() {
     return grid;
 }

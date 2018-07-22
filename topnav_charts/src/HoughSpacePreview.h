@@ -1,7 +1,3 @@
-//
-// Created by kasptom on 7/14/18.
-//
-
 #ifndef TOPNAV_CHARTS_HOUGHLINESPREVIEW_H
 #define TOPNAV_CHARTS_HOUGHLINESPREVIEW_H
 
@@ -13,9 +9,9 @@
 static const int PREVIEW_WIDTH = 480;
 static const int PREVIEW_HEIGHT = 480;
 
-class HoughLinesPreview {
+class HoughSpacePreview {
 public:
-    HoughLinesPreview();
+    HoughSpacePreview();
 
     std::vector<sf::RectangleShape> get_grid();
 

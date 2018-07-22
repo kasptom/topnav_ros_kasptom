@@ -23,14 +23,14 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS})
 
-add_executable(topnav_lines_preview_node
-        src/topnav_lines_preview_node.cpp
-        src/topnav_lines_preview_node.h
-        src/HoughLinesPreview.cpp
-        src/HoughLinesPreview.h
+add_executable(hough_space_preview
+        src/hough_space_preview_node.cpp
+        src/hough_space_preview_node.h
+        src/HoughSpacePreview.cpp
+        src/HoughSpacePreview.h
         )
 
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(topnav_lines_preview_node ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
+    target_link_libraries(hough_space_preview ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
 endif()
