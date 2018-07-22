@@ -25,15 +25,17 @@ LaserParameters LaserScanTransceiver::read_laser_parameters(const sensor_msgs::L
 }
 
 void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
-    std::vector<std::pair<double, double>> radiusAngles;
+    std::vector<std::pair<double, double>> anglesRadius;
 
     for (int i = 0; i < parameters.get_beam_count(); i++) {
-        radiusAngles.emplace_back(i * parameters.get_angle_step(), msg->ranges[i]);
+        if (msg->ranges[i] == INFINITY) continue;
+
+        anglesRadius.emplace_back(i * parameters.get_angle_step(), msg->ranges[i]);
     }
 
     std::vector<std::vector<int>> accumulator = create_accumulator(parameters);
 
-    hough_space(radiusAngles, accumulator, parameters);
+    hough_space(anglesRadius, accumulator, parameters);
 
     topnav_msgs::HoughAcc houghMessage = compose_message(accumulator);
     hough_space_publisher.publish(houghMessage);
