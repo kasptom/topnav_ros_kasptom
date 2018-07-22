@@ -13,11 +13,18 @@ void HoughLinesPreview::drawerCallback(const topnav_msgs::HoughAcc::ConstPtr &ms
     size_t cols = msg->accumulator[0].acc_row.size();
     size_t rows = msg->accumulator.size();
 
+    int occurences;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             sf::RectangleShape rectangle(sf::Vector2f(tile_width, tile_height));
-            if (msg->accumulator[i].acc_row[j] != 0) {
-                rectangle.setFillColor(sf::Color(255, 0, 0));
+            occurences = msg->accumulator[i].acc_row[j];
+
+            if (occurences != 0) {
+                rectangle.setFillColor(sf::Color(255, 0, 0,
+                                                 static_cast<sf::Uint8>(255 * std::min((occurences / 5), 1))));
+            }
+            else {
+                rectangle.setFillColor(sf::Color(255, 255, 255));
             }
             rectangle.setOrigin(-j * tile_width, -i * tile_height);
             grid.push_back(rectangle);
