@@ -1,11 +1,11 @@
 #include <sensor_msgs/LaserScan.h>
 #include <ros/ros.h>
+#include <HokuyoUtils.h>
 #include "LinesPreview.h"
-//#include <topnav_utils/HokuyoUtils.h> FIXME
 
 LinesPreview::LinesPreview() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
-//    parameters = HokuyoUtils::read_laser_parameters(ptr); FIXME
+    parameters = HokuyoUtils::read_laser_parameters(ptr);
 
     houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000,
                                                   &LinesPreview::onHoughSpaceAccumulatorUpdated, this);
@@ -43,5 +43,7 @@ void LinesPreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::C
  * @param col accumulator's column indicating the HoughtSpace's theta (angle)
  */
 void LinesPreview::createLineToDraw(int row, int col) {
-
+    sf::RectangleShape line(sf::Vector2f(150, 5));
+    line.rotate(row + col); //TEST
+    lines.push_back(line);
 }

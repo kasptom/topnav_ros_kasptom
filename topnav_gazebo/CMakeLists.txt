@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
         gazebo_msgs
         message_generation
         topnav_msgs
-#        topnav_utils FIXME
+        topnav_shared
         )
 
 add_service_files(
@@ -28,7 +28,7 @@ catkin_package(
         message_runtime
         gazebo_msgs
         topnav_msgs
-#        topnav_utils FIXME
+        topnav_shared
 )
 
 include_directories(${catkin_INCLUDE_DIRS})
@@ -44,8 +44,6 @@ add_executable(capo_laser_scan_transceiver
         src/capo_line_follower/hough_lidar.cpp
         src/capo_line_follower/LaserScanTransceiver.h
         src/capo_line_follower/LaserScanTransceiver.cpp
-        src/capo_line_follower/LaserParameters.cpp
-        src/capo_line_follower/LaserParameters.h
         src/capo_line_follower/laser_scan_transceiver.cpp
         )
 target_link_libraries(capo_laser_scan_transceiver ${catkin_LIBRARIES})

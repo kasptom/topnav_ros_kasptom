@@ -3,13 +3,12 @@
 #include <std_msgs/Empty.h>
 #include "LaserScanTransceiver.h"
 #include "hough_lidar.h"
-//#include "../../../topnav_utils/src/HokuyoUtils.h" FIXME
 #include <topnav_msgs/TestMessage.h>
+#include <HokuyoUtils.h>
 
 LaserScanTransceiver::LaserScanTransceiver() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
-//    parameters = HokuyoUtils::read_laser_parameters(ptr); FIXME
-    parameters = read_laser_parameters(ptr);
+    parameters = HokuyoUtils::read_laser_parameters(ptr);
     laser_scan_subscriber = handle.subscribe("/capo/laser/scan", 1000, &LaserScanTransceiver::laser_scan_callback,
                                              this);
     hough_space_publisher = handle.advertise<topnav_msgs::HoughAcc>(TOPIC_NAME_LASER_TRANSCEIVER, 1000);
@@ -44,16 +43,4 @@ topnav_msgs::HoughAcc LaserScanTransceiver::compose_message(std::vector<std::vec
     }
 
     return msg;
-}
-
-LaserParameters
-LaserScanTransceiver::read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg) {
-    ROS_INFO("reading laser specs");
-
-    LaserParameters parameters(msg->angle_min, msg->angle_max, msg->range_min, msg->range_max, msg->ranges.size());
-
-    ROS_INFO("Beam count: %zu", parameters.get_beam_count());
-    ROS_INFO("Angle step: %f", parameters.get_angle_step());
-    ROS_INFO("done");
-    return parameters;
 }

@@ -10,7 +10,7 @@ find_package(catkin REQUIRED
         roscpp
         rospy
         topnav_msgs
-#        topnav_utils FIXME
+        topnav_shared
         gazebo_msgs
         )
 
@@ -20,7 +20,7 @@ catkin_package(
         CATKIN_DEPENDS
         message_runtime
         topnav_msgs
-#        topnav_utils FIXME
+        topnav_shared
         gazebo_msgs
 )
 

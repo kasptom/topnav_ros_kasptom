@@ -44,7 +44,7 @@
 
     <exec_depend>topnav_msgs</exec_depend>
 
-    <!--<depend>topnav_utils</depend> FIXME-->
+    <depend>topnav_shared</depend>
 
     <!-- The export tag contains other, unspecified, tags -->
     <export>
