@@ -12,15 +12,14 @@ static const int PREVIEW_HEIGHT = 480;
 class LinesPreview {
 public:
     LinesPreview();
-    std::vector<sf::RectangleShape> get_grid();
+    std::vector<sf::RectangleShape> get_lines();
     void onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::ConstPtr &msg);
 
 private:
     ros::Subscriber houghAccumulatorSubscriber;
     ros::NodeHandle handle;
-    std::vector<sf::RectangleShape> grid;
-
-    void showMostFrequentLines(const topnav_msgs::HoughAcc::ConstPtr &msg);
+    std::vector<sf::RectangleShape> lines;
+    void createLineToDraw(int row, int col);
 };
 
 

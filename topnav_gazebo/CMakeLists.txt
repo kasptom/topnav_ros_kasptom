@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
         gazebo_msgs
         message_generation
         topnav_msgs
+#        topnav_utils FIXME
         )
 
 add_service_files(
@@ -27,6 +28,7 @@ catkin_package(
         message_runtime
         gazebo_msgs
         topnav_msgs
+#        topnav_utils FIXME
 )
 
 include_directories(${catkin_INCLUDE_DIRS})
@@ -37,7 +39,7 @@ target_link_libraries(world_reset_publisher ${catkin_LIBRARIES})
 add_executable(world_reset_subscriber src/world_reset/world_reset_subscriber.cpp src/world_reset/topnav_world_reset.h)
 target_link_libraries(world_reset_subscriber ${catkin_LIBRARIES})
 
-add_executable(capo_line_follower
+add_executable(capo_laser_scan_transceiver
         src/capo_line_follower/hough_lidar.h
         src/capo_line_follower/hough_lidar.cpp
         src/capo_line_follower/LaserScanTransceiver.h
@@ -46,4 +48,4 @@ add_executable(capo_line_follower
         src/capo_line_follower/LaserParameters.h
         src/capo_line_follower/laser_scan_transceiver.cpp
         )
-target_link_libraries(capo_line_follower ${catkin_LIBRARIES})
+target_link_libraries(capo_laser_scan_transceiver ${catkin_LIBRARIES})

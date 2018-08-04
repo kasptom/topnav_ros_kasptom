@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
         window.clear();
 
-        for (const sf::RectangleShape &rectangle : preview.get_grid()) {
+        for (const sf::RectangleShape &rectangle : preview.get_lines()) {
             window.draw(rectangle);
         }
 

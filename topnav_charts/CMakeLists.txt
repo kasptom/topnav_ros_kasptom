@@ -10,6 +10,8 @@ find_package(catkin REQUIRED
         roscpp
         rospy
         topnav_msgs
+#        topnav_utils FIXME
+        gazebo_msgs
         )
 
 find_package(SFML 2 REQUIRED graphics window system)
@@ -18,6 +20,8 @@ catkin_package(
         CATKIN_DEPENDS
         message_runtime
         topnav_msgs
+#        topnav_utils FIXME
+        gazebo_msgs
 )
 
 

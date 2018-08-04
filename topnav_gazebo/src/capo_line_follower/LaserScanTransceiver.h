@@ -6,6 +6,7 @@
 #include <ros/subscriber.h>
 #include <sensor_msgs/LaserScan.h>
 #include <topnav_msgs/HoughAcc.h>
+#include <ros/node_handle.h>
 #include "LaserParameters.h"
 
 static const std::string TOPIC_NAME_LASER_TRANSCEIVER = "/capo/laser/hough"; // NOLINT
@@ -22,12 +23,9 @@ private:
     ros::Subscriber laser_scan_subscriber;
     LaserParameters parameters = LaserParameters(0, 0, 0, 0, 0);
 
-    /**
-     * Call it in the constructor
-     */
-    LaserParameters read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg);
-
     topnav_msgs::HoughAcc compose_message(std::vector<std::vector<int>> vector);
+
+    LaserParameters read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg);
 };
 
 
