@@ -1,13 +1,16 @@
-#include "hough_space_preview_node.h"
-#include "HoughSpacePreview.h"
-
+#include <ros/init.h>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+#include "lines_preview_node.h"
+#include "LinesPreview.h"
 
 int main(int argc, char **argv) {
 
 
     sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "Hough Space Preview");
     ros::init(argc, argv, "houg_lines_preview");
-    HoughSpacePreview preview;
+    LinesPreview preview;
 
     while (window.isOpen()) {
         sf::Event event{};

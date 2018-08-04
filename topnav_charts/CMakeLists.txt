@@ -27,10 +27,16 @@ add_executable(hough_space_preview
         src/hough_space_preview_node.cpp
         src/hough_space_preview_node.h
         src/HoughSpacePreview.cpp
-        src/HoughSpacePreview.h
-        )
+        src/HoughSpacePreview.h)
+
+add_executable(lines_preview
+        src/lines_preview_node.cpp
+        src/lines_preview_node.h
+        src/LinesPreview.cpp
+        src/LinesPreview.h)
 
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(hough_space_preview ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
+    target_link_libraries(lines_preview ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
 endif()

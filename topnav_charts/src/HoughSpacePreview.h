@@ -15,12 +15,16 @@ public:
 
     std::vector<sf::RectangleShape> get_grid();
 
+    void onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::ConstPtr &msg);
+
 private:
     ros::Subscriber houghAccumulatorSubscriber;
     ros::NodeHandle handle;
     std::vector<sf::RectangleShape> grid;
 
-    void drawerCallback(const topnav_msgs::HoughAcc::ConstPtr &msg);
+    void markNumberOfLineOccurrences(float tile_height, float tile_width, int occurences, int houghSpaceRow,
+                                     int houghSpaceColumn,
+                                     sf::RectangleShape &rectangle) const;
 };
 
 
