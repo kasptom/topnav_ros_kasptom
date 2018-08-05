@@ -12,6 +12,7 @@ find_package(catkin REQUIRED
         topnav_msgs
         topnav_shared
         gazebo_msgs
+        std_msgs
         )
 
 find_package(SFML 2 REQUIRED graphics window system)
@@ -22,6 +23,7 @@ catkin_package(
         topnav_msgs
         topnav_shared
         gazebo_msgs
+        std_msgs
 )
 
 

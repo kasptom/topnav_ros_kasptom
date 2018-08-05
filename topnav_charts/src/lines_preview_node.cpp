@@ -25,6 +25,10 @@ int main(int argc, char **argv) {
             window.draw(rectangle);
         }
 
+        for (const sf::RectangleShape &point : preview.get_points()) {
+            window.draw(point);
+        }
+
         window.display();
         ros::spinOnce();
     }

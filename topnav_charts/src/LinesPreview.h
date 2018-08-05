@@ -9,19 +9,25 @@ static const int PREVIEW_HEIGHT = 480;
 #include <ros/node_handle.h>
 #include <topnav_msgs/HoughAcc.h>
 #include <LaserParameters.h>
+#include <sensor_msgs/LaserScan.h>
 
 class LinesPreview {
 public:
     LinesPreview();
 
     std::vector<sf::RectangleShape> get_lines();
+    std::vector<sf::RectangleShape> get_points();
 
     void onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::ConstPtr &msg);
 
+    void onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &msg);
+
 private:
     ros::Subscriber houghAccumulatorSubscriber;
+    ros::Subscriber laserPointsSubscriber;
     ros::NodeHandle handle;
     std::vector<sf::RectangleShape> lines;
+    std::vector<sf::RectangleShape> points;
 
     void createLineToDraw(int row, int col);
 
