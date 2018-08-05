@@ -63,9 +63,9 @@ void update_accumulator(std::pair<double, double> point, std::vector <std::vecto
         angle = params.get_angle_step() * angle_index;
         radius = std::abs(point.first * std::cos(angle) + point.second * std::sin(angle));
 
-        if (isNaN(radius) || radius == INFINITY) continue;
+        if (isNaN(radius) || radius == INFINITY || radius < params.get_range_min()) continue;
 
-        radius_index = static_cast<int>(radius / params.get_range_step());
+        radius_index = static_cast<int>((radius - params.get_range_min()) / params.get_range_step());
         accumulator[radius_index][angle_index] += 1;
     }
 }
