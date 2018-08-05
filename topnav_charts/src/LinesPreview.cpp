@@ -62,14 +62,14 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
 void LinesPreview::createLineToDraw(int row, int col) {
     sf::RectangleShape line(sf::Vector2f(PREVIEW_WIDTH * 2, 3));
 
-    double rho = row * parameters.get_range_step();
+    double rho = parameters.get_range_min() + row * parameters.get_range_step();
     double theta = col * parameters.get_angle_step();   // radians
 
     int x = static_cast<int>(PREVIEW_WIDTH / 2.0f * (rho * sin(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
     int y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * (rho * cos(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
     int rotation = static_cast<int>(90 - (theta / M_PI * 180));
 
-    line.setPosition(-y, -x);
+    line.setPosition(y, x);
     line.setRotation(rotation);
     line.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
     lines.push_back(line);
