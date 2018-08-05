@@ -6,11 +6,11 @@
 #include "LinesPreview.h"
 
 int main(int argc, char **argv) {
-
-
-    sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "Hough Space Preview");
-    ros::init(argc, argv, "houg_lines_preview");
+    sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "Points & Lines Preview");
+    ros::init(argc, argv, "hough_lines_preview");
     LinesPreview preview;
+
+    ros::Rate rate(100);    // milliseconds
 
     while (window.isOpen()) {
         sf::Event event{};
@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
 
         window.display();
         ros::spinOnce();
+        rate.sleep();
     }
 
     return 0;

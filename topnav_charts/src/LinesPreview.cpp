@@ -22,7 +22,7 @@ void LinesPreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::C
     size_t cols = msg->accumulator[0].acc_row.size();
     size_t rows = msg->accumulator.size();
 
-    int lineOccurrencesThreshold = 10;    // TODO to constant
+    int lineOccurrencesThreshold = 4;    // TODO to constant
     int occurrences = 0;
 
     for (int row = 0; row < rows; row++) {
@@ -43,8 +43,8 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
     for(int i = 0; i < msg->ranges.size(); i++) {
         angle = msg->angle_min + msg->angle_increment * i;
         range = msg->ranges[i];
-        x = range * std::cos(angle) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH;
-        y = range * std::sin(angle) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT;
+        x = range * std::cos(angle) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH / 2;
+        y = range * std::sin(angle) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT / 2;
 
         sf::RectangleShape point(sf::Vector2f(10, 10));
         point.setFillColor(sf::Color(255, 0,0,255));
@@ -65,13 +65,13 @@ void LinesPreview::createLineToDraw(int row, int col) {
     double rho = row * parameters.get_range_step();
     double theta = col * parameters.get_angle_step();   // radians
 
-    int x = static_cast<int>(PREVIEW_WIDTH * rho * sin(theta) / (parameters.get_range_max() - parameters.get_range_min()));
-    int y = static_cast<int>(PREVIEW_HEIGHT * rho * cos(theta) / (parameters.get_range_max() - parameters.get_range_min()));
+    int x = static_cast<int>(PREVIEW_WIDTH / 2.0f * (rho * sin(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
+    int y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * (rho * cos(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
     int rotation = static_cast<int>(90 - (theta / M_PI * 180));
 
-    line.setPosition(x, -y);
+    line.setPosition(-y, -x);
     line.setRotation(rotation);
-    line.move(sf::Vector2f(PREVIEW_WIDTH/2, PREVIEW_HEIGHT/2));
+    line.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
     lines.push_back(line);
 }
 
