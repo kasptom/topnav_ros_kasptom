@@ -22,15 +22,15 @@ void LinesPreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::C
     size_t cols = msg->accumulator[0].acc_row.size();
     size_t rows = msg->accumulator.size();
 
-    int lineOccurrencesThreshold = 4;    // TODO to constant
+    int lineOccurrencesThreshold = 5;    // TODO to constant
     int occurrences = 0;
 
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; col++) {
-            occurrences = msg->accumulator[row].acc_row[col];
+    for (int rho_idx = 0; rho_idx < rows; rho_idx++) {
+        for (int theta_idx = 0; theta_idx < cols; theta_idx++) {
+            occurrences = msg->accumulator[rho_idx].acc_row[theta_idx];
             if (occurrences >= lineOccurrencesThreshold)
             {
-                createLineToDraw(row,col);
+                createLineToDraw(rho_idx,theta_idx);
             }
         }
     }
@@ -40,15 +40,15 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
     points.clear();
 
     float x, y, angle, range;
-    for(int i = 0; i < msg->ranges.size(); i++) {
+    for (int i = 0; i < msg->ranges.size(); i++) {
         angle = msg->angle_min + msg->angle_increment * i;
         range = msg->ranges[i];
-        x = range * std::cos(angle) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH / 2;
-        y = range * std::sin(angle) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT / 2;
+        x = (range * std::cos(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH / 2;
+        y = (range * std::sin(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT / 2;
 
         sf::RectangleShape point(sf::Vector2f(10, 10));
-        point.setFillColor(sf::Color(255, 0,0,255));
-        point.setPosition(-y,-x);
+        point.setFillColor(sf::Color(255, 0, 0, 255));
+        point.setPosition(-y, -x);
         point.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
         points.push_back(point);
     }
@@ -56,20 +56,21 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
 
 /**
  *
- * @param row accumulator's row indicating the HoughSpace's rho (distance)
- * @param col accumulator's column indicating the HoughtSpace's theta (angle)
+ * @param rho_idx accumulator's row indicating the HoughSpace's rho (distance)
+ * @param theta_idx accumulator's column indicating the HoughtSpace's theta (angle)
  */
-void LinesPreview::createLineToDraw(int row, int col) {
-    sf::RectangleShape line(sf::Vector2f(PREVIEW_WIDTH * 2, 3));
+void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
+    sf::RectangleShape line(sf::Vector2f(PREVIEW_WIDTH * 2, 2));
 
-    double rho = parameters.get_range_min() + row * parameters.get_range_step();
-    double theta = col * parameters.get_angle_step();   // radians
+    double rho = parameters.get_range_min() + rho_idx * parameters.get_range_step();
+    double theta = theta_idx * parameters.get_angle_step();   // radians
 
-    int x = static_cast<int>(PREVIEW_WIDTH / 2.0f * (rho * sin(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
-    int y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * (rho * cos(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
-    int rotation = static_cast<int>(90 - (theta / M_PI * 180));
+    auto x = static_cast<int>(PREVIEW_WIDTH / 2.0f * (rho * sin(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
+    auto y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * (rho * cos(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
+    auto rotation = static_cast<int>(-theta / M_PI * 180);
 
-    line.setPosition(y, x);
+    line.setOrigin(PREVIEW_WIDTH, -1);
+    line.setPosition(-y, -x);
     line.setRotation(rotation);
     line.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
     lines.push_back(line);

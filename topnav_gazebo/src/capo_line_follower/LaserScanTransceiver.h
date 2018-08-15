@@ -23,7 +23,9 @@ private:
     ros::Subscriber laser_scan_subscriber;
     LaserParameters parameters = LaserParameters(0, 0, 0, 0, 0);
 
-    topnav_msgs::HoughAcc compose_message(std::vector<std::vector<int>> vector);
+    topnav_msgs::HoughAcc create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix);
+
+    float calculateAngle(int lidarAngleIndex);
 };
 
 

@@ -5,8 +5,9 @@
 #include "LaserParameters.h"
 
 void
-hough_space(const std::vector<std::pair<double, double>> &polarCoordinates, std::vector<std::vector<int>> &accumulator,
-            LaserParameters parameters);
+update_hough_space_accumulator(const std::vector<std::pair<double, double>> &polarCoordinates,
+                               std::vector<std::vector<int>> &accumulator,
+                               LaserParameters parameters);
 
 std::vector<std::vector<int>>
 create_accumulator(LaserParameters parameters);

@@ -29,7 +29,7 @@ private:
     std::vector<sf::RectangleShape> lines;
     std::vector<sf::RectangleShape> points;
 
-    void createLineToDraw(int row, int col);
+    void createLineToDraw(int rho_idx, int theta_idx);
 
     LaserParameters parameters = {0, 0, 0, 0, 0};
 };
