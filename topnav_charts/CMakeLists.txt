@@ -1,4 +1,4 @@
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
 cmake_minimum_required(VERSION 2.8.3)
 project(topnav_charts)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -41,8 +41,13 @@ add_executable(lines_preview
         src/LinesPreview.cpp
         src/LinesPreview.h)
 
+add_executable(sfml_test
+        src/sfml_test.cpp
+        )
+
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(hough_space_preview ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
     target_link_libraries(lines_preview ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${catkin_LIBRARIES})
+    target_link_libraries(sfml_test ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
