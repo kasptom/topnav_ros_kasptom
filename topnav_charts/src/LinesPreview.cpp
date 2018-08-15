@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include <HokuyoUtils.h>
 #include "LinesPreview.h"
+#include "../../topnav_gazebo/src/capo_line_follower/hough_lidar.h"
 
 LinesPreview::LinesPreview() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
@@ -28,9 +29,11 @@ void LinesPreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::C
     for (int rho_idx = 0; rho_idx < rows; rho_idx++) {
         for (int theta_idx = 0; theta_idx < cols; theta_idx++) {
             occurrences = msg->accumulator[rho_idx].acc_row[theta_idx];
-            if (occurrences >= lineOccurrencesThreshold)
-            {
-                createLineToDraw(rho_idx,theta_idx);
+            if (occurrences >= lineOccurrencesThreshold) {
+//                ROS_INFO("detected line: rho=%f, theta=%f",
+//                         parameters.get_range_step() * rho_idx,
+//                         360 * parameters.get_angle_step() * theta_idx / HOUGH_SPACE_THETA_RANGE);
+                createLineToDraw(rho_idx, theta_idx);
             }
         }
     }
@@ -65,14 +68,16 @@ void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
     double rho = parameters.get_range_min() + rho_idx * parameters.get_range_step();
     double theta = theta_idx * parameters.get_angle_step();   // radians
 
-    auto x = static_cast<int>(PREVIEW_WIDTH / 2.0f * (rho * sin(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
-    auto y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * (rho * cos(theta) - parameters.get_range_min()) / (parameters.get_range_max() - parameters.get_range_min()));
-    auto rotation = static_cast<int>(-theta / M_PI * 180);
+    auto x = PREVIEW_WIDTH / 2 + static_cast<int>(PREVIEW_WIDTH / 2.0f * rho * sin(theta) /
+                                                  (parameters.get_range_max() - parameters.get_range_min()));
+    auto y = PREVIEW_HEIGHT / 2 + static_cast<int>(PREVIEW_HEIGHT / 2.0f * rho * cos(theta) /
+                                                   (parameters.get_range_max() - parameters.get_range_min()));
+    auto rotation = static_cast<int>(theta / M_PI * 180);
 
-    line.setOrigin(PREVIEW_WIDTH, -1);
-    line.setPosition(-y, -x);
-    line.setRotation(rotation);
-    line.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
+    line.setPosition(PREVIEW_WIDTH - x, PREVIEW_HEIGHT - y);
+    line.setRotation(-rotation);
+//    ROS_INFO("x=%d y=%d", x, y);
+
     lines.push_back(line);
 }
 

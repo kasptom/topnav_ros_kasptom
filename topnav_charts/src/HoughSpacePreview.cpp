@@ -49,7 +49,7 @@ void HoughSpacePreview::markNumberOfLineOccurrences(float tile_height, float til
     } else {
         rectangle.setFillColor(sf::Color(255, 255, 255));
     }
-    rectangle.setOrigin(-houghSpaceColumn * tile_width, -houghSpaceRow * tile_height);
+    rectangle.setPosition(houghSpaceColumn * tile_width, houghSpaceRow * tile_height);
 }
 
 std::vector<sf::RectangleShape> HoughSpacePreview::get_grid() {

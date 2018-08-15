@@ -23,7 +23,7 @@ create_accumulator(LaserParameters parameters) {
     float angle_step = parameters.get_angle_step();
 
     auto rangeBucketsCount = static_cast<int>(std::ceil((max_range - min_range) / range_step));
-    auto angleBucketsCount = static_cast<int>(std::ceil(M_PI / angle_step));
+    auto angleBucketsCount = static_cast<int>(std::ceil(HOUGH_SPACE_THETA_RANGE / angle_step));
 
     std::vector <std::vector<int>> accumulator;
 
@@ -55,7 +55,7 @@ update_hough_space_accumulator(const std::vector<std::pair<double, double>> &pol
 void update_accumulator(std::pair<double, double> xy_pair, std::vector <std::vector<int>> &accumulator,
                         LaserParameters params) {
     double rho;
-    auto steps = static_cast<int>(M_PI / params.get_angle_step());
+    auto steps = static_cast<int>(HOUGH_SPACE_THETA_RANGE / params.get_angle_step());
     double theta;
     int rho_idx;
 
@@ -68,7 +68,7 @@ void update_accumulator(std::pair<double, double> xy_pair, std::vector <std::vec
 
         if (isNaN(rho) || rho == INFINITY || rho < params.get_range_min()) continue;
 
-        rho_idx = static_cast<int>(rho / params.get_range_step());
+        rho_idx = static_cast<int>((rho - params.get_range_min()) / params.get_range_step());
         accumulator[rho_idx][theta_idx] += 1;
     }
 }
