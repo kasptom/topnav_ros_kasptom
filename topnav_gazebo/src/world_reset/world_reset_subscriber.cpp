@@ -6,7 +6,7 @@
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
-void chatterCallback(const std_msgs::Empty::ConstPtr& msg)
+void laserScanCallback(const std_msgs::Empty::ConstPtr &msg)
 {
     ROS_INFO("Empty message received");
 
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
     ros::NodeHandle n;
 
-    ros::Subscriber sub = n.subscribe(TOPIC_NAME_TOPNAV_WORLD_RESET, 1000, chatterCallback);
+    ros::Subscriber sub = n.subscribe(TOPIC_NAME_TOPNAV_WORLD_RESET, 1000, laserScanCallback);
 
     ros::spin();
 
