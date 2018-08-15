@@ -75,6 +75,7 @@ void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
     auto rotation = static_cast<int>(theta / M_PI * 180);
 
     line.setPosition(PREVIEW_WIDTH - x, PREVIEW_HEIGHT - y);
+    line.setOrigin(PREVIEW_WIDTH, 1);
     line.setRotation(-rotation);
 //    ROS_INFO("x=%d y=%d", x, y);
 
