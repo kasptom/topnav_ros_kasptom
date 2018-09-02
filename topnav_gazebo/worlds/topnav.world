@@ -16,6 +16,11 @@
       <uri>model://sun</uri>
     </include>
 
+    <!-- the building -->
+    <include>
+      <uri>model://d17_shannon_1</uri>
+    </include>
+
     <!-- Focus camera on tall pendulum -->
     <gui fullscreen='0'>
       <camera name='user_camera'>
