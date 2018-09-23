@@ -1,9 +1,11 @@
 <launch>
     <arg name="model" default="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro"/>
+    <arg name="world" default="worlds/empty.world"/>
     <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz"/>
 
     <include file="$(find topnav_gazebo)/launch/gazebo.launch">
         <arg name="model" value="$(arg model)"/>
+        <arg name="world" value="$(arg world)"/>
     </include>
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>

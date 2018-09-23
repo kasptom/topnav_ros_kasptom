@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <include file="$(find topnav_gazebo)/launch/capo.launch">
+    <arg name="world" value="$(find topnav_gazebo)/worlds/topnav.world"/>
+    <arg name="model" value="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro" />
+  </include>
+
+  
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro'"/>
+
+  <node name="navbot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+   args="-urdf -param robot_description -model capo" />
+
+</launch>
