@@ -1,0 +1,15 @@
+material AR056/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture 056.png
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}
