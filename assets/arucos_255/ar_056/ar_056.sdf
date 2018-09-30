@@ -2,6 +2,7 @@
 <sdf version="1.5">
     <model name="ar_056">
         <link name="ar_056_link">
+            <static>true</static>
             <pose>0 0 0.115 0 0 0</pose>
             <inertial>
                 <mass>0.390</mass>
@@ -16,18 +17,18 @@
             </inertial>
             <collision name="ar_056_collision">
                 <geometry>
-                    <cylinder>
-                        <radius>0.055000</radius>
-                        <length>0.230000</length>
-                    </cylinder>
+                    <plane>
+                        <normal>0 0 1</normal>
+                        <size>0.15 0.15</size>
+                    </plane>
                 </geometry>
             </collision>
             <visual name="ar_056_visual">
                 <geometry>
-                    <cylinder>
-                        <radius>0.055000</radius>
-                        <length>0.230000</length>
-                    </cylinder>
+                    <plane>
+                        <normal>0 0 1</normal>
+                        <size>0.15 0.15</size>
+                    </plane>
                 </geometry>
                 <material>
                     <script>
