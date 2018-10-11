@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
     <model name="ar_056">
+        <static>1</static>
         <link name="ar_056_link">
-            <static>true</static>
-            <pose>0 0 0.115 0 0 0</pose>
+            <pose> 0 0 0.2 0 0 0</pose>
             <inertial>
                 <mass>0.390</mass>
                 <inertia>
@@ -17,18 +17,16 @@
             </inertial>
             <collision name="ar_056_collision">
                 <geometry>
-                    <plane>
-                        <normal>0 0 1</normal>
-                        <size>0.15 0.15</size>
-                    </plane>
+                    <box>
+                        <size>0.15 0.15 0.001</size>
+                    </box>
                 </geometry>
             </collision>
             <visual name="ar_056_visual">
                 <geometry>
-                    <plane>
-                        <normal>0 0 1</normal>
-                        <size>0.15 0.15</size>
-                    </plane>
+                    <box>
+                        <size>0.15 0.15 0.03</size>
+                    </box>
                 </geometry>
                 <material>
                     <script>
