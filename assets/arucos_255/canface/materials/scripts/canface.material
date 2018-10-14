@@ -1,0 +1,15 @@
+material Face/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+          filtering anistropic
+          max_anisotropy 16
+          colour_op_ex source1 src_manual src_current 1 1 0
+      }
+    }
+  }
+}
