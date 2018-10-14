@@ -1,7 +1,7 @@
 <?xml version='1.0' ?>
 <sdf version='1.4'>
     <model name="ar_056">
-        <!--<static>0</static>-->
+        <static>1</static>
         <link name='link'>
             <pose> 0 0 0 0 0 0</pose>
             <inertial>
@@ -17,24 +17,16 @@
             </inertial>
             <collision name='collision'>
                 <geometry>
-                    <!--<box>-->
-                        <!--<size>0.15 0.15 0.001</size>-->
-                    <!--</box>-->
-                    <cylinder>
-                        <radius>0.055000</radius>
-                        <length>0.230000</length>
-                    </cylinder>
+                    <box>
+                        <size>0.15 0.15 0.001</size>
+                    </box>
                 </geometry>
             </collision>
             <visual name='visual'>
                 <geometry>
-                    <!--<box>-->
-                        <!--<size>0.15 0.15 0.001</size>-->
-                    <!--</box>-->
-                    <cylinder>
-                        <radius>0.055000</radius>
-                        <length>0.230000</length>
-                    </cylinder>
+                    <box>
+                        <size>0.15 0.15 0.001</size>
+                    </box>
                 </geometry>
                 <material>
                     <script>
