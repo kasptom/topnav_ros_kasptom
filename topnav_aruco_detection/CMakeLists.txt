@@ -8,9 +8,11 @@ project(topnav_aruco_detection)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
+        roscpp
+        std_msgs
+        sensor_msgs
+        cv_bridge
+        image_transport
 )
 
 ## System dependencies are found with CMake's conventions
@@ -205,7 +207,6 @@ find_package(OpenCV REQUIRED)
 include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 add_executable(aruco_detector
         src/aruco_detector/ArUcoDetector.h
-        src/aruco_detector/ArUcoDetector.cpp
-        src/aruco_detector/aruco_detector_node.cpp)
+        src/aruco_detector/ArUcoDetector.cpp)
 target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})
 

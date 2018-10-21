@@ -4,15 +4,45 @@
 #include <opencv2/highgui.hpp>
 #include <iostream>
 #include <boost/thread/mutex.hpp>
+#include <cv_bridge/cv_bridge.h>
 
 using namespace cv;
 using namespace std;
 
 ArUcoDetector::ArUcoDetector() {
     camera_subscriber = handle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
+    namedWindow(ARUCO_OPENCV_WINDOW_NAME);
 }
 
+/**
+ * http://wiki.ros.org/cv_bridge/Tutorials/UsingCvBridgeToConvertBetweenROSImagesAndOpenCVImages
+ * @param msg
+ */
 void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &msg) {
+    //------
+    cv_bridge::CvImagePtr cv_ptr;
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    }
+    catch (cv_bridge::Exception& e)
+    {
+        ROS_ERROR("cv_bridge exception: %s", e.what());
+        return;
+    }
+
+    // Draw an example circle on the video stream
+    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
+        cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+
+    // Update GUI Window
+    cv::imshow(ARUCO_OPENCV_WINDOW_NAME, cv_ptr->image);
+    cv::waitKey(3);
+
+    // Output modified video stream
+    return;
+    //------
+
     int dictionaryId = aruco::DICT_6X6_250;
     bool showRejected = false;
     bool estimatePose = true;
@@ -58,4 +88,15 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
 //    }
 //
 //    imshow("out", imageCopy);
+}
+
+ArUcoDetector::~ArUcoDetector() {
+    cv::destroyWindow(ARUCO_OPENCV_WINDOW_NAME);
+}
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "aruco_detector");
+    ArUcoDetector detector;
+    ros::spin();
+    return 0;
 }
