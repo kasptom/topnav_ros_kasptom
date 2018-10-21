@@ -36,8 +36,6 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
     }
 
     int dictionaryId = aruco::DICT_6X6_250;
-    bool showRejected = false;
-    bool estimatePose = true;
 
     Ptr<aruco::DetectorParameters> detectorParameters = aruco::DetectorParameters::create();
     detectorParameters->cornerRefinementMethod = aruco::CORNER_REFINE_SUBPIX;
@@ -64,18 +62,13 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
         if (numberOfMarkers > 0) {
             aruco::drawDetectedMarkers(image, corners, ids);
 
-            if (estimatePose) {
-                for (int i = 0; i < ids.size(); i++) {
-                    aruco::drawAxis(
-                            image, cameraMatrix, distortionCoefficients, rVectors[i], tVectors[i],
-                            MARKER_LENGTH_METERS * 0.5f);
-                }
+            for (int i = 0; i < ids.size(); i++) {
+                aruco::drawAxis(
+                        image, cameraMatrix, distortionCoefficients, rVectors[i], tVectors[i],
+                        MARKER_LENGTH_METERS * 0.5f);
             }
         }
 
-        if (showRejected && rejected.size() > 0) {
-            aruco::drawDetectedMarkers(image, rejected, noArray(), Scalar(100, 0, 255));
-        }
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
     }
