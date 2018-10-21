@@ -203,10 +203,11 @@ include_directories(
 # TODO remove after connecting to the cv_bridge
 find_package(OpenCV REQUIRED)
 
-
+file(COPY launch/ DESTINATION ${CATKIN_DEVEL_PREFIX}/lib/topnav_aruco_detection)
 include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 add_executable(aruco_detector
         src/aruco_detector/ArUcoDetector.h
         src/aruco_detector/ArUcoDetector.cpp)
 target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})
+
 
