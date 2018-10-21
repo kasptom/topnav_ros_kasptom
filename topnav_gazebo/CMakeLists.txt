@@ -12,8 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
         topnav_shared
         )
 
-find_package(OpenCV REQUIRED)
-
 add_service_files(
         DIRECTORY srv
         FILES ResetWorld.srv
@@ -33,7 +31,7 @@ catkin_package(
         topnav_shared
 )
 
-include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
 
 add_executable(world_reset_publisher src/world_reset/world_reset_publisher.cpp src/world_reset/topnav_world_reset.h)
 target_link_libraries(world_reset_publisher ${catkin_LIBRARIES})
@@ -49,9 +47,3 @@ add_executable(capo_laser_scan_transceiver
         src/capo_line_follower/laser_scan_transceiver.cpp
         )
 target_link_libraries(capo_laser_scan_transceiver ${catkin_LIBRARIES})
-
-add_executable(aruco_detector
-        src/aruco_detector/ArUcoDetector.h
-        src/aruco_detector/ArUcoDetector.cpp
-        src/aruco_detector/aruco_detector_node.cpp)
-target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})

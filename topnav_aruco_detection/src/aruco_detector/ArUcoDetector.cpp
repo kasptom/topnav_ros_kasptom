@@ -21,13 +21,13 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
     detectorParameters->cornerRefinementMethod = aruco::CORNER_REFINE_SUBPIX;
 
     vector<int> ids;
-    vector<vector<Point2f>> corners, rejected;
+    vector< vector<Point2f> > corners, rejected;
     vector<Vec3d> rVectors, tVectors;
     Mat imageCopy;
     Mat image(msg->data);
     Mat cameraMatrix, distortionCoefficients;
 
-    ROS_INFO("height = %d, width = %d",msg->height, msg->width);
+    ROS_INFO("height = %d, width = %d", msg->height, msg->width);
 
     // TODO use opencv_bridge from ROS' vision_opencv
 //    Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
