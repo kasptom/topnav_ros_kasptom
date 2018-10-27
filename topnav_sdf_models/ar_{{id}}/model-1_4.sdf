@@ -1,6 +1,6 @@
 <?xml version='1.0' ?>
 <sdf version='1.4'>
-    <model name="ar_056">
+    <model name="ar_{{id}}">
         <static>1</static>
         <link name='link'>
             <pose> 0 0 0 0 0 0</pose>
@@ -30,9 +30,9 @@
                 </geometry>
                 <material>
                     <script>
-                        <uri>model://ar_056/materials/scripts</uri>
-                        <uri>model://ar_056/materials/textures</uri>
-                        <name>AR056/Diffuse</name>
+                        <uri>model://ar_{{id}}/materials/scripts</uri>
+                        <uri>model://ar_{{id}}/materials/textures</uri>
+                        <name>AR{{id}}/Diffuse</name>
                     </script>
                 </material>
             </visual>
