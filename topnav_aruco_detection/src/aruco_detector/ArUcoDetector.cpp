@@ -13,8 +13,11 @@ using namespace std;
 ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
     bool initOk = init(cameraConfigFileName);
     if (!initOk) {
-        cerr << "Invalid camera file" << endl;
+        ROS_ERROR("Invalid camera file: %s\n specify the full path of the camera config file (c930.yaml)",
+                  cameraConfigFileName.c_str());
         return;
+    } else {
+        ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
     camera_subscriber = handle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
@@ -45,7 +48,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
     vector<Vec3d> rVectors, tVectors;
     Mat image(cv_ptr->image);
 
-    ROS_INFO("height = %d, width = %d", msg->height, msg->width);
+//    ROS_INFO("height = %d, width = %d", msg->height, msg->width);
 
     try {
         Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(
@@ -97,8 +100,12 @@ bool ArUcoDetector::readCameraParameters(std::string filename) {
 }
 
 int main(int argc, char **argv) {
+    string cameraConfigFilePath = argc > 1 ? argv[1] : "c930.yaml";
+
+    ROS_INFO("Config file: %s", cameraConfigFilePath.c_str());
+
     ros::init(argc, argv, "aruco_detector");
-    ArUcoDetector detector("c930.yaml");
+    ArUcoDetector detector(cameraConfigFilePath);
     ros::spin();
     return 0;
 }
