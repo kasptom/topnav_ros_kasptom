@@ -1,4 +1,4 @@
-material AR056/Diffuse
+material AR{{id}}/Diffuse
 {
   technique
   {
