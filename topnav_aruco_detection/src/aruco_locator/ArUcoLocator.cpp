@@ -1,7 +1,8 @@
 #include <cv.hpp>
 #include "ArUcoLocator.h"
 #include <iostream>
-#include <ros/init.h>
+#include <utility> #include <ros/init.h>
+#include <topnav_msgs/Markers.h>
 
 ArUcoLocator::ArUcoLocator() {
     init();
@@ -34,16 +35,42 @@ ArUcoLocator::calculatePosition(const Vec3d &rotation, const Vec3d &translation,
 }
 
 void ArUcoLocator::printLocation(Vec3d location) {
-    printf("(%7.2f, %7.2f, %7.2f)", location.val[0], location.val[1], location.val[2]);
+    ROS_INFO("(%7.2f, %7.2f, %7.2f)", location.val[0], location.val[1], location.val[2]);
 }
 
 void ArUcoLocator::init() {
-    // TODO Markers message
-//    detecor_subscriber = handle.subscribe("capo/camera1/image_raw", 1000, &ArUcoLocator::marker_scan_callback, this);
+    detecor_subscriber = handle.subscribe(TOPIC_NAME_ARUCO_DETECTION, 1000, &ArUcoLocator::marker_scan_callback, this);
 }
 
-void ArUcoLocator::marker_scan_callback() {
-    // TODO Markers message
+void ArUcoLocator::marker_scan_callback(const topnav_msgs::Markers::ConstPtr &msg) {
+    vector<Marker> markers;
+    vector<int> ids;
+    vector<vector<Point2f>> allCorners;
+    vector<Vec3d> rotations;
+    vector<Vec3d> translations;
+
+    vector<Point2f> corners;
+
+    for (auto marker_msg : msg->markers) {
+        ids.push_back(marker_msg.id);
+
+        for (int j = 0; j < 4; j++) {
+            Point2f corner(static_cast<float>(marker_msg.x_corners[j]), static_cast<float>(marker_msg.y_corners[j]));
+            corners.push_back(corner);
+        }
+        rotations.emplace_back(marker_msg.rotation[0], marker_msg.rotation[1], marker_msg.rotation[2]);
+        translations.emplace_back(marker_msg.translation[0], marker_msg.translation[1], marker_msg.translation[2]);
+
+        corners.clear();
+        allCorners.push_back(corners);
+    }
+
+    markers = Marker::convertToMarkers(ids, allCorners, rotations, translations);
+
+    for (const auto &marker : markers) {
+        Vec3d location = retrieveMarkerReferenceFrameLocation(marker);
+        printLocation(location);
+    }
 }
 
 

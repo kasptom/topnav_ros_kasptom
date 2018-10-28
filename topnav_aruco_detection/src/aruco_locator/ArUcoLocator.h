@@ -6,6 +6,7 @@
 #include <fstream>
 #include <ros/subscriber.h>
 #include <ros/node_handle.h>
+#include <topnav_msgs/Markers.h>
 
 using namespace cv;
 static const float MARKER_LENGTH_METERS = 0.17;
@@ -16,7 +17,6 @@ public:
 
     ros::NodeHandle handle;
     ros::Subscriber detecor_subscriber;
-    void marker_scan_callback();
 
     Vec3d retrieveMarkerReferenceFrameLocation(Marker marker);
     Vec3d retrieveMarkerReferenceFrameLocation(Marker marker, double *distance);
@@ -30,6 +30,8 @@ public:
 private:
     void init();
     Mat calculatePosition(const Vec3d &rotation, const Vec3d &translation, double* distance) const;
+
+    void marker_scan_callback(const boost::shared_ptr<const topnav_msgs::Markers_ <allocator<void>>> &msg);
 };
 
 

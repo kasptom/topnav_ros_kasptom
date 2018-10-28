@@ -6,6 +6,7 @@
 #include <boost/thread/mutex.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include "ros/ros.h"
+#include "../aruco_model/Marker.h"
 
 using namespace cv;
 using namespace std;
@@ -20,8 +21,8 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
-    camera_subscriber = handle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
-    namedWindow(ARUCO_OPENCV_WINDOW_NAME);
+    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
+    detection_publisher = nodeHandle.advertise<topnav_msgs::Markers>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
 
 /**
@@ -57,7 +58,6 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
 
         long numberOfMarkers = ids.size();
         if (numberOfMarkers > 0) {
-
             aruco::estimatePoseSingleMarkers(
                     corners, MARKER_LENGTH_METERS, cameraMatrix, distortionCoefficients, rVectors, tVectors);
         }
@@ -70,12 +70,14 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
                         image, cameraMatrix, distortionCoefficients, rVectors[i], tVectors[i],
                         MARKER_LENGTH_METERS * 0.5f);
             }
+
+            topnav_msgs::Markers markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
+            detection_publisher.publish(markers_msg);
         }
 
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
     }
-
 
     // Update GUI Window
     imshow(ARUCO_OPENCV_WINDOW_NAME, cv_ptr->image);
@@ -97,6 +99,34 @@ bool ArUcoDetector::readCameraParameters(std::string filename) {
     fs["camera_matrix"] >> cameraMatrix;
     fs["distortion_coefficients"] >> distortionCoefficients;
     return true;
+}
+
+topnav_msgs::Markers
+ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std::vector<std::vector<cv::Point2f>> corners,
+                                               std::vector<cv::Vec3d> rvectors, std::vector<cv::Vec3d> tvectors) {
+    topnav_msgs::Markers markers_msg;
+
+    for (int i = 0; i < ar_uco_ids.size(); i++){
+        topnav_msgs::Marker marker;
+        marker.id = ar_uco_ids[i];
+
+        vector<cv::Point2f> marker_corners = corners[i];
+        for (int j = 0; j < 3; j++)
+        {
+            marker.rotation.push_back(rvectors[i][j]);
+            marker.translation.push_back(tvectors[i][j]);
+        }
+
+        for (int j = 0; j < 4; j++)
+        {
+            marker.x_corners.push_back(marker_corners[j].x);
+            marker.y_corners.push_back(marker_corners[j].y);
+        }
+
+        markers_msg.markers.push_back(marker);
+    }
+
+    return markers_msg;
 }
 
 int main(int argc, char **argv) {
