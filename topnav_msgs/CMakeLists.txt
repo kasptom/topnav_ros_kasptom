@@ -51,6 +51,8 @@ add_message_files(
         FILES
         HoughAccRow.msg
         HoughAcc.msg
+        Marker.msg
+        Markers.msg
         TestMessage.msg
 )
 

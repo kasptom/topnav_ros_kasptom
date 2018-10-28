@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="four-wheeled" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="capo" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:property name="scale" value="1.0" />
     <xacro:property name="caseWidth" value="${0.2032 * scale}" />
     <xacro:property name="caseLength" value="${0.24765 * scale}" />
@@ -87,6 +87,8 @@
     </transmission>
 
     <gazebo reference="head">
+        <!-- generates warn  Element[mu], child of element[link] not defined in SDF. Ignoring[mu]-->
+        <!-- http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo -->
         <mu1 value="200.0"/>
         <mu2 value="100.0"/>
         <kp value="1000000.0" />
@@ -139,6 +141,8 @@
         </transmission>
 
         <gazebo reference="${prefix}_${suffix}_wheel">
+            <!-- generates warn  Element[mu], child of element[link] not defined in SDF. Ignoring[mu]-->
+            <!-- http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo -->
             <mu value="4.0"/>
             <mu2 value="1.0"/>
             <kp value="1000000.0" />
