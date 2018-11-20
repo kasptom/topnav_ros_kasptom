@@ -10,33 +10,29 @@ template<class S, class P>
 class PublisherSubscriberNode {
 
 public:
-    PublisherSubscriberNode();
+    PublisherSubscriberNode(const std::string &subscribed_topic_name, const std::string &published_topic_name);
 
 protected:
     ros::NodeHandle handle;
     ros::Publisher publisher;
     ros::Subscriber subscriber;
 
-    virtual std::string get_published_topic_name()=0;
-
-    virtual std::string get_subscribed_topic_name()=0;
-
-    virtual void subscription_callback(const typename S::ConstPtr message)= 0;
+    virtual void subscription_callback(typename S::ConstPtr message)= 0;
 
 private:
-    void initPublisherAndSubscriber();
+    void initPublisherAndSubscriber(const std::string &subscribed_topic_name, const std::string &published_topic_name);
 };
 
 template<class S, class P>
-PublisherSubscriberNode<S, P>::PublisherSubscriberNode() {
-    initPublisherAndSubscriber();
+PublisherSubscriberNode<S, P>::PublisherSubscriberNode(const std::string &subscribed_topic_name, const std::string &published_topic_name) {
+    initPublisherAndSubscriber(subscribed_topic_name, published_topic_name);
 }
 
 template<class S, class P>
-void PublisherSubscriberNode<S, P>::initPublisherAndSubscriber() {
-    subscriber = handle.subscribe(get_subscribed_topic_name(), 1000, &PublisherSubscriberNode::subscription_callback,
+void PublisherSubscriberNode<S, P>::initPublisherAndSubscriber(const std::string &subscribed_topic_name, const std::string &published_topic_name) {
+    subscriber = handle.subscribe(subscribed_topic_name, 1000, &PublisherSubscriberNode::subscription_callback,
                                   this);
-    publisher = handle.advertise<P>(get_published_topic_name(), 1000);
+    publisher = handle.advertise<P>(published_topic_name, 1000);
 }
 
 
