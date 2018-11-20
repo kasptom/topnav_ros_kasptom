@@ -5,6 +5,7 @@
 #include <ros/node_handle.h>
 #include <opencv2/aruco.hpp>
 #include <topnav_msgs/Markers.h>
+#include <constants/topic_names.h>
 
 static const float MARKER_LENGTH_METERS = 0.17;
 

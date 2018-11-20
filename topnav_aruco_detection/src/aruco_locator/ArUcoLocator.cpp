@@ -1,8 +1,10 @@
 #include <cv.hpp>
 #include "ArUcoLocator.h"
 #include <iostream>
-#include <utility> #include <ros/init.h>
+#include <utility>
+#include <ros/init.h>
 #include <topnav_msgs/Markers.h>
+#include <constants/topic_names.h>
 
 ArUcoLocator::ArUcoLocator() {
     init();
@@ -18,6 +20,7 @@ Vec3d ArUcoLocator::retrieveMarkerReferenceFrameLocation(Marker marker, double *
     Vec3d translation = marker.getTranslation();
 
     Mat cameraPosition = calculatePosition(rotation, translation, distance);
+
     return cameraPosition;
 }
 

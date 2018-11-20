@@ -127,6 +127,9 @@ include_directories(
          src/LaserParameters.cpp
          src/HokuyoUtils.h
          src/HokuyoUtils.cpp
+         src/node/PublisherSubscriberNode.cpp
+         src/node/PublisherSubscriberNode.h
+         src/constants/topic_names.h
          src/topology/FieldOfViewRegion.cpp src/topology/RelativePosition.cpp src/topology/Distance.cpp)
 
 ## Add cmake target dependencies of the library
