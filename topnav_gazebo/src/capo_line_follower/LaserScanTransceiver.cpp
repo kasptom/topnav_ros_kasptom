@@ -3,6 +3,7 @@
 #include <std_msgs/Empty.h>
 #include "LaserScanTransceiver.h"
 #include "hough_lidar.h"
+#include "../../../topnav_shared/src/HokuyoUtils.h"
 #include <topnav_msgs/TestMessage.h>
 #include <HokuyoUtils.h>
 
@@ -15,13 +16,7 @@ LaserScanTransceiver::LaserScanTransceiver() {
 }
 
 void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
-    std::vector<std::pair<double, double>> polarCoordinates;
-
-    for (int i = 0; i < parameters.get_beam_count(); i++) {
-        if (msg->ranges[i] == INFINITY) continue;
-
-        polarCoordinates.emplace_back(msg->ranges[i], calculateAngle(i));
-    }
+    std::vector<std::pair<double, double>> polarCoordinates = HokuyoUtils::map_laser_scan_to_range_angle_data(msg, parameters);
 
     std::vector<std::vector<int>> accumulator = create_accumulator(parameters);
 
@@ -29,10 +24,6 @@ void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::Con
 
     topnav_msgs::HoughAcc houghMessage = create_hough_message(accumulator);
     hough_space_publisher.publish(houghMessage);
-}
-
-float LaserScanTransceiver::calculateAngle(int lidarAngleIndex) {
-    return parameters.get_angle_min() + lidarAngleIndex * parameters.get_angle_step();
 }
 
 topnav_msgs::HoughAcc LaserScanTransceiver::create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix) {

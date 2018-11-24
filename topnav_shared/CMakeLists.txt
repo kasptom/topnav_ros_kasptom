@@ -102,6 +102,7 @@ find_package(catkin REQUIRED
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES topnav_shared
