@@ -2,7 +2,6 @@
 #include "std_msgs/Empty.h"
 #include "sensor_msgs/LaserScan.h"
 #include "LaserScanTransceiver.h"
-
 #include <gazebo_msgs/SetModelState.h>
 
 int main(int argc, char **argv) {

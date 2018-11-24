@@ -8,7 +8,7 @@ static const int PREVIEW_HEIGHT = 480;
 #include <ros/subscriber.h>
 #include <ros/node_handle.h>
 #include <topnav_msgs/HoughAcc.h>
-#include <LaserParameters.h>
+#include "../../topnav_shared/src/models/LaserParameters.h"
 #include <sensor_msgs/LaserScan.h>
 
 class LinesPreview {

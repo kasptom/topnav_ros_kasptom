@@ -4,9 +4,10 @@
 #include <cstdio>
 #include <rosconsole/macros_generated.h>
 #include <ros/ros.h>
+#include <models/LaserParameters.h>
 #include "hough_lidar.h"
 
-void print_accumulator(std::vector <std::vector<int>> accumulator);
+void print_accumulator(std::vector<std::vector<int>> accumulator);
 
 void update_accumulator(std::pair<double, double> xy_pair, std::vector<std::vector<int>> &accumulator,
                         LaserParameters params);
@@ -15,7 +16,7 @@ bool isNaN(double radius);
 
 double calculateRho(const std::pair<double, double> &xy_pair, double theta);
 
-std::vector <std::vector<int>>
+std::vector<std::vector<int>>
 create_accumulator(LaserParameters parameters) {
     float min_range = parameters.get_range_min();
     float max_range = parameters.get_range_max();
@@ -25,7 +26,7 @@ create_accumulator(LaserParameters parameters) {
     auto rangeBucketsCount = static_cast<int>(std::ceil((max_range - min_range) / range_step));
     auto angleBucketsCount = static_cast<int>(std::ceil(HOUGH_SPACE_THETA_RANGE / angle_step));
 
-    std::vector <std::vector<int>> accumulator;
+    std::vector<std::vector<int>> accumulator;
 
     for (int i = 0; i < rangeBucketsCount; i++) {
         accumulator.emplace_back(angleBucketsCount);
@@ -35,12 +36,12 @@ create_accumulator(LaserParameters parameters) {
 }
 
 void
-update_hough_space_accumulator(const std::vector<std::pair<double, double>> &polarCoordinates,
+update_hough_space_accumulator(const std::vector<AngleRange> &polarCoordinates,
                                std::vector<std::vector<int>> &accumulator,
                                LaserParameters parameters) {
-    for (std::pair<double, double> polarCoord : polarCoordinates) {
-        std::pair<double, double> xy_point = std::make_pair(polarCoord.first * cos(polarCoord.second),
-                                                            polarCoord.first * sin(polarCoord.second));
+    for (AngleRange polarCoord : polarCoordinates) {
+        std::pair<double, double> xy_point = std::make_pair(polarCoord.get_range() * cos(polarCoord.get_angle()),
+                                                            polarCoord.get_range() * sin(polarCoord.get_angle()));
         update_accumulator(xy_point, accumulator, parameters);
 //        ROS_INFO("(%f, %f)", polarCoord.first, polarCoord.second);
 //        ROS_INFO("(%f, %f)", xy_point.first, xy_point.second);
@@ -52,7 +53,7 @@ update_hough_space_accumulator(const std::vector<std::pair<double, double>> &pol
  * @param xy_pair - laser read 2D coordinates
  * @param accumulator - angle and radius matrix (Hough Space)
  */
-void update_accumulator(std::pair<double, double> xy_pair, std::vector <std::vector<int>> &accumulator,
+void update_accumulator(std::pair<double, double> xy_pair, std::vector<std::vector<int>> &accumulator,
                         LaserParameters params) {
     double rho;
     auto steps = static_cast<int>(HOUGH_SPACE_THETA_RANGE / params.get_angle_step());
@@ -79,7 +80,7 @@ double calculateRho(const std::pair<double, double> &xy_pair, double theta) {
 
 bool isNaN(double radius) { return radius != radius; }
 
-void print_accumulator(std::vector <std::vector<int>> accumulator) {
+void print_accumulator(std::vector<std::vector<int>> accumulator) {
     std::stringstream string_stream("", std::ios_base::app | std::ios_base::out);
 
     ROS_INFO("----------------------------------------------------------------------");

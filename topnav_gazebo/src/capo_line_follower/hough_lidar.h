@@ -2,13 +2,12 @@
 #define TOPNAV_GAZEBO_HOUGH_LIDAR_H
 
 #include <vector>
-#include <math.h>
-#include "LaserParameters.h"
+#include <models/AngleRange.h>
 
 static double HOUGH_SPACE_THETA_RANGE = 2 * M_PI;
 
 void
-update_hough_space_accumulator(const std::vector<std::pair<double, double>> &polarCoordinates,
+update_hough_space_accumulator(const std::vector<AngleRange> &polarCoordinates,
                                std::vector<std::vector<int>> &accumulator,
                                LaserParameters parameters);
 

@@ -7,7 +7,7 @@
 #include <sensor_msgs/LaserScan.h>
 #include <topnav_msgs/HoughAcc.h>
 #include <ros/node_handle.h>
-#include <LaserParameters.h>
+#include <models/LaserParameters.h>
 
 static const std::string TOPIC_NAME_LASER_TRANSCEIVER = "/capo/laser/hough"; // NOLINT
 

@@ -124,8 +124,10 @@ include_directories(
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/topnav_shared.cpp
-         src/LaserParameters.h
-         src/LaserParameters.cpp
+         src/models/LaserParameters.h
+         src/models/LaserParameters.cpp
+         src/models/AngleRange.h
+         src/models/AngleRange.cpp
          src/HokuyoUtils.h
          src/HokuyoUtils.cpp
          src/node/PublisherSubscriberNode.cpp

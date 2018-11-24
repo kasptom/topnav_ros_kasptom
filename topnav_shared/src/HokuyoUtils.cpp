@@ -1,6 +1,7 @@
 #include <rosconsole/macros_generated.h>
 #include <ros/ros.h>
 #include "HokuyoUtils.h"
+#include "models/AngleRange.h"
 #include <vector>
 
 LaserParameters HokuyoUtils::read_laser_parameters(const sensor_msgs::LaserScan::ConstPtr &msg) {
@@ -14,17 +15,17 @@ LaserParameters HokuyoUtils::read_laser_parameters(const sensor_msgs::LaserScan:
     return parameters;
 }
 
-std::vector< std::pair<double, double> >
+std::vector<AngleRange>
 HokuyoUtils::map_laser_scan_to_range_angle_data(
-        const sensor_msgs::LaserScan_< std::allocator<void> >::ConstPtr &msg, LaserParameters parameters) {
-    std::vector< std::pair<double, double> > polarCoordinates;
+        const sensor_msgs::LaserScan_<std::allocator<void> >::ConstPtr &msg, LaserParameters parameters) {
+    std::vector<AngleRange> polar_coordinates;
 
     for (int i = 0; i < parameters.get_beam_count(); i++) {
         if (msg->ranges[i] == INFINITY) continue;
 
-        polarCoordinates.emplace_back(msg->ranges[i], HokuyoUtils::calculate_angle(i, parameters));
+        polar_coordinates.push_back(AngleRange(HokuyoUtils::calculate_angle(i, parameters), msg->ranges[i]));
     }
-    return polarCoordinates;
+    return polar_coordinates;
 }
 
 float HokuyoUtils::calculate_angle(int lidar_angle_index, LaserParameters parameters) {

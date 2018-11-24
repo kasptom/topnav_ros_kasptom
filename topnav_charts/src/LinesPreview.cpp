@@ -2,7 +2,6 @@
 #include <ros/ros.h>
 #include <HokuyoUtils.h>
 #include "LinesPreview.h"
-#include "../../topnav_gazebo/src/capo_line_follower/hough_lidar.h"
 
 LinesPreview::LinesPreview() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");

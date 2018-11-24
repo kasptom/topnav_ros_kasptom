@@ -3,7 +3,6 @@
 #include <std_msgs/Empty.h>
 #include "LaserScanTransceiver.h"
 #include "hough_lidar.h"
-#include "../../../topnav_shared/src/HokuyoUtils.h"
 #include <topnav_msgs/TestMessage.h>
 #include <HokuyoUtils.h>
 
@@ -16,7 +15,7 @@ LaserScanTransceiver::LaserScanTransceiver() {
 }
 
 void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
-    std::vector<std::pair<double, double>> polarCoordinates = HokuyoUtils::map_laser_scan_to_range_angle_data(msg, parameters);
+    std::vector<AngleRange> polarCoordinates = HokuyoUtils::map_laser_scan_to_range_angle_data(msg, parameters);
 
     std::vector<std::vector<int>> accumulator = create_accumulator(parameters);
 
