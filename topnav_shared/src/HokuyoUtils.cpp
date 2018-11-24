@@ -23,7 +23,7 @@ HokuyoUtils::map_laser_scan_to_range_angle_data(
     for (int i = 0; i < parameters.get_beam_count(); i++) {
         if (msg->ranges[i] == INFINITY) continue;
 
-        polar_coordinates.push_back(AngleRange(HokuyoUtils::calculate_angle(i, parameters), msg->ranges[i]));
+        polar_coordinates.emplace_back(HokuyoUtils::calculate_angle(i, parameters), msg->ranges[i]);
     }
     return polar_coordinates;
 }

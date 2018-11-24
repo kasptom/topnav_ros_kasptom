@@ -53,6 +53,7 @@ add_message_files(
         HoughAcc.msg
         Marker.msg
         Markers.msg
+        AngleRangesMsg.msg
         TestMessage.msg
 )
 
