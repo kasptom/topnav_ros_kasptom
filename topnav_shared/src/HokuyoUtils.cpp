@@ -21,7 +21,7 @@ HokuyoUtils::map_laser_scan_to_range_angle_data(
     std::vector<AngleRange> polar_coordinates;
 
     for (int i = 0; i < parameters.get_beam_count(); i++) {
-        if (msg->ranges[i] == INFINITY) continue;
+//        if (msg->ranges[i] == INFINITY) continue;
 
         polar_coordinates.emplace_back(HokuyoUtils::calculate_angle(i, parameters), msg->ranges[i]);
     }
