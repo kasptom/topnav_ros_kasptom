@@ -55,6 +55,7 @@ add_message_files(
         Markers.msg
         AngleRangesMsg.msg
         TestMessage.msg
+        TopNavConfigMsg.msg
 )
 
 generate_messages(

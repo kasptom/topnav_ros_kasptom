@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include <HokuyoUtils.h>
 #include "LinesPreview.h"
+#include <constants/topic_names.h>
 
 LinesPreview::LinesPreview() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
@@ -9,6 +10,9 @@ LinesPreview::LinesPreview() {
 
     houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000,
                                                   &LinesPreview::onHoughSpaceAccumulatorUpdated, this);
+    topnavConfigSubscriber = handle.subscribe(TOPIC_NAME_TOPNAV_CONFIG, 1000,
+                                              &LinesPreview::on_configuration_message_received, this);
+
     laserPointsSubscriber = handle.subscribe("/capo/laser/scan", 1000, &LinesPreview::onLaserPointsUpdated, this);
 }
 
@@ -22,16 +26,12 @@ void LinesPreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::C
     size_t cols = msg->accumulator[0].acc_row.size();
     size_t rows = msg->accumulator.size();
 
-    int lineOccurrencesThreshold = 5;    // TODO to constant
     int occurrences = 0;
 
     for (int rho_idx = 0; rho_idx < rows; rho_idx++) {
         for (int theta_idx = 0; theta_idx < cols; theta_idx++) {
             occurrences = msg->accumulator[rho_idx].acc_row[theta_idx];
-            if (occurrences >= lineOccurrencesThreshold) {
-//                ROS_INFO("detected line: rho=%f, theta=%f",
-//                         parameters.get_range_step() * rho_idx,
-//                         360 * parameters.get_angle_step() * theta_idx / HOUGH_SPACE_THETA_RANGE);
+            if (occurrences >= line_detection_votes_threshold) {
                 createLineToDraw(rho_idx, theta_idx);
             }
         }
@@ -83,4 +83,9 @@ void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
 
 std::vector<sf::RectangleShape> LinesPreview::get_points() {
     return points;
+}
+
+void LinesPreview::on_configuration_message_received(const topnav_msgs::TopNavConfigMsg &msg) {
+    line_detection_votes_threshold = msg.line_detection_threshold;
+    ROS_INFO("LinesPreview: line detecion votes threshold changed to: %d", line_detection_votes_threshold);
 }

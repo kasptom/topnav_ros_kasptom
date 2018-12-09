@@ -25,6 +25,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>topnav_msgs</exec_depend>
 
+  <depend>topnav_shared</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
