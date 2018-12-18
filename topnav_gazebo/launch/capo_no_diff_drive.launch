@@ -47,4 +47,6 @@
     <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
 
     <node name="lines_preview" pkg="topnav_charts" type="lines_preview"/>
+
+    <node name="topnav_config_node" pkg="topnav_config" type="topnav_config_node"/>
 </launch>
