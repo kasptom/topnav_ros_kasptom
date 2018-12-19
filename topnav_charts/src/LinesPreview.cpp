@@ -59,7 +59,7 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
 /**
  *
  * @param rho_idx accumulator's row indicating the HoughSpace's rho (distance)
- * @param theta_idx accumulator's column indicating the HoughtSpace's theta (angle)
+ * @param theta_idx accumulator's column indicating the HoughSpace's theta (angle)
  */
 void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
     sf::RectangleShape line(sf::Vector2f(PREVIEW_WIDTH * 2, 2));
