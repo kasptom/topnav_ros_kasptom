@@ -35,16 +35,23 @@ create_accumulator(LaserParameters parameters) {
     return accumulator;
 }
 
+//int counter = 0;
+
 void
 update_hough_space_accumulator(const std::vector<AngleRange> &polarCoordinates,
                                std::vector<std::vector<int>> &accumulator,
                                LaserParameters parameters) {
     for (AngleRange polarCoord : polarCoordinates) {
-        std::pair<double, double> xy_point = std::make_pair(polarCoord.get_range() * cos(polarCoord.get_angle()),
-                                                            polarCoord.get_range() * sin(polarCoord.get_angle()));
+        std::pair<double, double> xy_point = std::make_pair(polarCoord.get_range() * cos(M_PI_2 + polarCoord.get_angle()),
+                                                            polarCoord.get_range() * sin(M_PI_2 + polarCoord.get_angle()));
         update_accumulator(xy_point, accumulator, parameters);
-//        ROS_INFO("(%f, %f)", polarCoord.first, polarCoord.second);
-//        ROS_INFO("(%f, %f)", xy_point.first, xy_point.second);
+
+//        counter = (counter + 1) % 1000;
+
+//        if (counter == 999 && polarCoord.get_range() < INFINITY) {
+//            ROS_INFO("(%05.2f[o], %05.2f)", polarCoord.get_angle() * 180 / M_PI, polarCoord.get_range());
+//            ROS_INFO("(%05.2f, %05.2f)", xy_point.first, xy_point.second);
+//        }
     }
 }
 

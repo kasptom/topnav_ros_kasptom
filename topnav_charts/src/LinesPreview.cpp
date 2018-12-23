@@ -62,23 +62,35 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
  * @param theta_idx accumulator's column indicating the HoughSpace's theta (angle)
  */
 void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
-    sf::RectangleShape line(sf::Vector2f(PREVIEW_WIDTH * 2, 2));
+    sf::RectangleShape line(sf::Vector2f(2, PREVIEW_HEIGHT * 2));
 
     double rho = parameters.get_range_min() + rho_idx * parameters.get_range_step();
     double theta = theta_idx * parameters.get_angle_step();   // radians
 
-    auto x = PREVIEW_WIDTH / 2 + static_cast<int>(PREVIEW_WIDTH / 2.0f * rho * sin(theta) /
-                                                  (parameters.get_range_max() - parameters.get_range_min()));
-    auto y = PREVIEW_HEIGHT / 2 + static_cast<int>(PREVIEW_HEIGHT / 2.0f * rho * cos(theta) /
-                                                   (parameters.get_range_max() - parameters.get_range_min()));
+    float max_range = parameters.get_range_max();
+    float min_range = parameters.get_range_min();
+
+    sf::RectangleShape rhoLine(sf::Vector2f(2, static_cast<float>(PREVIEW_WIDTH / 2.0f * rho / (max_range - min_range))));
+    rhoLine.setFillColor(sf::Color(0, 255, 0));
+    rhoLine.setPosition(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f);
+
+    double x_coords = rho * cos(theta);
+    double y_coords = rho * sin(theta);
+
+    auto x = static_cast<int>(PREVIEW_WIDTH / 2.0f * x_coords /(max_range - min_range));
+    auto y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * y_coords /(max_range - min_range));
     auto rotation = static_cast<int>(theta / M_PI * 180);
 
-    line.setPosition(PREVIEW_WIDTH - x, PREVIEW_HEIGHT - y);
-    line.setOrigin(PREVIEW_WIDTH, 1);
+    rhoLine.setRotation(- rotation - 90.0f);
+
+    ROS_INFO("(%5.2f, %5.2f) theta=%05.2f, rho=%05.2f, x=%d y=%d", x_coords, y_coords, theta * 180 / M_PI, rho, x , y);
+
+    line.setOrigin(1, PREVIEW_HEIGHT);
+    line.setPosition(PREVIEW_WIDTH / 2.0f + x, PREVIEW_HEIGHT / 2.0f - y);
     line.setRotation(-rotation);
-//    ROS_INFO("x=%d y=%d", x, y);
 
     lines.push_back(line);
+    lines.push_back(rhoLine);
 }
 
 std::vector<sf::RectangleShape> LinesPreview::get_points() {
