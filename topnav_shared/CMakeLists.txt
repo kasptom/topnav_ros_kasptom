@@ -133,7 +133,9 @@ include_directories(
          src/node/PublisherSubscriberNode.cpp
          src/node/PublisherSubscriberNode.h
          src/constants/topic_names.h
-         src/topology/FieldOfViewRegion.cpp src/topology/RelativePosition.cpp src/topology/Distance.cpp)
+         src/topology/FieldOfViewRegion.cpp src/topology/RelativePosition.cpp src/topology/Distance.cpp
+         src/FileUtils.cpp
+         src/FileUtils.h)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

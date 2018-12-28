@@ -7,6 +7,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include "ros/ros.h"
 #include "../aruco_model/Marker.h"
+#include <FileUtils.h>
 
 using namespace cv;
 using namespace std;
@@ -89,7 +90,7 @@ ArUcoDetector::~ArUcoDetector() {
 }
 
 bool ArUcoDetector::init(std::string filename) {
-    return ArUcoDetector::readCameraParameters(filename);
+    return ArUcoDetector::readCameraParameters(std::move(filename));
 }
 
 bool ArUcoDetector::readCameraParameters(std::string filename) {
@@ -130,7 +131,12 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
 }
 
 int main(int argc, char **argv) {
-    string cameraConfigFilePath = argc > 1 ? argv[1] : "c930.yaml";
+    string cameraConfigFilePath;
+    if (argc > 1) {
+        cameraConfigFilePath = argv[1];
+    } else {
+        cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
+    }
 
     ROS_INFO("Config file: %s", cameraConfigFilePath.c_str());
 
