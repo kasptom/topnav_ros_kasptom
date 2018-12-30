@@ -3,7 +3,7 @@
 #include <iostream>
 #include <utility>
 #include <ros/init.h>
-#include <topnav_msgs/Markers.h>
+#include <topnav_msgs/MarkersMsg.h>
 #include <constants/topic_names.h>
 
 ArUcoLocator::ArUcoLocator() {
@@ -45,7 +45,7 @@ void ArUcoLocator::init() {
     detecor_subscriber = handle.subscribe(TOPIC_NAME_ARUCO_DETECTION, 1000, &ArUcoLocator::marker_scan_callback, this);
 }
 
-void ArUcoLocator::marker_scan_callback(const topnav_msgs::Markers::ConstPtr &msg) {
+void ArUcoLocator::marker_scan_callback(const topnav_msgs::MarkersMsg::ConstPtr &msg) {
     vector<Marker> markers;
     vector<int> ids;
     vector<vector<Point2f>> allCorners;

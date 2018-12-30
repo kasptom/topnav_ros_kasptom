@@ -23,7 +23,7 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
     }
 
     camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
-    detection_publisher = nodeHandle.advertise<topnav_msgs::Markers>(TOPIC_NAME_ARUCO_DETECTION, 1000);
+    detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
 
 /**
@@ -72,7 +72,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
                         MARKER_LENGTH_METERS * 0.5f);
             }
 
-            topnav_msgs::Markers markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
+            topnav_msgs::MarkersMsg markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
             detection_publisher.publish(markers_msg);
         }
 
@@ -102,13 +102,13 @@ bool ArUcoDetector::readCameraParameters(std::string filename) {
     return true;
 }
 
-topnav_msgs::Markers
+topnav_msgs::MarkersMsg
 ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std::vector<std::vector<cv::Point2f>> corners,
                                                std::vector<cv::Vec3d> rvectors, std::vector<cv::Vec3d> tvectors) {
-    topnav_msgs::Markers markers_msg;
+    topnav_msgs::MarkersMsg markers_msg;
 
     for (int i = 0; i < ar_uco_ids.size(); i++){
-        topnav_msgs::Marker marker;
+        topnav_msgs::MarkerMsg marker;
         marker.id = ar_uco_ids[i];
 
         vector<cv::Point2f> marker_corners = corners[i];

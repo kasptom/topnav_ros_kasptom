@@ -51,8 +51,8 @@ add_message_files(
         FILES
         HoughAccRow.msg
         HoughAcc.msg
-        Marker.msg
-        Markers.msg
+        MarkerMsg.msg
+        MarkersMsg.msg
         AngleRangesMsg.msg
         TestMessage.msg
         TopNavConfigMsg.msg
