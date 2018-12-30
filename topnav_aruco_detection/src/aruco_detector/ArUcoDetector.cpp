@@ -22,7 +22,7 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
-    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
+    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1, &ArUcoDetector::camera_image_callback, this);
     detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
 
@@ -78,6 +78,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
 
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
+        ROS_ERROR("Error during aruco detection");
     }
 
     // Update GUI Window
@@ -134,7 +135,9 @@ int main(int argc, char **argv) {
     string cameraConfigFilePath;
     if (argc > 1) {
         cameraConfigFilePath = argv[1];
-    } else {
+    }
+
+    if (cameraConfigFilePath.find(".yaml") == string::npos) {
         cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
     }
 
