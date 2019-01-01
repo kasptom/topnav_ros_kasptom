@@ -8,6 +8,10 @@
     <arg name="debug" default="false"/>
     <arg name="model" default="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro"/>
     <arg name="world" default="worlds/empty.world"/>
+    <arg name="capo_x" default="0.0"/>
+    <arg name="capo_y" default="0.0"/>
+    <arg name="capo_z" default="1.0"/>
+    <arg name="capo_yaw_rads" default="0.0"/>
 
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -24,7 +28,11 @@
 
     <!-- push robot_description to factory and spawn robot in gazebo -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-          args="-z 1.0 -unpause -urdf -model capo -param robot_description" respawn="false" output="screen" />
+          args="-x $(arg capo_x) -y $(arg capo_y) -z $(arg capo_z) -Y $(arg capo_yaw_rads)
+          -unpause
+          -urdf
+          -model capo
+          -param robot_description" respawn="false" output="screen" />
 
     <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
         <param name="publish_frequency" type="double" value="30.0" />
