@@ -12,7 +12,7 @@
     <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.03 * scale}"/>
     <xacro:property name="wheelWeight" value="${0.15 * scale}" />
     <xacro:property name="headDiam" value="${0.1 * scale}" />
-    <xacro:property name="headHeight" value="${0.04 * scale}" />
+    <xacro:property name="headHeight" value="${0.08 * scale}" />
     <xacro:property name="headWeight" value="${0.2 * scale}" />
     <xacro:property name="cameraWidth" value="${0.095 * scale}" />
     <xacro:property name="cameraHeight" value="${0.03 * scale}" />
