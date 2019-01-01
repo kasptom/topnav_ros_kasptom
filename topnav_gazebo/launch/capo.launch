@@ -35,9 +35,19 @@
 
     <node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>
 
+    <!-- robot steering - at most one option at once -->
+    <!--<node name="capo_controller_spawner" pkg="controller_manager" type="spawner"-->
+          <!--args="capo_joint_state_controller-->
+          <!--capo_head_rotation_controller-->
+          <!--capo_front_left_wheel_controller-->
+          <!--capo_front_right_wheel_controller-->
+          <!--capo_rear_left_wheel_controller-->
+          <!--capo_rear_right_wheel_controller"/>-->
+
     <!--<node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">-->
         <!--<param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>-->
     <!--</node>-->
+    <!-- robot steering -->
 
     <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
     

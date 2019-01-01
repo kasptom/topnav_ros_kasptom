@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <include file="$(find topnav_gazebo)/launch/capo.launch">
+    <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_03_aruco_test.world"/>
+    <arg name="model" value="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro" />
+  </include>
+
+
+  <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>
+  </node>
+</launch>
