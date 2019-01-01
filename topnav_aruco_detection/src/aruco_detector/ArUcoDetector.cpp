@@ -7,6 +7,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include "ros/ros.h"
 #include "../aruco_model/Marker.h"
+#include <FileUtils.h>
 
 using namespace cv;
 using namespace std;
@@ -21,8 +22,8 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
-    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1000, &ArUcoDetector::camera_image_callback, this);
-    detection_publisher = nodeHandle.advertise<topnav_msgs::Markers>(TOPIC_NAME_ARUCO_DETECTION, 1000);
+    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1, &ArUcoDetector::camera_image_callback, this);
+    detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
 
 /**
@@ -71,12 +72,13 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
                         MARKER_LENGTH_METERS * 0.5f);
             }
 
-            topnav_msgs::Markers markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
+            topnav_msgs::MarkersMsg markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
             detection_publisher.publish(markers_msg);
         }
 
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
+        ROS_ERROR("Error during aruco detection");
     }
 
     // Update GUI Window
@@ -89,7 +91,7 @@ ArUcoDetector::~ArUcoDetector() {
 }
 
 bool ArUcoDetector::init(std::string filename) {
-    return ArUcoDetector::readCameraParameters(filename);
+    return ArUcoDetector::readCameraParameters(std::move(filename));
 }
 
 bool ArUcoDetector::readCameraParameters(std::string filename) {
@@ -101,13 +103,13 @@ bool ArUcoDetector::readCameraParameters(std::string filename) {
     return true;
 }
 
-topnav_msgs::Markers
+topnav_msgs::MarkersMsg
 ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std::vector<std::vector<cv::Point2f>> corners,
                                                std::vector<cv::Vec3d> rvectors, std::vector<cv::Vec3d> tvectors) {
-    topnav_msgs::Markers markers_msg;
+    topnav_msgs::MarkersMsg markers_msg;
 
     for (int i = 0; i < ar_uco_ids.size(); i++){
-        topnav_msgs::Marker marker;
+        topnav_msgs::MarkerMsg marker;
         marker.id = ar_uco_ids[i];
 
         vector<cv::Point2f> marker_corners = corners[i];
@@ -130,7 +132,14 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
 }
 
 int main(int argc, char **argv) {
-    string cameraConfigFilePath = argc > 1 ? argv[1] : "c930.yaml";
+    string cameraConfigFilePath;
+    if (argc > 1) {
+        cameraConfigFilePath = argv[1];
+    }
+
+    if (cameraConfigFilePath.find(".yaml") == string::npos) {
+        cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
+    }
 
     ROS_INFO("Config file: %s", cameraConfigFilePath.c_str());
 

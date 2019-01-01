@@ -7,9 +7,12 @@
 #include <sensor_msgs/LaserScan.h>
 #include <topnav_msgs/HoughAcc.h>
 #include <ros/node_handle.h>
-#include <LaserParameters.h>
+#include <models/LaserParameters.h>
+#include <topnav_msgs/AngleRangesMsg.h>
+#include <models/AngleRange.h>
 
-static const std::string TOPIC_NAME_LASER_TRANSCEIVER = "/capo/laser/hough"; // NOLINT
+static const std::string TOPIC_NAME_LASER_HOUGH = "/capo/laser/hough"; // NOLINT
+static const std::string TOPIC_NAME_LASER_ANGLE_RANGE = "/capo/laser/angle_range"; // NOLINT
 
 class LaserScanTransceiver {
 public:
@@ -20,12 +23,14 @@ public:
 private:
     ros::NodeHandle handle;
     ros::Publisher hough_space_publisher;
+    ros::Publisher angle_range_lidar_publisher;
     ros::Subscriber laser_scan_subscriber;
     LaserParameters parameters = LaserParameters(0, 0, 0, 0, 0);
 
     topnav_msgs::HoughAcc create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix);
 
-    float calculateAngle(int lidarAngleIndex);
+    topnav_msgs::AngleRangesMsg_<std::allocator<void>>
+    create_angle_range_message(std::vector<AngleRange> polar_coordinates);
 };
 
 

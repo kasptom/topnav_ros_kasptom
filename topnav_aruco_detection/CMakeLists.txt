@@ -9,13 +9,15 @@ find_package(catkin REQUIRED COMPONENTS
         cv_bridge
         image_transport
         topnav_msgs
+        topnav_shared
 )
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES topnav_aruco_detection
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+        #  INCLUDE_DIRS include
+        #  LIBRARIES topnav_aruco_detection
+        CATKIN_DEPENDS
+        topnav_shared
+        #  DEPENDS system_lib
 )
 
 

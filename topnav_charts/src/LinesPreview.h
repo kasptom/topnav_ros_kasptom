@@ -8,7 +8,8 @@ static const int PREVIEW_HEIGHT = 480;
 #include <ros/subscriber.h>
 #include <ros/node_handle.h>
 #include <topnav_msgs/HoughAcc.h>
-#include <LaserParameters.h>
+#include <topnav_msgs/TopNavConfigMsg.h>
+#include "../../topnav_shared/src/models/LaserParameters.h"
 #include <sensor_msgs/LaserScan.h>
 
 class LinesPreview {
@@ -20,14 +21,21 @@ public:
 
     void onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::ConstPtr &msg);
 
+    void on_configuration_message_received(const topnav_msgs::TopNavConfigMsg &msg);
+
     void onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &msg);
 
 private:
     ros::Subscriber houghAccumulatorSubscriber;
+    ros::Subscriber topnavConfigSubscriber;
     ros::Subscriber laserPointsSubscriber;
     ros::NodeHandle handle;
     std::vector<sf::RectangleShape> lines;
     std::vector<sf::RectangleShape> points;
+
+    int line_detection_votes_threshold = 5;
+
+private:
 
     void createLineToDraw(int rho_idx, int theta_idx);
 

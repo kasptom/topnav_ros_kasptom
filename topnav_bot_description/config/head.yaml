@@ -1,2 +1,14 @@
 type: "position_controllers/JointPositionController"
 joint: head_swivel
+
+#type: "position_controllers/JointTrajectoryController"
+#joints:
+#  - head_swivel
+#
+#constraints:
+#  goal_time: 0.5
+#  head_swivel:
+#    goal:       0.01
+#    trajectory: 0.05
+#stop_trajectory_duration: 0.0
+#state_publish_rate: 100

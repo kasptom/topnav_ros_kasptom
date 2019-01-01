@@ -3,8 +3,6 @@
 
 #include <opencv2/aruco.hpp>
 
-static const std::string TOPIC_NAME_ARUCO_DETECTION = "/capo/camera/aruco"; // NOLINT
-
 using namespace cv;
 using namespace std;
 

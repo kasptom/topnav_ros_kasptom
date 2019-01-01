@@ -10,7 +10,12 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "hough_lines_preview");
     LinesPreview preview;
 
-    ros::Rate rate(100);    // milliseconds
+
+    int loopFrequencyHz = 50;
+
+    ROS_INFO("publishing with %d [Hz] frequency", loopFrequencyHz);
+
+    ros::Rate rate(loopFrequencyHz); // Hz
 
     while (window.isOpen()) {
         sf::Event event{};

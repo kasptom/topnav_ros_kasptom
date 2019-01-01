@@ -1,0 +1,2 @@
+type: "velocity_controllers/JointVelocityController"
+joint: rear_right_wheel_joint

@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
     <model name="ar_{{id}}">
+        <pose> 0 0 0.5 1.57 0 0</pose>
         <static>1</static>
         <link name="link">
-            <pose> 0 0 0 0 0 0</pose>
+            <pose> 0 0 0 0 0 1.57</pose>
             <inertial>
                 <mass>0.390</mass>
                 <inertia>

@@ -102,6 +102,7 @@ find_package(catkin REQUIRED
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES topnav_shared
@@ -123,11 +124,18 @@ include_directories(
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/topnav_shared.cpp
-         src/LaserParameters.h
-         src/LaserParameters.cpp
+         src/models/LaserParameters.h
+         src/models/LaserParameters.cpp
+         src/models/AngleRange.h
+         src/models/AngleRange.cpp
          src/HokuyoUtils.h
          src/HokuyoUtils.cpp
- )
+         src/node/PublisherSubscriberNode.cpp
+         src/node/PublisherSubscriberNode.h
+         src/constants/topic_names.h
+         src/topology/FieldOfViewRegion.cpp src/topology/RelativePosition.cpp src/topology/Distance.cpp
+         src/FileUtils.cpp
+         src/FileUtils.h)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
