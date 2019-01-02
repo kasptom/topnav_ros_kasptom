@@ -5,4 +5,10 @@
     <arg name="model" value="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro" />
   </include>
 
+  <!-- At most one option  -->
+  <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
+  <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
+
+  <node name="hough_lines_preview" pkg="topnav_charts" type="lines_preview"/>
+
 </launch>

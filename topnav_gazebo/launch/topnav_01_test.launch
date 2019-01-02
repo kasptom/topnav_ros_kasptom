@@ -9,26 +9,12 @@
         <arg name="capo_yaw_rads" value="1.57"/>
     </include>
 
-    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-        <param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>
-    </node>
-
     <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
 
     <node name="lines_preview" pkg="topnav_charts" type="lines_preview"/>
 
-    <!-- robot steering - at most one option at once -->
-    <node name="capo_controller_spawner" pkg="controller_manager" type="spawner"
-    args="capo_joint_state_controller
-    capo_head_rotation_controller
-    capo_front_left_wheel_controller
-    capo_front_right_wheel_controller
-    capo_rear_left_wheel_controller
-    capo_rear_right_wheel_controller"/>
-
-    <!--<node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">-->
-    <!--<param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>-->
-    <!--</node>-->
-    <!-- robot steering -->
+    <!-- At most one option  -->
+    <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
+    <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
 
 </launch>

@@ -1,0 +1,35 @@
+<launch>
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/joints.yaml"
+              ns="capo_joint_state_controller"/>
+
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/head.yaml"
+              ns="capo_head_rotation_controller"/>
+
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/front_left_wheel_controller.yaml"
+              ns="capo_front_left_wheel_controller"/>
+
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/front_right_wheel_controller.yaml"
+              ns="capo_front_right_wheel_controller"/>
+
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/rear_left_wheel_controller.yaml"
+              ns="capo_rear_left_wheel_controller"/>
+
+    <rosparam command="load"
+              file="$(find topnav_bot_description)/config/rear_right_wheel_controller.yaml"
+              ns="capo_rear_right_wheel_controller"/>
+
+
+    <node name="capo_controller_spawner" pkg="controller_manager" type="spawner"
+          args="capo_joint_state_controller
+          capo_diff_drive_controller
+          capo_head_rotation_controller"/>
+
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/capo_diff_drive_controller/cmd_vel"/>
+    </node>
+</launch>
