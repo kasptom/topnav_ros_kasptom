@@ -9,7 +9,6 @@
 #include <topnav_msgs/MarkersMsg.h>
 
 using namespace cv;
-static const float MARKER_LENGTH_METERS = 0.17;
 
 class ArUcoLocator {
 public:
@@ -27,9 +26,10 @@ public:
      */
     void printLocation(Vec3d location);
 
+    static Mat calculatePosition(const Vec3d &rotation, const Vec3d &translation, double* distance);
+
 private:
     void init();
-    Mat calculatePosition(const Vec3d &rotation, const Vec3d &translation, double* distance) const;
 
     void marker_scan_callback(const boost::shared_ptr<const topnav_msgs::MarkersMsg_ <allocator<void>>> &msg);
 };

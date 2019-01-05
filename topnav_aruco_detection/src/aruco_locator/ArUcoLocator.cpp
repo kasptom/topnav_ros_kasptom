@@ -25,7 +25,7 @@ Vec3d ArUcoLocator::retrieveMarkerReferenceFrameLocation(Marker marker, double *
 }
 
 Mat
-ArUcoLocator::calculatePosition(const Vec3d &rotation, const Vec3d &translation, double *distance) const {
+ArUcoLocator::calculatePosition(const Vec3d &rotation, const Vec3d &translation, double *distance) {
     Mat R;
     Rodrigues(rotation, R);
     Mat cameraPosition = -R.t() * Mat(translation);
@@ -74,12 +74,4 @@ void ArUcoLocator::marker_scan_callback(const topnav_msgs::MarkersMsg::ConstPtr 
         Vec3d location = retrieveMarkerReferenceFrameLocation(marker);
         printLocation(location);
     }
-}
-
-
-int main(int argc, char **argv) {
-    ros::init(argc, argv, "aruco_locator");
-    ArUcoLocator locator;
-    ros::spin();
-    return 0;
 }

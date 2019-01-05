@@ -33,15 +33,8 @@ include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 add_executable(aruco_detector
         src/aruco_detector/ArUcoDetector.h
         src/aruco_detector/ArUcoDetector.cpp
-        src/aruco_model/Marker.h
-        src/aruco_model/Marker.cpp)
-target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})
-
-add_executable(aruco_locator
         src/aruco_locator/ArUcoLocator.h
         src/aruco_locator/ArUcoLocator.cpp
         src/aruco_model/Marker.h
         src/aruco_model/Marker.cpp)
-target_link_libraries(aruco_locator ${catkin_LIBRARIES} ${OpenCV_LIBS})
-
-
+target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})

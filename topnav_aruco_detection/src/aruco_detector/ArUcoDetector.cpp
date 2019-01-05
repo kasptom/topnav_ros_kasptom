@@ -7,6 +7,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include "ros/ros.h"
 #include "../aruco_model/Marker.h"
+#include "../aruco_locator/ArUcoLocator.h"
 #include <FileUtils.h>
 
 using namespace cv;
@@ -112,11 +113,15 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
         topnav_msgs::MarkerMsg marker;
         marker.id = ar_uco_ids[i];
 
+        double distance;
+        Vec3d camera_position = ArUcoLocator::calculatePosition(rvectors[i], tvectors[i], &distance);
+
         vector<cv::Point2f> marker_corners = corners[i];
         for (int j = 0; j < 3; j++)
         {
             marker.rotation.push_back(rvectors[i][j]);
             marker.translation.push_back(tvectors[i][j]);
+            marker.camera_position.push_back(camera_position[j]);
         }
 
         for (int j = 0; j < 4; j++)
