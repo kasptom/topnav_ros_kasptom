@@ -6,7 +6,9 @@
         <sensor type="camera" name="camera1">
             <update_rate>30.0</update_rate>
             <camera name="head">
-                <horizontal_fov>1.3962634</horizontal_fov>
+                <!--<horizontal_fov>1.3962634</horizontal_fov>-->
+                <!-- FIXME this is not the FOV which complies with the c930 camera but works better with ArUco (why?)-->
+                <horizontal_fov>1.03</horizontal_fov>
                 <image>
                     <width>640</width>
                     <height>480</height>
