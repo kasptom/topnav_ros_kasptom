@@ -54,6 +54,9 @@ add_message_files(
         MarkerMsg.msg
         MarkersMsg.msg
         AngleRangesMsg.msg
+        GuidelineMsg.msg
+        FeedbackMsg.msg
+        TopologyMsg.msg
         TestMessage.msg
         TopNavConfigMsg.msg
 )

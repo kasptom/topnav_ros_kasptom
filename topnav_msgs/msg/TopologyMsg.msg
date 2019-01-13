@@ -1,0 +1,5 @@
+time timestamp
+string identity
+string relative_alignment
+string relative_direction
+string relative_distance
