@@ -4,7 +4,7 @@
 
     <gazebo reference="camera_link">
         <sensor type="camera" name="camera1">
-            <update_rate>30.0</update_rate>
+            <update_rate>10.0</update_rate>
             <camera name="head">
                 <!--<horizontal_fov>1.3962634</horizontal_fov>-->
                 <!-- FIXME this is not the FOV which complies with the c930 camera but works better with ArUco (why?)-->

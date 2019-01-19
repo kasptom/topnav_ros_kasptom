@@ -73,9 +73,10 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
                         MARKER_LENGTH_METERS * 0.5f);
             }
 
-            topnav_msgs::MarkersMsg markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
-            detection_publisher.publish(markers_msg);
         }
+
+        topnav_msgs::MarkersMsg markers_msg = ArUcoDetector::create_marker_detection_message(ids, corners, rVectors, tVectors);
+        detection_publisher.publish(markers_msg);
 
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
@@ -152,4 +153,17 @@ int main(int argc, char **argv) {
     ArUcoDetector detector(cameraConfigFilePath);
     ros::spin();
     return 0;
+//    // ---
+//
+//    int loopFrequencyHz = 30;
+//
+//    ROS_INFO("publishing with %d [Hz] frequency", loopFrequencyHz);
+//
+//    ros::Rate rate(loopFrequencyHz); // Hz
+//
+//    while (!ros::isShuttingDown()) {
+//        ros::spinOnce();
+//        rate.sleep();
+//    }
+//    // ---
 }
