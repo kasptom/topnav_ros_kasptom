@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot name="capo" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find topnav_bot_description)/urdf/materials.xacro" />
+
     <xacro:property name="scale" value="1.0" />
     <xacro:property name="caseWidth" value="${0.2032 * scale}" />
     <xacro:property name="caseLength" value="${0.24765 * scale}" />
@@ -23,21 +25,6 @@
     <xacro:property name="laserSamplesCount" value="61"/>
     <xacro:property name="laserMinAngle" value="${-2*pi/3}"/>
     <xacro:property name="laserMaxAngle" value="${2*pi/3}"/>
-
-
-
-    <material name="gray">
-        <color rgba="0.5 0.5 0.5 1"/>
-    </material>
-    <material name="black">
-        <color rgba="0 0 0 1"/>
-    </material>
-    <material name="white">
-        <color rgba="1 1 1 1"/>
-    </material>
-    <material name="green">
-        <color rgba="0 1 0 1"/>
-    </material>
 
     <xacro:macro name="default_inertial" params="mass">
         <inertial>
@@ -93,7 +80,7 @@
         <mu2 value="100.0"/>
         <kp value="1000000.0" />
         <kd value="1.0" />
-        <material>Gazebo/Gray</material>
+        <material>Gazebo/Grey</material>
     </gazebo>
     <!-- /head -->
 

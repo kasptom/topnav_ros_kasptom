@@ -42,5 +42,6 @@
                 <distortionT2>3.9927076218923579e-01</distortionT2>
             </plugin>
         </sensor>
+        <material>Gazebo/Black</material>
     </gazebo>
 </robot>

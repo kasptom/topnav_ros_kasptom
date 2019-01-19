@@ -8,7 +8,7 @@
             <geometry>
                 <cylinder length="${headHeight}" radius="${headDiam/2}"/>
             </geometry>
-            <material name="gray"/>
+            <!--<material name="gray"/>-->
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
