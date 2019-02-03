@@ -14,6 +14,10 @@ void ConfigNode::on_configuration_changed(topnav_config::topnavConfig &config, u
 topnav_msgs::TopNavConfigMsg ConfigNode::create_config_message(topnav_config::topnavConfig &config) {
     topnav_msgs::TopNavConfigMsg message;
     message.line_detection_threshold = config.line_detection_threshold;
+    message.prop_coeff_angle = config.pd_Kp_ang;
+    message.deriv_coeff_angle = config.pd_Kd_ang;
+    message.prop_coeff_dist = config.pd_Kp_dst;
+    message.deriv_coeff_dist = config.pd_Kd_dst;
     return message;
 }
 
