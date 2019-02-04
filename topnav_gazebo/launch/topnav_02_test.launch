@@ -11,4 +11,6 @@
 
   <node name="hough_lines_preview" pkg="topnav_charts" type="lines_preview"/>
 
+  <note name="topnav_config_node_test_2" pkg="topnav_config" type="topnav_config_node" />
+
 </launch>
