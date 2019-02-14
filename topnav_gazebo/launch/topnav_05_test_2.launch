@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <include file="$(find topnav_gazebo)/launch/capo.launch">
+        <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
+        <arg name="model" value="$(find topnav_bot_description)/urdf/capo/capo.urdf.xacro"/>
+        <arg name="capo_x" value="0.35"/>
+        <arg name="capo_y" value="2.3"/>
+        <arg name="capo_z" value="1.0"/>
+        <arg name="capo_yaw_rads" value="1.57"/>
+    </include>
+
+    <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
+
+    <node name="lines_preview" pkg="topnav_charts" type="lines_preview"/>
+
+    <!-- At most one option  -->
+    <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
+    <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
+
+    <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+</launch>
