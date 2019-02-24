@@ -48,10 +48,10 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
         x = (range * std::cos(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH / 2;
         y = (range * std::sin(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT / 2;
 
-        sf::RectangleShape point(sf::Vector2f(10, 10));
+        sf::RectangleShape point(sf::Vector2f(POINT_SIZE_PX, POINT_SIZE_PX));
         point.setFillColor(sf::Color(255, 0, 0, 255));
         point.setPosition(-y, -x);
-        point.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f));
+        point.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f - POINT_SIZE_PX / 2.0f, PREVIEW_HEIGHT / 2.0f - POINT_SIZE_PX / 2.0f));
         points.push_back(point);
     }
 }

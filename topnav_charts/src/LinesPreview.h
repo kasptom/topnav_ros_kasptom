@@ -3,6 +3,7 @@
 
 static const int PREVIEW_WIDTH = 480;
 static const int PREVIEW_HEIGHT = 480;
+static const int POINT_SIZE_PX = 10;
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <ros/subscriber.h>
