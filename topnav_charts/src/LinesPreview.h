@@ -1,8 +1,8 @@
 #ifndef TOPNAV_GAZEBO_LINESPREVIEW_H
 #define TOPNAV_GAZEBO_LINESPREVIEW_H
 
-static const int PREVIEW_WIDTH = 480;
-static const int PREVIEW_HEIGHT = 480;
+static const int LIDAR_PREVIEW_WIDTH = 480;
+static const int LIDAR_PREVIEW_HEIGHT = 480;
 static const int POINT_SIZE_PX = 10;
 
 #include <SFML/Graphics/RectangleShape.hpp>

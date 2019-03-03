@@ -8,8 +8,8 @@ HoughSpacePreview::HoughSpacePreview() {
 
 void HoughSpacePreview::onHoughSpaceAccumulatorUpdated(const topnav_msgs::HoughAcc::ConstPtr &msg) {
     grid.clear();
-    float tile_height = PREVIEW_HEIGHT / (float) msg->accumulator.size();
-    float tile_width = PREVIEW_WIDTH / (float) msg->accumulator[0].acc_row.size();
+    float tile_height = LIDAR_PREVIEW_HEIGHT / (float) msg->accumulator.size();
+    float tile_width = LIDAR_PREVIEW_WIDTH / (float) msg->accumulator[0].acc_row.size();
 
     size_t cols = msg->accumulator[0].acc_row.size();
     size_t rows = msg->accumulator.size();

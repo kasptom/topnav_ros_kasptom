@@ -6,7 +6,7 @@
 #include "LinesPreview.h"
 
 int main(int argc, char **argv) {
-    sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "Points & Lines Preview");
+    sf::RenderWindow window(sf::VideoMode(LIDAR_PREVIEW_WIDTH, LIDAR_PREVIEW_HEIGHT), "Points & Lines Preview");
     ros::init(argc, argv, "hough_lines_preview");
     LinesPreview preview;
 

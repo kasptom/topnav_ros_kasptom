@@ -3,7 +3,7 @@
 
 
 int main(int argc, char **argv) {
-    sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "Hough Space Preview");
+    sf::RenderWindow window(sf::VideoMode(LIDAR_PREVIEW_WIDTH, LIDAR_PREVIEW_HEIGHT), "Hough Space Preview");
     ros::init(argc, argv, "houg_lines_preview");
     HoughSpacePreview preview;
 

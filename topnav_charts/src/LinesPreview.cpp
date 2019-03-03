@@ -45,13 +45,13 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
     for (int i = 0; i < msg->ranges.size(); i++) {
         angle = msg->angle_min + msg->angle_increment * i;
         range = msg->ranges[i];
-        x = (range * std::cos(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_WIDTH / 2;
-        y = (range * std::sin(angle) - msg->range_min) / (msg->range_max - msg->range_min) * PREVIEW_HEIGHT / 2;
+        x = (range * std::cos(angle) - msg->range_min) / (msg->range_max - msg->range_min) * LIDAR_PREVIEW_WIDTH / 2;
+        y = (range * std::sin(angle) - msg->range_min) / (msg->range_max - msg->range_min) * LIDAR_PREVIEW_HEIGHT / 2;
 
         sf::RectangleShape point(sf::Vector2f(POINT_SIZE_PX, POINT_SIZE_PX));
         point.setFillColor(sf::Color(255, 0, 0, 255));
         point.setPosition(-y, -x);
-        point.move(sf::Vector2f(PREVIEW_WIDTH / 2.0f - POINT_SIZE_PX / 2.0f, PREVIEW_HEIGHT / 2.0f - POINT_SIZE_PX / 2.0f));
+        point.move(sf::Vector2f(LIDAR_PREVIEW_WIDTH / 2.0f - POINT_SIZE_PX / 2.0f, LIDAR_PREVIEW_HEIGHT / 2.0f - POINT_SIZE_PX / 2.0f));
         points.push_back(point);
     }
 }
@@ -62,7 +62,7 @@ void LinesPreview::onLaserPointsUpdated(const sensor_msgs::LaserScan::ConstPtr &
  * @param theta_idx accumulator's column indicating the HoughSpace's theta (angle)
  */
 void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
-    sf::RectangleShape line(sf::Vector2f(2, PREVIEW_HEIGHT * 2));
+    sf::RectangleShape line(sf::Vector2f(2, LIDAR_PREVIEW_HEIGHT * 2));
 
     double rho = parameters.get_range_min() + rho_idx * parameters.get_range_step();
     double theta = theta_idx * parameters.get_angle_step();   // radians
@@ -70,23 +70,23 @@ void LinesPreview::createLineToDraw(int rho_idx, int theta_idx) {
     float max_range = parameters.get_range_max();
     float min_range = parameters.get_range_min();
 
-    sf::RectangleShape rhoLine(sf::Vector2f(2, static_cast<float>(PREVIEW_WIDTH / 2.0f * rho / (max_range - min_range))));
+    sf::RectangleShape rhoLine(sf::Vector2f(2, static_cast<float>(LIDAR_PREVIEW_WIDTH / 2.0f * rho / (max_range - min_range))));
     rhoLine.setFillColor(sf::Color(0, 255, 0));
-    rhoLine.setPosition(PREVIEW_WIDTH / 2.0f, PREVIEW_HEIGHT / 2.0f);
+    rhoLine.setPosition(LIDAR_PREVIEW_WIDTH / 2.0f, LIDAR_PREVIEW_HEIGHT / 2.0f);
 
     double x_coords = rho * cos(theta);
     double y_coords = rho * sin(theta);
 
-    auto x = static_cast<int>(PREVIEW_WIDTH / 2.0f * x_coords /(max_range - min_range));
-    auto y = static_cast<int>(PREVIEW_HEIGHT / 2.0f * y_coords /(max_range - min_range));
+    auto x = static_cast<int>(LIDAR_PREVIEW_WIDTH / 2.0f * x_coords /(max_range - min_range));
+    auto y = static_cast<int>(LIDAR_PREVIEW_HEIGHT / 2.0f * y_coords /(max_range - min_range));
     auto rotation = static_cast<int>(theta / M_PI * 180);
 
     rhoLine.setRotation(- rotation - 90.0f);
 
     ROS_INFO("(%5.2f, %5.2f) theta=%05.2f, rho=%05.2f, x=%d y=%d", x_coords, y_coords, theta * 180 / M_PI, rho, x , y);
 
-    line.setOrigin(1, PREVIEW_HEIGHT);
-    line.setPosition(PREVIEW_WIDTH / 2.0f + x, PREVIEW_HEIGHT / 2.0f - y);
+    line.setOrigin(1, LIDAR_PREVIEW_HEIGHT);
+    line.setPosition(LIDAR_PREVIEW_WIDTH / 2.0f + x, LIDAR_PREVIEW_HEIGHT / 2.0f - y);
     line.setRotation(-rotation);
 
     lines.push_back(line);

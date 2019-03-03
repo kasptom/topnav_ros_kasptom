@@ -16,11 +16,11 @@ public:
     float width, height;
 
     RectangleParams() {
-        height = PREVIEW_HEIGHT / 2.0f;
+        height = LIDAR_PREVIEW_HEIGHT / 2.0f;
         width = 10;
 
-        pos_x = PREVIEW_WIDTH / 2.0f;
-        pos_y = PREVIEW_HEIGHT / 2.0f;
+        pos_x = LIDAR_PREVIEW_WIDTH / 2.0f;
+        pos_y = LIDAR_PREVIEW_HEIGHT / 2.0f;
         org_x = width / 2;  //half of the rectangle height
         org_y = height / 2;
         rotation = 0;
@@ -37,7 +37,7 @@ std::atomic<bool> isRunning(true);
 RectangleParams params;
 
 void draw_rectangle() {
-    sf::RenderWindow window(sf::VideoMode(PREVIEW_WIDTH, PREVIEW_HEIGHT), "SFML test");
+    sf::RenderWindow window(sf::VideoMode(LIDAR_PREVIEW_WIDTH, LIDAR_PREVIEW_HEIGHT), "SFML test");
 
     sf::RectangleShape rectangleShape(sf::Vector2f(params.width, params.height));
 
