@@ -26,6 +26,9 @@
                     <mean>0.0</mean>
                     <stddev>0.007</stddev>
                 </noise>
+
+                <!-- rotate camera x y z roll pitch yaw, approx 15 degrees up -->
+                <pose>0 0 0 0 -0.261799388 0</pose>
             </camera>
             <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                 <alwaysOn>true</alwaysOn>
