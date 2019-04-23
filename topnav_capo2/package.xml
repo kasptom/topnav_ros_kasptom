@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>topnav_capo2</name>
+  <version>0.0.0</version>
+  <description>The topnav_capo2 package</description>
+
+  <maintainer email="kasptom@gmail.com">kasptom</maintainer>
+  <license>MIT</license>
+
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/topnav_gazebo</url> -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>diff_drive_controller</exec_depend>
+  <!--<exec_depend>gazebo_ros</exec_depend>-->
+  <!--<exec_depend>gazebo_ros_control</exec_depend>-->
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>position_controllers</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rqt_robot_steering</exec_depend>
+  <!--<exec_depend>rviz</exec_depend>-->
+  <!--<exec_depend>xacro</exec_depend>-->
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <!-- msg and srv -->
+  <build_depend>message_generation</build_depend>
+
+  <!-- gazebo services call -->
+  <!--<build_depend>gazebo_msgs</build_depend>-->
+  <!--<build_depend>gazebo</build_depend>-->
+
+  <build_depend>topnav_msgs</build_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <!-- msg and srv -->
+  <exec_depend>message_runtime</exec_depend>
+
+  <!-- gazebo services call -->
+  <!--<exec_depend>gazebo_msgs</exec_depend>-->
+  <!--<exec_depend>gazebo</exec_depend>-->
+
+  <exec_depend>topnav_msgs</exec_depend>
+
+  <depend>topnav_shared</depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+  </export>
+</package>
