@@ -12,8 +12,8 @@ class MaestroWheelsDriver:
         self._initialize_servo()
 
     def set_velocity(self, left_wheel, right_wheel):
-        left_wheel_target = left_wheel * 400 + self.left_mid
-        right_wheel_target = right_wheel * 400 + self.right_mid
+        left_wheel_target = int(left_wheel * 400 + self.left_mid)
+        right_wheel_target = int(right_wheel * 400 + self.right_mid)
 
         left_wheel_target = self.left_min if left_wheel_target < self.left_min else left_wheel_target
         right_wheel_target = self.right_min if right_wheel_target < self.right_min else right_wheel_target
