@@ -2,7 +2,7 @@
 import rospy
 
 from driver.maestro.wheels_driver import MaestroWheelsDriver
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 
 FRONT_LEFT_WHEEL_TOPIC = "/capo_front_left_wheel_controller/command"
 FRONT_RIGHT_WHEEL_TOPIC = "/capo_front_right_wheel_controller/command"
@@ -18,9 +18,9 @@ class CapoWheelsController:
         self.right_wheel_velocity = 0.0
 
         self.driver = MaestroWheelsDriver()
-        self.left_wheel_subscriber = rospy.Subscriber(FRONT_LEFT_WHEEL_TOPIC, Float32, queue_size=1,
+        self.left_wheel_subscriber = rospy.Subscriber(FRONT_LEFT_WHEEL_TOPIC, Float64, queue_size=1,
                                                       callback=self.set_left_velocity)
-        self.right_wheel_subscriber = rospy.Subscriber(FRONT_RIGHT_WHEEL_TOPIC, Float32, queue_size=1,
+        self.right_wheel_subscriber = rospy.Subscriber(FRONT_RIGHT_WHEEL_TOPIC, Float64, queue_size=1,
                                                        callback=self.set_right_velocity)
 
     def start(self):
