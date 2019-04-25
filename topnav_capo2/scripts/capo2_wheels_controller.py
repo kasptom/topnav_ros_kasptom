@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import rospy
 
 from driver.maestro.wheels_driver import MaestroWheelsDriver
