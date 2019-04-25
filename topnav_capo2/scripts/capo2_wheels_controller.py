@@ -28,11 +28,11 @@ class CapoWheelsController:
         rospy.spin()
 
     def set_left_velocity(self, value):
-        self.left_wheel_velocity = value
+        self.left_wheel_velocity = value.data
         self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
 
     def set_right_velocity(self, value):
-        self.right_wheel_velocity = value
+        self.right_wheel_velocity = value.data
         self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
 
 
