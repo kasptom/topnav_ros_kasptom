@@ -4,5 +4,10 @@
             type="capo2_camera_publisher.py"
             respawn="false" output="screen"/>
 
+    <node name="capo2_wheels_controller"
+            pkg="topnav_capo2"
+            type="capo2_wheels_controller.py"
+            respawn="false" output="screen"/>
+
     <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
 </launch>
