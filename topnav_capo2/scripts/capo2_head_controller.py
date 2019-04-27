@@ -33,8 +33,8 @@ class HeadController:
 
     def set_head_rotation(self, value):
         self.driver.set_head_rotation(value.data)
-        # rospy.loginfo("left vel: %.2f" % self.driver.get_head_rotation())
-        print("left vel: %.2f" % self.driver.get_head_rotation())
+        # rospy.loginfo("head rotation: %.2f" % self.driver.get_head_rotation())
+        print("head rotation: %.2f" % self.driver.get_head_rotation())
 
     @staticmethod
     def _create_joint_state_messsage(head_rotation):
