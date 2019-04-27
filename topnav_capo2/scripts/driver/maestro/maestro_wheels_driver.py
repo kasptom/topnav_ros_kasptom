@@ -1,7 +1,8 @@
 import maestro
+from driver.interface_wheels_driver import IWheelsDriver
 
 
-class MaestroWheelsDriver:
+class MaestroWheelsDriver(IWheelsDriver):
     def __init__(self, left_min=4000, left_mid=6000, left_max=8000, right_min=4000, right_mid=6000, right_max=8000):
         self.right_max = right_max
         self.right_mid = right_mid
@@ -30,11 +31,11 @@ class MaestroWheelsDriver:
         self._servo.setTarget(0, left_wheel_target)
         self._servo.setTarget(1, right_wheel_target)
 
-    def _initialize_servo(self):
-        self._servo = maestro.Controller()
-
     def stop_wheels(self):
         self.set_velocity(0, 0)
 
     def stop_driver(self):
         self._servo.close()
+
+    def _initialize_servo(self):
+        self._servo = maestro.Controller()
