@@ -3,10 +3,8 @@ import rospy
 from std_msgs.msg import Float64, Header
 from sensor_msgs.msg import JointState
 
+from constants.topic_names import HEAD_JOINT_TOPIC, CAPO_JOINT_STATES
 from driver.dummy.dummy_head_driver import DummyHeadDriver
-
-HEAD_JOINT_TOPIC = "/capo_head_rotation_controller/command";
-CAPO_JOINT_STATES = '/joint_states'
 
 
 class HeadController:

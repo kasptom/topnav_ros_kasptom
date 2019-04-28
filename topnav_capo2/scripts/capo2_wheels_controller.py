@@ -4,14 +4,8 @@ import rospy
 from std_msgs.msg import Float64
 
 # from driver.dummy.dummy_wheels_driver import DummyWheelsDriver
+from constants.topic_names import FRONT_LEFT_WHEEL_TOPIC, FRONT_RIGHT_WHEEL_TOPIC
 from driver.maestro.maestro_wheels_driver import MaestroWheelsDriver
-
-FRONT_LEFT_WHEEL_TOPIC = "/capo_front_left_wheel_controller/command"
-FRONT_RIGHT_WHEEL_TOPIC = "/capo_front_right_wheel_controller/command"
-
-
-# BACK_RIGHT_WHEEL_TOPIC = "/capo_rear_left_wheel_controller/command",
-# BACK_LEFT_WHEEL_TOPIC = "/capo_rear_right_wheel_controller/command"
 
 
 class CapoWheelsController:
