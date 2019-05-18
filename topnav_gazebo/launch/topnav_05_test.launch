@@ -5,7 +5,7 @@
         <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
         <arg name="capo_x" value="1.0"/>
         <arg name="capo_y" value="2.0"/>
-        <arg name="capo_z" value="1.0"/>
+        <arg name="capo_z" value="0.2"/>
         <arg name="capo_yaw_rads" value="1.57"/>
     </include>
 

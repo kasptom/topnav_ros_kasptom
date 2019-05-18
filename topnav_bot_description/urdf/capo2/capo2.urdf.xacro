@@ -8,21 +8,21 @@
     <xacro:property name="caseHeight" value="${0.12 * scale}" />
     <xacro:property name="caseWeight" value="${4 * scale}"/>
     <xacro:property name="wheelDiam" value="${0.1 * scale}" />
-    <xacro:property name="wheelWidth" value="${0.005 * scale}"/>
+    <xacro:property name="wheelWidth" value="${0.02 * scale}"/>
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
     <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
     <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.06 * scale}"/>
     <xacro:property name="wheelWeight" value="${0.15 * scale}" />
     <xacro:property name="headDiam" value="${0.05 * scale}" />
     <xacro:property name="headHeight" value="${0.08 * scale}" />
-    <xacro:property name="headWeight" value="${0.2 * scale}" />
+    <xacro:property name="headWeight" value="${0.1 * scale}" />
     <xacro:property name="cameraWidth" value="${0.095 * scale}" />
     <xacro:property name="cameraHeight" value="${0.03 * scale}" />
     <xacro:property name="cameraDepth" value="${0.03 * scale}" />
     <xacro:property name="hokuyoSide" value="${0.05 * scale}" />
     <xacro:property name="hokuyoHeight" value="${0.07 * scale}" />
     <xacro:property name="casterWheelRadius" value="${0.01 * scale}"/>
-    <xacro:property name="casterWheelWeight" value="${0.005 * scale}"/>
+    <xacro:property name="casterWheelWeight" value="${0.1* scale}"/>
 
     <xacro:property name="laserSamplesCount" value="61"/>
     <xacro:property name="laserMinAngle" value="${-2*pi/3}"/>
@@ -132,8 +132,8 @@
         <gazebo reference="${prefix}_${suffix}_wheel">
             <!-- generates warn  Element[mu], child of element[link] not defined in SDF. Ignoring[mu]-->
             <!-- http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo -->
-            <mu value="4.0"/>
-            <mu2 value="1.0"/>
+            <mu1 value="40.0"/>
+            <mu2 value="20.0"/>
             <kp value="1000000.0" />
             <kd value="1.0" />
             <!--<fdir1>0 0 1</fdir1>-->
@@ -146,34 +146,49 @@
     <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
     <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
 
-    <link name="caster_wheel">
-        <visual>
-            <geometry>
-                <sphere radius="${casterWheelRadius}"/>
-            </geometry>
-            <material name="gray"/>
-        </visual>
+    <xacro:macro name="caster_wheel" params="prefix origX origY origZ">
+        <link name="${prefix}_caster_wheel">
+            <visual>
+                <geometry>
+                    <sphere radius="${casterWheelRadius}"/>
+                </geometry>
+                <material name="gray"/>
+            </visual>
 
-        <inertial>
-            <xacro:property name="r" value="${casterWheelRadius}" />
-            <xacro:property name="m" value="${casterWheelWeight}" />
-            <mass value="${m}" />
-            <inertia ixx="${(2/5)*m*r*r}" ixy="0.0" ixz="0.0"
-                     iyy="${(2/5)*m*r*r}" iyz="0.0"
-                     izz="${(2/5)*m*r*r}" />
-        </inertial>
-        <collision>
-            <geometry>
-                <sphere radius="${casterWheelRadius}"/>
-            </geometry>
-        </collision>
-    </link>
-    <joint name="base_caster_wheel_joint" type="fixed">
-        <axis rpy="0 0 0" xyz="0 1 0"/>
-        <parent link="base_link"/>
-        <child link="caster_wheel"/>
-        <origin rpy="0 0 0" xyz="-0.08 0 ${scale * -0.06}"/>
-    </joint>
+            <inertial>
+                <xacro:property name="r" value="${casterWheelRadius}"/>
+                <xacro:property name="m" value="${casterWheelWeight}"/>
+                <mass value="${m}"/>
+                <inertia ixx="${(2/5)*m*r*r}" ixy="0.0" ixz="0.0"
+                         iyy="${(2/5)*m*r*r}" iyz="0.0"
+                         izz="${(2/5)*m*r*r}"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="${casterWheelRadius}"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>0</mu>
+                            <mu2>0</mu2>
+                            <slip1>1.0</slip1>
+                            <slip2>1.0</slip2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+        </link>
+        <joint name="base_${prefix}_caster_wheel_joint" type="fixed">
+            <axis rpy="0 0 0" xyz="0 1 0"/>
+            <parent link="base_link"/>
+            <child link="${prefix}_caster_wheel"/>
+            <origin rpy="0 0 0" xyz="${origX} ${origY} ${origZ}"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:caster_wheel prefix="left" origX="-0.08" origY="0.04" origZ="${scale * -0.06}"/>
+    <xacro:caster_wheel prefix="right" origX="-0.08" origY="-0.04" origZ="${scale * -0.06}"/>
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
