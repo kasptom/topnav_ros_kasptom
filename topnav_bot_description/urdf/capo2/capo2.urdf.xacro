@@ -3,17 +3,17 @@
     <xacro:include filename="$(find topnav_bot_description)/urdf/materials.xacro" />
 
     <xacro:property name="scale" value="1.0" />
-    <xacro:property name="caseWidth" value="${0.2032 * scale}" />
-    <xacro:property name="caseLength" value="${0.24765 * scale}" />
-    <xacro:property name="caseHeight" value="${0.1016 * scale}" />
+    <xacro:property name="caseWidth" value="${0.1 * scale}" />
+    <xacro:property name="caseLength" value="${0.18 * scale}" />
+    <xacro:property name="caseHeight" value="${0.12 * scale}" />
     <xacro:property name="caseWeight" value="${4 * scale}"/>
-    <xacro:property name="wheelDiam" value="${0.12065 * scale}" />
-    <xacro:property name="wheelWidth" value="${0.05 * scale}"/>
+    <xacro:property name="wheelDiam" value="${0.1 * scale}" />
+    <xacro:property name="wheelWidth" value="${0.005 * scale}"/>
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
     <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
-    <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.03 * scale}"/>
+    <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.06 * scale}"/>
     <xacro:property name="wheelWeight" value="${0.15 * scale}" />
-    <xacro:property name="headDiam" value="${0.1 * scale}" />
+    <xacro:property name="headDiam" value="${0.05 * scale}" />
     <xacro:property name="headHeight" value="${0.08 * scale}" />
     <xacro:property name="headWeight" value="${0.2 * scale}" />
     <xacro:property name="cameraWidth" value="${0.095 * scale}" />
@@ -21,6 +21,8 @@
     <xacro:property name="cameraDepth" value="${0.03 * scale}" />
     <xacro:property name="hokuyoSide" value="${0.05 * scale}" />
     <xacro:property name="hokuyoHeight" value="${0.07 * scale}" />
+    <xacro:property name="casterWheelRadius" value="${0.01 * scale}"/>
+    <xacro:property name="casterWheelWeight" value="${0.005 * scale}"/>
 
     <xacro:property name="laserSamplesCount" value="61"/>
     <xacro:property name="laserMinAngle" value="${-2*pi/3}"/>
@@ -84,24 +86,24 @@
     </gazebo>
     <!-- /head -->
 
-    <xacro:macro name="wheel" params="prefix suffix origX origY origZ mass">
+    <xacro:macro name="wheel" params="prefix suffix origX origY origZ mass diam width">
         <link name="${prefix}_${suffix}_wheel">
             <visual>
                 <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
                 <geometry>
-                    <cylinder length="${wheelWidth}" radius="${wheelDiam/2}"/>
+                    <cylinder length="${width}" radius="${diam/2}"/>
                 </geometry>
                 <material name="black"/>
             </visual>
             <collision>
                 <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
                 <geometry>
-                    <cylinder length="${wheelWidth}" radius="${wheelDiam/2}"/>
+                    <cylinder length="${width}" radius="${diam/2}"/>
                 </geometry>
             </collision>
             <inertial>
-                <xacro:property name="r" value="${wheelDiam/2}" />
-                <xacro:property name="h" value="${wheelWidth}" />
+                <xacro:property name="r" value="${diam/2}" />
+                <xacro:property name="h" value="${width}" />
                 <xacro:property name="m" value="${mass}" />
 
                 <mass value="${m}" />
@@ -139,8 +141,39 @@
         </gazebo>
     </xacro:macro>
 
-    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}"/>
-    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}"/>
+    <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
+    <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
+    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
+    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
+
+    <link name="caster_wheel">
+        <visual>
+            <geometry>
+                <sphere radius="${casterWheelRadius}"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+
+        <inertial>
+            <xacro:property name="r" value="${casterWheelRadius}" />
+            <xacro:property name="m" value="${casterWheelWeight}" />
+            <mass value="${m}" />
+            <inertia ixx="${(2/5)*m*r*r}" ixy="0.0" ixz="0.0"
+                     iyy="${(2/5)*m*r*r}" iyz="0.0"
+                     izz="${(2/5)*m*r*r}" />
+        </inertial>
+        <collision>
+            <geometry>
+                <sphere radius="${casterWheelRadius}"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="base_caster_wheel_joint" type="fixed">
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <parent link="base_link"/>
+        <child link="caster_wheel"/>
+        <origin rpy="0 0 0" xyz="-0.08 0 ${scale * -0.06}"/>
+    </joint>
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
