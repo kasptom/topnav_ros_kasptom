@@ -6,7 +6,7 @@
         <arg name="capo_x" value="1.0"/>
         <arg name="capo_y" value="-4.0"/>
         <arg name="capo_z" value="0.2"/>
-        <arg name="capo_yaw_rads" value="1.57"/>
+        <arg name="capo_yaw_rads" value="0.0"/>
     </include>
 
     <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
