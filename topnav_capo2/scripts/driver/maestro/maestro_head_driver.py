@@ -5,10 +5,10 @@ from driver.maestro import maestro
 class MaestroHeadDriver(IHeadDriver):
 
     def __init__(self):
-        self._MIN_TARGET = 2200
-        self._MAX_TARGET = 9700
         self._LOWER_SERVO_CHANNEL = 2
         self._UPPER_SERVO_CHANNEL = 3
+        self._MIN_TARGET = {self._LOWER_SERVO_CHANNEL: 2400, self._UPPER_SERVO_CHANNEL: 2200}
+        self._MAX_TARGET = {self._LOWER_SERVO_CHANNEL: 9500, self._UPPER_SERVO_CHANNEL: 9700}
         self._SERVO_SPEED = 18
         self._MIN_ANGLE = -180
         self._MAX_ANGLE = 180
@@ -24,10 +24,12 @@ class MaestroHeadDriver(IHeadDriver):
             print 'Invalid angle: %d' % angle_degrees
             return
 
-        upper_target = self._MIN_TARGET + (self._MAX_TARGET - self._MIN_TARGET) * (
-                min(angle_degrees, 0) - self._MIN_ANGLE) / self._ANGULAR_SERVO_RANGE
-        lower_target = self._MAX_TARGET - (self._MAX_TARGET - self._MIN_TARGET) * (
-                max(angle_degrees, 0) - self._MID_ANGLE) / self._ANGULAR_SERVO_RANGE
+        upper_target = self._MIN_TARGET[self._UPPER_SERVO_CHANNEL] + (
+                    self._MAX_TARGET[self._UPPER_SERVO_CHANNEL] - self._MIN_TARGET[self._UPPER_SERVO_CHANNEL]) * (
+                               min(angle_degrees, 0) - self._MIN_ANGLE) / self._ANGULAR_SERVO_RANGE
+        lower_target = self._MAX_TARGET[self._UPPER_SERVO_CHANNEL] - (
+                    self._MAX_TARGET[self._UPPER_SERVO_CHANNEL] - self._MIN_TARGET[self._UPPER_SERVO_CHANNEL]) * (
+                               max(angle_degrees, 0) - self._MID_ANGLE) / self._ANGULAR_SERVO_RANGE
 
         self._servo.setTarget(self._UPPER_SERVO_CHANNEL, upper_target)
         self._servo.setTarget(self._LOWER_SERVO_CHANNEL, lower_target)
