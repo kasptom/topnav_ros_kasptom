@@ -42,6 +42,7 @@ class MaestroHeadDriver(IHeadDriver):
         upper_servo_target = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
         rotation += self._ANGULAR_SERVO_RANGE * (upper_servo_target - self._MIN_TARGET) / (
                 self._MAX_TARGET - self._MIN_TARGET)
+        return rotation
 
     def reset_head_rotation(self):
         self._servo.setTarget(self._LOWER_SERVO_CHANNEL,
