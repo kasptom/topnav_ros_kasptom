@@ -62,3 +62,4 @@ class MaestroHeadDriver(IHeadDriver):
                              self._SERVO_SPEED)
         self._servo.setSpeed(self._UPPER_SERVO_CHANNEL,
                              self._SERVO_SPEED)
+        self.set_head_rotation(self._MID_ANGLE)
