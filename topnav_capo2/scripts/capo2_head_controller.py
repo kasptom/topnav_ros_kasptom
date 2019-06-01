@@ -5,12 +5,13 @@ from sensor_msgs.msg import JointState
 
 from constants.topic_names import HEAD_JOINT_TOPIC, CAPO_JOINT_STATES
 from driver.dummy.dummy_head_driver import DummyHeadDriver
+# from driver.maestro.maestro_head_driver import MaestroHeadDriver
 
 
 class HeadController:
 
     def __init__(self):
-        # self.driver = MaestroHeadDriver() todo
+        # self.driver = MaestroHeadDriver()
         self.driver = DummyHeadDriver()
 
         self.rotation_joint_change_subscriber = rospy.Subscriber(HEAD_JOINT_TOPIC, Float64,
