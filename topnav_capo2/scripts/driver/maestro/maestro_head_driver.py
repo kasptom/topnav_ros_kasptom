@@ -16,6 +16,9 @@ class MaestroHeadDriver(IHeadDriver):
         self._ANGULAR_SERVO_RANGE = 180
         self._initialize_servos()
 
+    def __del__(self):
+        self.stop_driver()
+
     def set_head_rotation(self, angle_degrees):
         if angle_degrees > 180 or angle_degrees < -180:
             print('Invalid angle: %d', angle_degrees)
