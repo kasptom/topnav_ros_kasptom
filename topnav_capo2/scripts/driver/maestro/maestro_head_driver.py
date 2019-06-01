@@ -5,8 +5,8 @@ from driver.maestro import maestro
 class MaestroHeadDriver(IHeadDriver):
 
     def __init__(self):
-        self._MIN_TARGET = 2000
-        self._MAX_TARGET = 10000
+        self._MIN_TARGET = 1900
+        self._MAX_TARGET = 9800
         self._LOWER_SERVO_CHANNEL = 2
         self._UPPER_SERVO_CHANNEL = 3
         self._SERVO_SPEED = 12
