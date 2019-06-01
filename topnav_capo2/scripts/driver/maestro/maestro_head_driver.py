@@ -5,11 +5,11 @@ from driver.maestro import maestro
 class MaestroHeadDriver(IHeadDriver):
 
     def __init__(self):
-        self._MIN_TARGET = 1900
-        self._MAX_TARGET = 9800
+        self._MIN_TARGET = 2200
+        self._MAX_TARGET = 9700
         self._LOWER_SERVO_CHANNEL = 2
         self._UPPER_SERVO_CHANNEL = 3
-        self._SERVO_SPEED = 12
+        self._SERVO_SPEED = 18
         self._MIN_ANGLE = -180
         self._MAX_ANGLE = 180
         self._MID_ANGLE = 0
@@ -24,13 +24,13 @@ class MaestroHeadDriver(IHeadDriver):
             print 'Invalid angle: %d' % angle_degrees
             return
 
-        lower_target = self._MAX_TARGET - (self._MAX_TARGET - self._MIN_TARGET) * (
-                max(angle_degrees, 0) - self._MID_ANGLE) / self._ANGULAR_SERVO_RANGE
         upper_target = self._MIN_TARGET + (self._MAX_TARGET - self._MIN_TARGET) * (
                 min(angle_degrees, 0) - self._MIN_ANGLE) / self._ANGULAR_SERVO_RANGE
+        lower_target = self._MAX_TARGET - (self._MAX_TARGET - self._MIN_TARGET) * (
+                max(angle_degrees, 0) - self._MID_ANGLE) / self._ANGULAR_SERVO_RANGE
 
-        self._servo.setTarget(self._LOWER_SERVO_CHANNEL, lower_target)
         self._servo.setTarget(self._UPPER_SERVO_CHANNEL, upper_target)
+        self._servo.setTarget(self._LOWER_SERVO_CHANNEL, lower_target)
         print 'lower target: %d, upper target: %d' % (lower_target, upper_target)
 
     def get_head_rotation(self):
