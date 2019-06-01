@@ -57,11 +57,11 @@ class MaestroHeadDriver(IHeadDriver):
     def _initialize_servos(self):
         self._servo = maestro.Controller()
         self._servo.setRange(self._LOWER_SERVO_CHANNEL,
-                             self._MIN_TARGET,
-                             self._MAX_TARGET)
+                             self._MIN_TARGET[0],
+                             self._MAX_TARGET[0])
         self._servo.setRange(self._UPPER_SERVO_CHANNEL,
-                             self._MIN_TARGET,
-                             self._MAX_TARGET)
+                             self._MIN_TARGET[1],
+                             self._MAX_TARGET[1])
 
         self._servo.setSpeed(self._LOWER_SERVO_CHANNEL,
                              self._SERVO_SPEED)
