@@ -34,12 +34,12 @@ class MaestroHeadDriver(IHeadDriver):
             lower_target = self._MIN_TARGET[0]
             upper_target = self._MID_TARGET[1] - (
                     self._MID_TARGET[1] - self._MIN_TARGET[1]) * (
-                                   angle_degrees - self._MIN_ANGLE) / (self._ANGULAR_SERVO_RANGE / 2)
+                                   angle_degrees - self._MAX_ANGLE / 2) / (self._ANGULAR_SERVO_RANGE / 2)
         else:  # angle_degrees < - 90
             lower_target = self._MAX_TARGET[0]
-            upper_target = self._MID_TARGET[1] - (
-                    self._MID_TARGET[1] - self._MIN_TARGET[1]) * (
-                                   angle_degrees - self._MIN_ANGLE) / (self._ANGULAR_SERVO_RANGE / 2)
+            upper_target = self._MID_TARGET[1] + (
+                    self._MAX_TARGET[1] - self._MID_TARGET[1]) * (
+                                   self._MIN_ANGLE / 2 - angle_degrees) / (self._ANGULAR_SERVO_RANGE / 2)
 
         self._servo.setTarget(self._UPPER_SERVO_CHANNEL, upper_target)
         self._servo.setTarget(self._LOWER_SERVO_CHANNEL, lower_target)
