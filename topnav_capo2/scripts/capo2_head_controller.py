@@ -1,4 +1,6 @@
 #!/usr/bin/python
+import math
+
 import rospy
 from std_msgs.msg import Float64, Header
 from sensor_msgs.msg import JointState
@@ -31,7 +33,7 @@ class HeadController:
             rate.sleep()
 
     def set_head_rotation(self, value):
-        self.driver.set_head_rotation(value.data)
+        self.driver.set_head_rotation(value.data * 180 / math.pi)
         # rospy.loginfo("head rotation: %.2f" % self.driver.get_head_rotation())
         print("head rotation: %.2f" % self.driver.get_head_rotation())
 
