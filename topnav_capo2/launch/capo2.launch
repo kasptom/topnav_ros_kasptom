@@ -17,5 +17,7 @@
     <include file="$(find topnav_capo2)/launch/hokuyo.launch">
         <arg name="serial_port" value="/dev/ttyACM2"/>
     </include>
+
+    <remap from="/capo/laser/scan" to="/scan"/>
     <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
 </launch>
