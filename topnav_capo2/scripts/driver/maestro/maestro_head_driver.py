@@ -46,15 +46,21 @@ class MaestroHeadDriver(IHeadDriver):
         print 'lower target: %d, upper target: %d' % (lower_target, upper_target)
 
     def get_head_rotation(self):
-        rotation = self._MIN_ANGLE
-        lower_servo_target = self._servo.getPosition(self._LOWER_SERVO_CHANNEL)
-        rotation += self._ANGULAR_SERVO_RANGE * (lower_servo_target - self._MIN_TARGET) / (
-                self._MAX_TARGET[0] - self._MIN_TARGET[0])
+        lower_position = self._servo.getPosition(self._LOWER_SERVO_CHANNEL)
+        upper_position = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
 
-        upper_servo_target = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
-        rotation += self._ANGULAR_SERVO_RANGE * (upper_servo_target - self._MIN_TARGET) / (
-                self._MAX_TARGET[1] - self._MIN_TARGET[1])
-        return rotation
+        angle_degrees = self._MAX_ANGLE / 2 - (lower_position - self._MIN_TARGET[0]) / (
+                self._MAX_TARGET[0] - self._MIN_TARGET[0]) * self._ANGULAR_SERVO_RANGE
+
+        if upper_position > self._MID_TARGET[1]:
+            angle_degrees -= self._ANGULAR_SERVO_RANGE / 2 * (upper_position - self._MID_TARGET[1]) / (
+                        self._MAX_TARGET[1] - self._MID_TARGET[1])
+
+        elif upper_position < self._MID_TARGET[1]:
+            angle_degrees += self._ANGULAR_SERVO_RANGE / 2 * (self._MID_TARGET[1] - upper_position) / (
+                        self._MID_TARGET[1] - self._MIN_TARGET[1])
+
+        return angle_degrees
 
     def reset_head_rotation(self):
         self.set_head_rotation(0)
