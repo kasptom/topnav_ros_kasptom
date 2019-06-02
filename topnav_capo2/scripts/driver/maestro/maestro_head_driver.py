@@ -24,7 +24,6 @@ class MaestroHeadDriver(IHeadDriver):
         if angle_degrees > 180 or angle_degrees < -180:
             print 'Invalid angle: %d' % angle_degrees
             return
-        lower_target = self._MID_TARGET[0]
         upper_target = self._MID_TARGET[1]
 
         if -90 <= angle_degrees <= 90:
@@ -33,12 +32,12 @@ class MaestroHeadDriver(IHeadDriver):
                                    angle_degrees - self._MIN_ANGLE / 2) / self._ANGULAR_SERVO_RANGE
         elif angle_degrees > 90:
             lower_target = self._MIN_TARGET[0]
-            upper_target = self._MIN_TARGET[1] + (
+            upper_target = self._MID_TARGET[1] - (
                     self._MID_TARGET[1] - self._MIN_TARGET[1]) * (
                                    angle_degrees - self._MIN_ANGLE) / (self._ANGULAR_SERVO_RANGE / 2)
         else:  # angle_degrees < - 90
             lower_target = self._MAX_TARGET[0]
-            upper_target = self._MID_TARGET[1] + (
+            upper_target = self._MID_TARGET[1] - (
                     self._MID_TARGET[1] - self._MIN_TARGET[1]) * (
                                    angle_degrees - self._MIN_ANGLE) / (self._ANGULAR_SERVO_RANGE / 2)
 
