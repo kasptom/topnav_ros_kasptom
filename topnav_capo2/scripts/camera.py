@@ -14,6 +14,8 @@ class Camera:
 
     def open(self):
         self.capture = cv2.VideoCapture(self.camera_id)
+        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
     def is_opened(self):
         return self.capture is not None and self.capture.isOpened()
