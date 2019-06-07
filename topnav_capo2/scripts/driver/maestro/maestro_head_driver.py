@@ -49,16 +49,25 @@ class MaestroHeadDriver(IHeadDriver):
         lower_position = self._servo.getPosition(self._LOWER_SERVO_CHANNEL)
         upper_position = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
 
-        angle_degrees = self._MAX_ANGLE / 2 - (lower_position - self._MIN_TARGET[0]) / (
-                self._MAX_TARGET[0] - self._MIN_TARGET[0]) * self._ANGULAR_SERVO_RANGE
+        angle_degrees = 0
+
+        if lower_position > self._MID_TARGET[0]:
+            angle_degrees -= (self._ANGULAR_SERVO_RANGE / 2) * (
+                    (lower_position - self._MID_TARGET[0]) / (self._MAX_TARGET[0] - self._MID_TARGET[0])
+            )
+        else:
+            angle_degrees += (self._ANGULAR_SERVO_RANGE / 2) * (
+                    (self._MID_TARGET[0] - lower_position) / (self._MID_TARGET[0] - self._MIN_TARGET[0])
+            )
 
         if upper_position > self._MID_TARGET[1]:
-            angle_degrees -= self._ANGULAR_SERVO_RANGE / 2 * (upper_position - self._MID_TARGET[1]) / (
-                        self._MAX_TARGET[1] - self._MID_TARGET[1])
-
-        elif upper_position < self._MID_TARGET[1]:
-            angle_degrees += self._ANGULAR_SERVO_RANGE / 2 * (self._MID_TARGET[1] - upper_position) / (
-                        self._MID_TARGET[1] - self._MIN_TARGET[1])
+            angle_degrees += (self._ANGULAR_SERVO_RANGE / 2) * (
+                    (lower_position - self._MID_TARGET[1]) / (self._MAX_TARGET[1] - self._MID_TARGET[1])
+            )
+        else:
+            angle_degrees -= (self._ANGULAR_SERVO_RANGE / 2) * (
+                    (self._MID_TARGET[1] - lower_position) / (self._MID_TARGET[1] - self._MIN_TARGET[1])
+            )
 
         return angle_degrees
 
