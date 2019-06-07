@@ -35,7 +35,7 @@
         <parent link="base_link"/>
         <child link="head"/>
         <axis xyz="0 0 1"/>
-        <origin xyz="${caseLength / 2 - (hokuyoSide + headDiam / 2)} 0 ${caseHeight / 2 + headHeight / 2}"/>
+        <origin xyz="${caseLength / 2 - (hokuyoSide + headDiam / 2 + headOffset)} 0 ${caseHeight / 2 + headHeight / 2}"/>
         <limit effort="30"
                velocity="1.0"
                lower="${-pi}"

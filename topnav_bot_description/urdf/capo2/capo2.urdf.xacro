@@ -3,24 +3,30 @@
     <xacro:include filename="$(find topnav_bot_description)/urdf/materials.xacro" />
 
     <xacro:property name="scale" value="1.0" />
-    <xacro:property name="caseWidth" value="${0.1 * scale}" />
+    <xacro:property name="caseWidth" value="${0.135 * scale}" />
     <xacro:property name="caseLength" value="${0.18 * scale}" />
     <xacro:property name="caseHeight" value="${0.12 * scale}" />
     <xacro:property name="caseWeight" value="${4 * scale}"/>
-    <xacro:property name="wheelDiam" value="${0.1 * scale}" />
-    <xacro:property name="wheelWidth" value="${0.02 * scale}"/>
+    <xacro:property name="wheelDiam" value="${0.09 * scale}" />
+    <xacro:property name="wheelWidth" value="${0.01 * scale}"/>
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
     <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
     <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.06 * scale}"/>
     <xacro:property name="wheelWeight" value="${0.15 * scale}" />
+
     <xacro:property name="headDiam" value="${0.05 * scale}" />
     <xacro:property name="headHeight" value="${0.08 * scale}" />
     <xacro:property name="headWeight" value="${0.1 * scale}" />
+    <xacro:property name="headOffset" value="${0.07 * scale}" />
+
     <xacro:property name="cameraWidth" value="${0.095 * scale}" />
     <xacro:property name="cameraHeight" value="${0.03 * scale}" />
     <xacro:property name="cameraDepth" value="${0.03 * scale}" />
+
     <xacro:property name="hokuyoSide" value="${0.05 * scale}" />
     <xacro:property name="hokuyoHeight" value="${0.07 * scale}" />
+    <xacro:property name="hokuyoOffset" value="${0.03 * scale}" />
+
     <xacro:property name="casterWheelRadius" value="${0.01 * scale}"/>
     <xacro:property name="casterWheelWeight" value="${0.1* scale}"/>
 
@@ -143,8 +149,8 @@
 
     <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
     <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
-    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
-    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="-0.02" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
+    <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="-0.025" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
+    <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="-0.025" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
 
     <xacro:macro name="caster_wheel" params="prefix origX origY origZ">
         <link name="${prefix}_caster_wheel">
