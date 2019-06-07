@@ -62,11 +62,11 @@ class MaestroHeadDriver(IHeadDriver):
             )
 
         if upper_position > self._MID_TARGET[1]:
-            angle_degrees += (self._ANGULAR_SERVO_RANGE / 2) * (
+            angle_degrees -= (self._ANGULAR_SERVO_RANGE / 2) * (
                     float(upper_position - self._MID_TARGET[1]) / (self._MAX_TARGET[1] - self._MID_TARGET[1])
             )
         else:
-            angle_degrees -= (self._ANGULAR_SERVO_RANGE / 2) * (
+            angle_degrees += (self._ANGULAR_SERVO_RANGE / 2) * (
                     float(self._MID_TARGET[1] - upper_position) / (self._MID_TARGET[1] - self._MIN_TARGET[1])
             )
 
