@@ -48,6 +48,7 @@ class MaestroHeadDriver(IHeadDriver):
     def get_head_rotation(self):
         lower_position = self._servo.getPosition(self._LOWER_SERVO_CHANNEL)
         upper_position = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
+        print 'lower / upper position: %.2f / %.2f' % (lower_position, lower_position)
 
         angle_degrees = 0
 

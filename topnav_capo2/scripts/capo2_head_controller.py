@@ -27,6 +27,7 @@ class HeadController:
 
         while not rospy.is_shutdown():
             head_rotation = self.driver.get_head_rotation()
+            print "publish head rotation: %.2f" % head_rotation
             message = self._create_joint_state_messsage(head_rotation)
 
             self.rotation_joint_state_publisher.publish(message)
@@ -35,7 +36,7 @@ class HeadController:
     def set_head_rotation(self, value):
         self.driver.set_head_rotation(value.data * 180 / math.pi)
         # rospy.loginfo("head rotation: %.2f" % self.driver.get_head_rotation())
-        print("head rotation: %.2f" % self.driver.get_head_rotation())
+        print "head rotation: %.2f" % self.driver.get_head_rotation()
 
     @staticmethod
     def _create_joint_state_messsage(head_rotation):
