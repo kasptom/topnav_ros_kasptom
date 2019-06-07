@@ -43,12 +43,12 @@ class MaestroHeadDriver(IHeadDriver):
 
         self._servo.setTarget(self._UPPER_SERVO_CHANNEL, int(upper_target))
         self._servo.setTarget(self._LOWER_SERVO_CHANNEL, int(lower_target))
-        print 'lower target: %d, upper target: %d' % (lower_target, upper_target)
+        # print 'lower target: %d, upper target: %d' % (lower_target, upper_target)
 
     def get_head_rotation(self):
         lower_position = self._servo.getPosition(self._LOWER_SERVO_CHANNEL)
         upper_position = self._servo.getPosition(self._UPPER_SERVO_CHANNEL)
-        print 'lower / upper position: %.2f / %.2f' % (lower_position, upper_position)
+        # print 'lower / upper position: %.2f / %.2f' % (lower_position, upper_position)
 
         angle_degrees = 0
 
