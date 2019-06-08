@@ -26,6 +26,7 @@
     <xacro:property name="hokuyoSide" value="${0.05 * scale}" />
     <xacro:property name="hokuyoHeight" value="${0.07 * scale}" />
     <xacro:property name="hokuyoOffset" value="${0.03 * scale}" />
+    <xacro:property name="hokuyoHeightOffset" value="${0.03 * scale}" />
 
     <xacro:property name="casterWheelRadius" value="${0.01 * scale}"/>
     <xacro:property name="casterWheelWeight" value="${0.1* scale}"/>
