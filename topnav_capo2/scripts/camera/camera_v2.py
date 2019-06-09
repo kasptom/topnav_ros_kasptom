@@ -4,26 +4,25 @@
     https://github.com/opencv/opencv
     https://github.com/Zbar/Zbar
 """
-import cv2
 
 from constants.preview import CAM_PREVIEW_HEIGHT, CAM_PREVIEW_WIDTH
+from interface_camera import ICamera
+from pi_videostream import PiVideoStream
 
 
-class Camera:
-    def __init__(self, camera_id):
-        self.camera_id = camera_id
-        self.capture = None
+class CameraV2(ICamera):
+    def __init__(self):
+        self.vs = None
 
     def open(self):
-        self.capture = cv2.VideoCapture(self.camera_id)
-        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_PREVIEW_WIDTH)
-        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_PREVIEW_HEIGHT)
+        self.vs = PiVideoStream(resolution=(CAM_PREVIEW_WIDTH, CAM_PREVIEW_HEIGHT), framerate=32)
+        self.vs.start()
 
     def is_opened(self):
-        return self.capture is not None and self.capture.isOpened()
+        return self.vs.is_opened()
 
     def close(self):
-        self.capture.release()
+        self.vs.stop()
 
     def get_frame(self):
         """
@@ -31,7 +30,7 @@ class Camera:
         :return: image read from camera
         :rtype: PIL.Image
         """
-        frame = self.capture.read()[1]
+        frame = self.vs.read()
         # use more lightweight format
         # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # return gray
