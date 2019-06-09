@@ -1,7 +1,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <joint name="hokuyo_joint" type="fixed">
         <axis xyz="0 1 0"/>
-        <origin xyz="${caseLength/2 - (hokuyoSide/2 + hokuyoOffset)} 0 ${caseHeight/2 + hokuyoHeight/2}" rpy="0 0 0"/>
+        <origin xyz="${caseLength/2 - (hokuyoSide/2 + hokuyoOffset)} 0 ${caseHeight/2 + hokuyoHeight/2 - hokuyoHeightOffset}" rpy="0 0 0"/>
         <parent link="base_link"/>
         <child link="hokuyo_link"/>
     </joint>

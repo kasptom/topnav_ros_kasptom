@@ -28,12 +28,12 @@ class CapoWheelsController:
     def set_left_velocity(self, value):
         self.left_wheel_velocity = value.data
         self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
-        print("left vel: %.2f" % self.left_wheel_velocity)
+        # print("left vel: %.2f" % self.left_wheel_velocity)
 
     def set_right_velocity(self, value):
         self.right_wheel_velocity = value.data
         self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
-        print("right vel: %.2f" % self.right_wheel_velocity)
+        # print("right vel: %.2f" % self.right_wheel_velocity)
 
 
 if __name__ == '__main__':
