@@ -9,7 +9,7 @@ class MaestroHeadDriver(IHeadDriver):
         self._UPPER_SERVO_CHANNEL = 3
         self._MIN_TARGET = [2000, 3650]
         self._MAX_TARGET = [10000, 9000]
-        self._MID_TARGET = [6000, 6000]
+        self._MID_TARGET = [6000, 6325]
         self._SERVO_SPEED = 6
         self._MIN_ANGLE = -180
         self._MAX_ANGLE = 180
