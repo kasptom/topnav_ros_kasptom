@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import cv2
 
-from camera.file_video_stream import FileVideoStream
+from file_video_stream import FileVideoStream
 from camera.interface_camera import ICamera
 from constants.preview import CAM_PREVIEW_WIDTH, CAM_PREVIEW_HEIGHT
 
