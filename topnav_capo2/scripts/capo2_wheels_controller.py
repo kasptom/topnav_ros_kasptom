@@ -13,7 +13,7 @@ class CapoWheelsController:
         self.left_wheel_velocity = 0.0
         self.right_wheel_velocity = 0.0
 
-        self.driver = MaestroWheelsDriver(4000, 5900, 8000, 4000, 5900, 8000)
+        self.driver = MaestroWheelsDriver(5000, 5900, 6800, 5000, 5900, 6800)
         # self.driver = DummyWheelsDriver()
 
         self.left_wheel_subscriber = rospy.Subscriber(FRONT_LEFT_WHEEL_TOPIC, Float64, queue_size=1,
