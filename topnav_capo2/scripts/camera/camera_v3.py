@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import cv2
 
-from file_video_stream import FileVideoStream
+from webcam_video_stream import WebcamVideoStream
 from interface_camera import ICamera
 from constants.preview import CAM_PREVIEW_WIDTH, CAM_PREVIEW_HEIGHT
 
@@ -16,7 +16,7 @@ class CameraV3(ICamera):
         self.capture = cv2.VideoCapture(self.camera_id)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_PREVIEW_WIDTH)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_PREVIEW_HEIGHT)
-        self.vs = FileVideoStream(self.capture)
+        self.vs = WebcamVideoStream(self.capture)
         self.vs.start()
 
     def is_opened(self):
