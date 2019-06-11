@@ -4,7 +4,9 @@ import rospy
 from cv_bridge import CvBridge
 
 from sensor_msgs.msg import Image
-from camera import Camera
+# from camera.camera import Camera
+# from camera.camera_v2 import CameraV2
+from camera.camera_v3 import CameraV3
 
 TOPIC_NAME_CAMERA = "capo/camera1/image_raw"
 
@@ -20,7 +22,9 @@ class Capo2CameraPublisher:
     def start(self):
         rospy.init_node("capo2_camera_publisher", anonymous=True)
         rate = rospy.Rate(10)  # 10hz
-        camera = Camera(camera_id=0)
+        # camera = Camera(camera_id=0)
+        # camera = CameraV2()
+        camera = CameraV3(camera_id=0)
 
         camera.open()
 

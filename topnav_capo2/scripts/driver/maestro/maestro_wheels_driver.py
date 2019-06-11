@@ -3,8 +3,8 @@ from driver.interface_wheels_driver import IWheelsDriver
 
 
 class MaestroWheelsDriver(IWheelsDriver):
-    _LEFT_WHEEL_CHANNEL = 0
-    _RIGHT_WHEEL_CHANNEL = 1
+    _RIGHT_WHEEL_CHANNEL = 0
+    _LEFT_WHEEL_CHANNEL = 1
 
     def __init__(self, left_min=4000, left_mid=6000, left_max=8000, right_min=4000, right_mid=6000, right_max=8000):
         self.right_max = right_max
@@ -30,9 +30,10 @@ class MaestroWheelsDriver(IWheelsDriver):
         if right_wheel == 0:
             right_wheel_target = 0
 
-        # print("Setting wheel servos (%d, %d) (%d, %d)" % (0, left_wheel_target, 1, right_wheel_target))
-        self._servo.setTarget(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, left_wheel_target)
-        self._servo.setTarget(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, right_wheel_target)
+        print("Setting wheel servos (%d, %d) (%d, %d)" % (MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, left_wheel_target,
+                                                          MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, right_wheel_target))
+        self._servo.setTarget(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, left_wheel_target)
+        self._servo.setTarget(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, right_wheel_target)
 
     def stop_wheels(self):
         self.set_velocity(0, 0)

@@ -10,7 +10,7 @@ class MaestroHeadDriver(IHeadDriver):
         self._MIN_TARGET = [2000, 3650]
         self._MAX_TARGET = [10000, 9000]
         self._MID_TARGET = [6000, 6325]
-        self._SERVO_SPEED = 6
+        self._SERVO_SPEED = 3
         self._MIN_ANGLE = -180
         self._MAX_ANGLE = 180
         self._MID_ANGLE = 0
@@ -21,9 +21,12 @@ class MaestroHeadDriver(IHeadDriver):
         self.stop_driver()
 
     def set_head_rotation(self, angle_degrees):
-        if angle_degrees > 180 or angle_degrees < -180:
+        if angle_degrees > 180:
             print 'Invalid angle: %d' % angle_degrees
-            return
+            angle_degrees = 180
+        elif angle_degrees < -180:
+            angle_degrees = -180
+
         upper_target = self._MID_TARGET[1]
 
         if -90 <= angle_degrees <= 90:
