@@ -1,4 +1,5 @@
 <launch>
+    <!--fixme <env name="GAZEBO_MEDIA_PATH" value="$(find topnav_bot_description)/media"/>-->
 
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     <arg name="paused" default="false"/>

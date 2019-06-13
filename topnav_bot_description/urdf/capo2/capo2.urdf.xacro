@@ -145,6 +145,7 @@
             <kd value="1.0" />
             <!--<fdir1>0 0 1</fdir1>-->
             <material>Gazebo/Black</material>
+            <!--<material>Topnav/PololuWheel</material>-->
         </gazebo>
     </xacro:macro>
 
