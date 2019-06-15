@@ -1,2 +1,2 @@
 #!/bin/sh
-rosrun image_view image_view image:=/capo/camera1/image_raw
+rosrun image_view image_view image:=/capo2_camera/image_raw

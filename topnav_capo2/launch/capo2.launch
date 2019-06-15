@@ -1,5 +1,8 @@
 <launch>
-    <include file="$(find topnav_capo2)/launch/camera.launch" />
+
+    <include file="$(find topnav_capo2)/launch/opencv_videostream.launch" />
+    <!-- Obsolete: use opencv_videostream -->
+    <!--<include file="$(find topnav_capo2)/launch/camera.launch" />-->
 
     <node name="capo2_wheels_controller"
           pkg="topnav_capo2"

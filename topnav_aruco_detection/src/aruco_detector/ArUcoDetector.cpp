@@ -23,7 +23,7 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
-    camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1, &ArUcoDetector::camera_image_callback, this);
+    camera_subscriber = nodeHandle.subscribe("capo2_camera/image_raw", 1, &ArUcoDetector::camera_image_callback, this);
     detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
 
