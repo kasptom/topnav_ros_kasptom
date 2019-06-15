@@ -1,8 +1,5 @@
 <launch>
-    <node name="capo2_camera_publisher"
-          pkg="topnav_capo2"
-          type="capo2_camera_publisher.py"
-          respawn="false" output="screen"/>
+    <include file="$(find topnav_capo2)/launch/camera.launch" />
 
     <node name="capo2_wheels_controller"
           pkg="topnav_capo2"
