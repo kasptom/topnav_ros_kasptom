@@ -8,7 +8,7 @@ from sensor_msgs.msg import Image
 # from camera.camera_v2 import CameraV2
 from camera.camera_v3 import CameraV3
 
-TOPIC_NAME_CAMERA = "capo2_camera/image_raw"
+TOPIC_NAME_CAMERA = "capo/camera1/image_raw"
 
 
 # http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
