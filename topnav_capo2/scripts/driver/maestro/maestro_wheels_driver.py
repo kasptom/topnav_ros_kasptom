@@ -1,3 +1,5 @@
+from serial import SerialException
+
 import maestro
 from driver.interface_wheels_driver import IWheelsDriver
 
@@ -43,4 +45,11 @@ class MaestroWheelsDriver(IWheelsDriver):
         self._servo.close()
 
     def _initialize_servos(self):
-        self._servo = maestro.Controller()
+        try:
+            self._servo = maestro.Controller('/dev/ttyACM0')
+        except SerialException:
+            print '[wheels] could not connect to /dev/ttyACM0. Trying with /dev/ttyACM1'
+        try:
+            self._servo = maestro.Controller('/dev/ttyACM1')
+        except SerialException:
+            raise

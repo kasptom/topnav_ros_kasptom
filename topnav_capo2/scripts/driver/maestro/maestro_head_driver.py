@@ -1,3 +1,5 @@
+from serial import SerialException
+
 from driver.interface_head_driver import IHeadDriver
 from driver.maestro import maestro
 
@@ -83,7 +85,15 @@ class MaestroHeadDriver(IHeadDriver):
         self._servo.close()
 
     def _initialize_servos(self):
-        self._servo = maestro.Controller()
+        try:
+            self._servo = maestro.Controller('/dev/ttyACM0')
+        except SerialException:
+            print '[head] could not connect to /dev/ttyACM0. Trying with /dev/ttyACM1'
+        try:
+            self._servo = maestro.Controller('/dev/ttyACM1')
+        except SerialException:
+            raise
+
         self._servo.setRange(self._LOWER_SERVO_CHANNEL,
                              self._MIN_TARGET[0],
                              self._MAX_TARGET[0])
