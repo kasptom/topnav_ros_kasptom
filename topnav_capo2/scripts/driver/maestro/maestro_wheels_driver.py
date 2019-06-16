@@ -52,4 +52,8 @@ class MaestroWheelsDriver(IWheelsDriver):
         try:
             self._servo = maestro.Controller('/dev/ttyACM1')
         except SerialException:
+            print '[wheels] could not connect to /dev/ttyACM1. Trying with /dev/ttyACM3'
+        try:
+            self._servo = maestro.Controller('/dev/ttyACM3')
+        except SerialException:
             raise
