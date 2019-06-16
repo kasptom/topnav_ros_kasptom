@@ -28,7 +28,7 @@ class CameraV3(ICamera):
 
     def get_frame(self):
         """
-        Get frame from camera (ignore return status) in gray scale
+        Get frame from camera (ignore return status)
         :return: image read from camera
         :rtype: PIL.Image
         """
