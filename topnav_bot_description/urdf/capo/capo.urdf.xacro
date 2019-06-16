@@ -2,6 +2,8 @@
 <robot name="capo" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find topnav_bot_description)/urdf/materials.xacro" />
 
+    <xacro:arg name="use_sim_camera" default="false" />
+
     <xacro:property name="scale" value="1.0" />
     <xacro:property name="caseWidth" value="${0.2032 * scale}" />
     <xacro:property name="caseLength" value="${0.24765 * scale}" />
@@ -31,6 +33,13 @@
     <xacro:property name="laserSamplesCount" value="62"/>
     <xacro:property name="laserMinAngle" value="-2.08"/>
     <xacro:property name="laserMaxAngle" value="2.08"/>
+
+    <xacro:if value="$(arg use_real_camera)">
+        <xacro:property name="cameraFileName" value="camera_sim.gazebo" />
+    </xacro:if>
+    <xacro:unless value="$(arg use_real_camera)">
+        <xacro:property name="cameraFileName" value="camera.gazebo" />
+    </xacro:unless>
 
     <xacro:macro name="default_inertial" params="mass">
         <inertial>

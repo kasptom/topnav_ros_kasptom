@@ -1,0 +1,51 @@
+<robot>
+    <!-- camera -->
+    <!--http://gazebosim.org/tutorials?tut=ros_gzplugins-->
+
+    <gazebo reference="camera_link">
+        <sensor type="camera" name="camera1">
+            <update_rate>10.0</update_rate>
+            <camera name="head">
+                <!--<horizontal_fov>1.3962634</horizontal_fov>-->
+                <!-- FIXME this is not the FOV which complies with the c930 camera but works better with ArUco (why?)-->
+                <horizontal_fov>1.03</horizontal_fov>
+                <image>
+                    <width>1280</width>
+                    <height>960</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>l
+                    <!-- Noise is sampled independently per pixel on each frame.
+                         That pixel's noise value is added to each of its color
+                         channels, which at that point lie in the range [0,1]. -->
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+
+                <!-- rotate camera x y z roll pitch yaw, approx 15 degrees up -->
+                <!--<pose>0 0 0 0 -0.261799388 0</pose>-->
+                <pose>0 0 0 0 0 0</pose>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>0.0</updateRate>
+                <cameraName>capo/camera1_real</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>camera_link</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>1.0808655412260015e-01</distortionK1>
+                <distortionK2>-2.7156751932089240e-01</distortionK2>
+                <distortionK3>-5.7111917727329926e-04</distortionK3>
+                <distortionT1>7.0058416314089239e-03</distortionT1>
+                <distortionT2>3.9927076218923579e-01</distortionT2>
+            </plugin>
+        </sensor>
+        <material>Gazebo/Black</material>
+    </gazebo>
+</robot>

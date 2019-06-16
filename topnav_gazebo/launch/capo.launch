@@ -1,4 +1,5 @@
 <launch>
+    <arg name="use_real_camera" default="false" />
     <arg name="model" default="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
     <arg name="world" default="worlds/empty.world"/>
     <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz"/>
@@ -13,6 +14,7 @@
         <arg name="capo_x" value="$(arg capo_x)"/>
         <arg name="capo_y" value="$(arg capo_y)"/>
         <arg name="capo_z" value="$(arg capo_z)"/>
+        <arg name="use_real_camera" value="$(arg use_real_camera)"/>
         <arg name="capo_yaw_rads" value="$(arg capo_yaw_rads)"/>
     </include>
 
@@ -31,6 +33,8 @@
     <node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>
 
     <node name="topnav_config_node" pkg="topnav_config" type="topnav_config_node"/>
+
+    <node pkg="image_view" type="image_view" name="latency_image_view" args="image:=/capo/camera1_real/image_raw"  if="$(arg use_real_camera)"/>
 
     <!-- At most one option  -->
     <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->

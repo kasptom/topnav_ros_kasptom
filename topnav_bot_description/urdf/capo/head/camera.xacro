@@ -30,5 +30,5 @@
         </inertial>
     </link>
 
-    <xacro:include filename="camera.gazebo" />
+    <xacro:include filename="${cameraFileName}" />
 </robot>
