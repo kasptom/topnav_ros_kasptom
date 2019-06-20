@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Driving using topological navigation (specify start and end marker) -->
+
+<!-- Camera latency tests (capture the video and publish it via webcam (e. g. C930e)-->
 <launch>
     <include file="$(find topnav_gazebo)/launch/capo.launch">
         <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
         <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
-        <arg name="use_real_camera" value="false"/>
+        <arg name="use_real_camera" value="true"/>
         <arg name="capo_x" value="1.0"/>
         <arg name="capo_y" value="-4.0"/>
         <arg name="capo_z" value="0.2"/>
@@ -20,4 +21,8 @@
     <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
 
     <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+
+    <include file="$(find topnav_capo2)/launch/opencv_videostream.launch">
+        <arg name="camera_dev_video_id" value="1"/>
+    </include>
 </launch>

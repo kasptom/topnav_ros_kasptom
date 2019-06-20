@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ArUco detection / steering with the remote control -->
 <launch>
   <include file="$(find topnav_gazebo)/launch/capo.launch">
     <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_03_aruco_test.world"/>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Approach to the marker #0 test -->
 <launch>
     <include file="$(find topnav_gazebo)/launch/capo.launch">
         <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
