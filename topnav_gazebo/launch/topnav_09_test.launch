@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Camera latency tests (capture the video and publish it via webcam (e. g. C930e)-->
+<!-- Camera latency test: approach marker (capture the video and publish it via webcam (e. g. C930e)-->
 <launch>
     <include file="$(find topnav_gazebo)/launch/capo.launch">
         <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
         <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
         <arg name="use_real_camera" value="true"/>
-        <arg name="capo_x" value="1.0"/>
-        <arg name="capo_y" value="-4.0"/>
+        <arg name="capo_x" value="6.5"/>
+        <arg name="capo_y" value="-2.9"/>
         <arg name="capo_z" value="0.2"/>
         <arg name="capo_yaw_rads" value="1.57"/>
     </include>
