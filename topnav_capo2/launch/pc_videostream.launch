@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find topnav_capo2)/launch/opencv_videostream.launch">
+        <arg name="camera_dev_video_id" value="1"/>
+        <arg name="visualize" value="true"/>
+    </include>
+</launch>

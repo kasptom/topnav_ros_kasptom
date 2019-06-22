@@ -1,6 +1,7 @@
 <launch>
     <!-- launch video stream -->
     <arg name="camera_dev_video_id" default="0"/>
+    <arg name="visualize" default="false"/>
     <group ns="capo">
         <include file="$(find video_stream_opencv)/launch/camera.launch">
             <!-- node name and ros graph name -->
@@ -28,7 +29,7 @@
             <arg name="width" value="320"/>
             <arg name="height" value="240"/>
             <!-- visualize on an image_view window the stream generated -->
-            <!--<arg name="visualize" value="true" />-->
+            <arg name="visualize" value="$(arg camera_dev_video_id)"/>
         </include>
     </group>
 </launch>
