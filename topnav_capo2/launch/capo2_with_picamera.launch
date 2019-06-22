@@ -1,0 +1,23 @@
+<launch>
+
+    <!--<include file="$(find topnav_capo2)/launch/opencv_videostream.launch" />-->
+    <!-- Obsolete: use opencv_videostream -->
+    <include file="$(find topnav_capo2)/launch/camera.launch" />
+
+    <node name="capo2_wheels_controller"
+          pkg="topnav_capo2"
+          type="capo2_wheels_controller.py"
+          respawn="false" output="screen"/>
+
+    <node name="capo2_head_controller"
+          pkg="topnav_capo2"
+          type="capo2_head_controller.py"
+          respawn="false" output="screen"/>
+
+    <include file="$(find topnav_capo2)/launch/hokuyo.launch">
+        <arg name="serial_port" value="/dev/ttyACM2"/>
+    </include>
+
+    <remap from="/capo/laser/scan" to="/scan"/>
+    <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
+</launch>
