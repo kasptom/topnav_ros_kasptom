@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Pass through door test #2 (smaller distance) -->
 <launch>
     <include file="$(find topnav_gazebo)/launch/capo.launch">
         <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>

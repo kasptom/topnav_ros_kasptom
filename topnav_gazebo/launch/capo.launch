@@ -18,7 +18,7 @@
         <arg name="capo_yaw_rads" value="$(arg capo_yaw_rads)"/>
     </include>
 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
+    <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>-->
 
     <rosparam command="load"
               file="$(find topnav_bot_description)/config/joints.yaml"
