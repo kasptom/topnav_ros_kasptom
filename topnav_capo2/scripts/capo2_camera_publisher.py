@@ -30,6 +30,8 @@ class Capo2CameraPublisher:
 
         while not rospy.is_shutdown() and camera.is_opened():
             image = camera.get_frame()
+            print "publishing frame"
+            print image
             img_message = self.bridge_object.cv2_to_imgmsg(image, 'bgr8')
             self.publisher.publish(img_message)
             rate.sleep()
