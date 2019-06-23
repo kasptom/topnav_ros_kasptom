@@ -11,8 +11,9 @@ from driver.maestro.maestro_head_driver import MaestroHeadDriver
 
 class HeadController:
 
-    def __init__(self, servo):
+    def __init__(self, servo, lock):
         self.driver = MaestroHeadDriver(servo)
+        self.lock = lock
 
         self.rotation_joint_change_subscriber = rospy.Subscriber(HEAD_JOINT_TOPIC, Float64,
                                                                  queue_size=1,
@@ -25,7 +26,9 @@ class HeadController:
         # print "head rotation: %.2f" % self.driver.get_head_rotation()
 
     def publish_head_rotation(self):
+        self.lock.acquire()
         head_rotation = self.driver.get_head_rotation()
+        self.lock.release()
         # print "publish head rotation: %.2f" % head_rotation
         message = self._create_joint_state_messsage(head_rotation / 180.0 * math.pi)
         self.rotation_joint_state_publisher.publish(message)

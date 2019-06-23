@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from serial import SerialException
+from threading import Lock
 
 import rospy
 import maestro
@@ -11,6 +12,7 @@ from constants.tty_ports import TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLB
 
 class CapoController:
     def __init__(self):
+        self.lock = Lock()
         try:
             self._servo = maestro.Controller(TTY_PORT_MAESTRO_DEFAULT)
         except SerialException:
@@ -26,14 +28,15 @@ class CapoController:
         except SerialException:
             raise
 
-        self.head_controller = HeadController(self._servo)
-        self.wheels_controller = CapoWheelsController(self._servo)
+        self.head_controller = HeadController(self._servo, self.lock)
+        self.wheels_controller = CapoWheelsController(self._servo, self.lock)
 
     def start(self):
         rospy.init_node("capo2_controller", anonymous=True)
         rate = rospy.Rate(10)  # 10hz
 
         while not rospy.is_shutdown():
+            self.wheels_controller
             self.head_controller.publish_head_rotation()
             rate.sleep()
 
