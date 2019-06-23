@@ -11,24 +11,19 @@ from driver.maestro.maestro_wheels_driver import MaestroWheelsDriver
 
 
 class CapoWheelsController:
-    def __init__(self):
+    def __init__(self, servo):
         self.left_wheel_velocity = 0.0
         self.right_wheel_velocity = 0.0
         self.left_right_setting_counter = 0
         self.lock = Lock()
         self.left_right_counter = 0
 
-        self.driver = MaestroWheelsDriver(5000, 5900, 6800, 5000, 5900, 6800)
-        # self.driver = DummyWheelsDriver()
+        self.driver = MaestroWheelsDriver(servo, 5000, 5900, 6800, 5000, 5900, 6800)
 
         self.left_wheel_subscriber = rospy.Subscriber(FRONT_LEFT_WHEEL_TOPIC, Float64, queue_size=1,
                                                       callback=self.set_left_velocity)
         self.right_wheel_subscriber = rospy.Subscriber(FRONT_RIGHT_WHEEL_TOPIC, Float64, queue_size=1,
                                                        callback=self.set_right_velocity)
-
-    def start(self):
-        rospy.init_node("capo2_wheels_controller", anonymous=True)
-        rospy.spin()
 
     def set_left_velocity(self, value):
         with self.lock:
@@ -47,11 +42,3 @@ class CapoWheelsController:
             if self.left_right_counter == 0:
                 self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
         # print("right vel: %.2f" % self.right_wheel_velocity)
-
-
-if __name__ == '__main__':
-    try:
-        controller = CapoWheelsController()
-        controller.start()
-    except rospy.ROSInterruptException:
-        raise

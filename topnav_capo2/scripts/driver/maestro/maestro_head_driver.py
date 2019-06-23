@@ -1,13 +1,9 @@
-from serial import SerialException
-
-from constants.tty_ports import TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLBACK_A, TTY_PORT_MAESTRO_FALLBACK_B
 from driver.interface_head_driver import IHeadDriver
-from driver.maestro.thread_save_maestro import ThreadSaveController
 
 
 class MaestroHeadDriver(IHeadDriver):
 
-    def __init__(self):
+    def __init__(self, servo):
         self._LOWER_SERVO_CHANNEL = 2
         self._UPPER_SERVO_CHANNEL = 3
         self._MIN_TARGET = [2000, 2000]
@@ -19,7 +15,7 @@ class MaestroHeadDriver(IHeadDriver):
         self._MID_ANGLE = 0
         self._ANGULAR_SERVO_RANGE = 180
         self._servo = None
-        self._initialize_servos()
+        self._initialize_servos(servo)
 
     def __del__(self):
         self.stop_driver()
@@ -86,22 +82,8 @@ class MaestroHeadDriver(IHeadDriver):
         self.reset_head_rotation()
         self._servo.close()
 
-    def _initialize_servos(self):
-        try:
-            self._servo = ThreadSaveController(TTY_PORT_MAESTRO_DEFAULT)
-        except SerialException:
-            print '[head] could not connect to %s Trying with %s'\
-                  % (TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLBACK_A)
-        try:
-            self._servo = self._servo if self._servo is not None else ThreadSaveController(TTY_PORT_MAESTRO_FALLBACK_A)
-        except SerialException:
-            print '[head] could not connect to %s Trying with %s' \
-                  % (TTY_PORT_MAESTRO_FALLBACK_A, TTY_PORT_MAESTRO_FALLBACK_B)
-        try:
-            self._servo = self._servo if self._servo is not None else ThreadSaveController(TTY_PORT_MAESTRO_FALLBACK_B)
-        except SerialException:
-            raise
-
+    def _initialize_servos(self, servo):
+        self._servo = servo
         self._servo.setRange(self._LOWER_SERVO_CHANNEL,
                              self._MIN_TARGET[0],
                              self._MAX_TARGET[0])
