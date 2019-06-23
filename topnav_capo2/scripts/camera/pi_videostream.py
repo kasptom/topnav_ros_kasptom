@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # import the necessary packages
-import time
-
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread
@@ -14,7 +12,6 @@ class PiVideoStream:
         self.camera.resolution = resolution
         self.camera.framerate = framerate
         self.rawCapture = PiRGBArray(self.camera, size=resolution)
-        time.sleep(0.1)
         self.stream = self.camera.capture_continuous(self.rawCapture,
                                                      format="bgr", use_video_port=True)
 
@@ -24,7 +21,6 @@ class PiVideoStream:
         self.stopped = False
 
     def start(self):
-        print "[pivstream] starting the stream update thread"
         # start the thread to read frames from the video stream
         Thread(target=self.update, args=()).start()
         return self
@@ -40,7 +36,6 @@ class PiVideoStream:
             # if the thread indicator variable is set, stop the thread
             # and resource camera resources
             if self.stopped:
-                print "[pivstream] stream is stopped"
                 self.stream.close()
                 self.rawCapture.close()
                 self.camera.close()
@@ -48,10 +43,6 @@ class PiVideoStream:
 
     def read(self):
         # return the frame most recently read
-        if self.frame is None:
-            print "[pivstream] frame is empty"
-        else:
-            print "[pivstream] %s" % str(self.frame)
         return self.frame
 
     def stop(self):
@@ -63,5 +54,4 @@ class PiVideoStream:
         try:
             return self.camera._check_camera_open()
         except Exception:
-            print "[pivstream] not opened"
             return False
