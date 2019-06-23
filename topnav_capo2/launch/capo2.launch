@@ -1,6 +1,6 @@
 <launch>
 
-    <include file="$(find topnav_capo2)/launch/opencv_videostream.launch" />
+    <include file="$(find topnav_capo2)/launch/opencv_videostream.launch"/>
     <!-- Obsolete: use opencv_videostream -->
     <!--<include file="$(find topnav_capo2)/launch/camera.launch" />-->
 
@@ -20,4 +20,6 @@
 
     <remap from="/capo/laser/scan" to="/scan"/>
     <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
+
+    <include file="$(find topnav_capo2)/launch/aruco_detector_no_preview.launch"/>
 </launch>
