@@ -36,7 +36,6 @@ class CapoController:
         rate = rospy.Rate(10)  # 10hz
 
         while not rospy.is_shutdown():
-            self.wheels_controller
             self.head_controller.publish_head_rotation()
             rate.sleep()
 
