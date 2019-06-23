@@ -13,6 +13,8 @@ from constants.tty_ports import TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLB
 class CapoController:
     def __init__(self):
         self.lock = Lock()
+        self._servo = None
+
         try:
             self._servo = maestro.Controller(TTY_PORT_MAESTRO_DEFAULT)
         except SerialException:
