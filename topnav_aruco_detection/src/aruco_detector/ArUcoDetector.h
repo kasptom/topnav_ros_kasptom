@@ -13,7 +13,7 @@ static const std::string ARUCO_OPENCV_WINDOW_NAME = "Aruco detection preview"; /
 
 class ArUcoDetector {
 public:
-    ArUcoDetector(std::string cameraConfigFileName);
+    ArUcoDetector(std::string cameraConfigFileName, bool visualize);
 
     void camera_image_callback(const sensor_msgs::Image::ConstPtr &msg);
 
@@ -31,6 +31,8 @@ private:
     ros::NodeHandle nodeHandle;
     ros::Subscriber camera_subscriber;
     ros::Publisher detection_publisher;
+
+    bool visualize;
 
     bool init(std::string fileName);
 };

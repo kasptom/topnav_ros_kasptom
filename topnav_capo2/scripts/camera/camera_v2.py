@@ -1,8 +1,6 @@
 #!/usr/bin/python
 """
-    QR code (from video) scanner based on examples from
-    https://github.com/opencv/opencv
-    https://github.com/Zbar/Zbar
+    https://www.pyimagesearch.com/2015/03/30/accessing-the-raspberry-pi-camera-with-opencv-and-python/
 """
 
 from constants.preview import CAM_PREVIEW_HEIGHT, CAM_PREVIEW_WIDTH

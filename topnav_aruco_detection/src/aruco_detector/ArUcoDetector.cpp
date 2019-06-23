@@ -13,7 +13,7 @@
 using namespace cv;
 using namespace std;
 
-ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
+ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, bool visualize) {
     bool initOk = init(cameraConfigFileName);
     if (!initOk) {
         ROS_ERROR("Invalid camera file: %s\n specify the full path of the camera config file (c930.yaml)",
@@ -23,6 +23,7 @@ ArUcoDetector::ArUcoDetector(string cameraConfigFileName) {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
     }
 
+    this->visualize = visualize;
     camera_subscriber = nodeHandle.subscribe("capo/camera1/image_raw", 1, &ArUcoDetector::camera_image_callback, this);
     detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
@@ -64,7 +65,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
                     corners, MARKER_LENGTH_METERS, cameraMatrix, distortionCoefficients, rVectors, tVectors);
         }
 
-        if (numberOfMarkers > 0) {
+        if (numberOfMarkers > 0 && visualize) {
             aruco::drawDetectedMarkers(image, corners, ids);
 
             for (int i = 0; i < ids.size(); i++) {
@@ -83,13 +84,17 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
         ROS_ERROR("Error during aruco detection");
     }
 
-    // Update GUI Window
-    imshow(ARUCO_OPENCV_WINDOW_NAME, cv_ptr->image);
-    waitKey(3);
+    if (visualize) {
+        // Update GUI Window
+        imshow(ARUCO_OPENCV_WINDOW_NAME, cv_ptr->image);
+        waitKey(3);
+    }
 }
 
 ArUcoDetector::~ArUcoDetector() {
-    cv::destroyWindow(ARUCO_OPENCV_WINDOW_NAME);
+    if (visualize) {
+        cv::destroyWindow(ARUCO_OPENCV_WINDOW_NAME);
+    }
 }
 
 bool ArUcoDetector::init(std::string filename) {
@@ -139,18 +144,34 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
 
 int main(int argc, char **argv) {
     string cameraConfigFilePath;
-    if (argc > 1) {
+    bool visualize = true;
+
+    /* argv[0], and argv[argc - 1] and argv[argc - 2] are reserved for ROS
+     (node file path, node name and log file path respectively)
+    for (int i = 0; i < argc; i++) {
+        ROS_INFO("argv[%d]=%s", i, argv[i]);
+    }
+    */
+
+    if (argc > 3) {
         cameraConfigFilePath = argv[1];
     }
+
+    if (argc > 4) {
+        visualize = strcmp("true", argv[2]) == 0;
+    }
+
 
     if (cameraConfigFilePath.find(".yaml") == string::npos) {
         cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
     }
 
-    ROS_INFO("Config file: %s", cameraConfigFilePath.c_str());
+    ROS_INFO("config file: %s", cameraConfigFilePath.c_str());
+    ROS_INFO("visualize: %s", visualize ? "true" : "false");
 
     ros::init(argc, argv, "aruco_detector");
-    ArUcoDetector detector(cameraConfigFilePath);
+
+    ArUcoDetector detector(cameraConfigFilePath, visualize);
     ros::spin();
     return 0;
 //    // ---
