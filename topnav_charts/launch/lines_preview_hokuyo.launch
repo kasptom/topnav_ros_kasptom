@@ -1,0 +1,4 @@
+<!-- run this node if you use the real Hokuyo -->
+<launch>
+    <node name="lines_preview" pkg="topnav_charts" type="lines_preview"/>
+</launch>

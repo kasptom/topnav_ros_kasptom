@@ -1,1 +1,3 @@
-<launch/>
+<launch>
+    <node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>
+</launch>
