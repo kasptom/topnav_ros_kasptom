@@ -18,6 +18,7 @@ class MaestroHeadDriver(IHeadDriver):
         self._MAX_ANGLE = 180
         self._MID_ANGLE = 0
         self._ANGULAR_SERVO_RANGE = 180
+        self._servo = None
         self._initialize_servos()
 
     def __del__(self):

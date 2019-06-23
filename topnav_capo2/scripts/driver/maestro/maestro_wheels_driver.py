@@ -16,6 +16,7 @@ class MaestroWheelsDriver(IWheelsDriver):
         self.left_max = left_max
         self.left_mid = left_mid
         self.left_min = left_min
+        self._servo = None
         self._initialize_servos()
 
     def set_velocity(self, left_wheel, right_wheel):
