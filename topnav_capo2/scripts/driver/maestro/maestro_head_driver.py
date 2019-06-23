@@ -2,7 +2,7 @@ from serial import SerialException
 
 from constants.tty_ports import TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLBACK_A, TTY_PORT_MAESTRO_FALLBACK_B
 from driver.interface_head_driver import IHeadDriver
-from driver.maestro import maestro
+from driver.maestro.thread_save_maestro import ThreadSaveController
 
 
 class MaestroHeadDriver(IHeadDriver):
@@ -88,17 +88,17 @@ class MaestroHeadDriver(IHeadDriver):
 
     def _initialize_servos(self):
         try:
-            self._servo = maestro.Controller(TTY_PORT_MAESTRO_DEFAULT)
+            self._servo = ThreadSaveController(TTY_PORT_MAESTRO_DEFAULT)
         except SerialException:
             print '[head] could not connect to %s Trying with %s'\
                   % (TTY_PORT_MAESTRO_DEFAULT, TTY_PORT_MAESTRO_FALLBACK_A)
         try:
-            self._servo = self._servo if self._servo is not None else maestro.Controller(TTY_PORT_MAESTRO_FALLBACK_A)
+            self._servo = self._servo if self._servo is not None else ThreadSaveController(TTY_PORT_MAESTRO_FALLBACK_A)
         except SerialException:
             print '[head] could not connect to %s Trying with %s' \
                   % (TTY_PORT_MAESTRO_FALLBACK_A, TTY_PORT_MAESTRO_FALLBACK_B)
         try:
-            self._servo = self._servo if self._servo is not None else maestro.Controller(TTY_PORT_MAESTRO_FALLBACK_B)
+            self._servo = self._servo if self._servo is not None else ThreadSaveController(TTY_PORT_MAESTRO_FALLBACK_B)
         except SerialException:
             raise
 
