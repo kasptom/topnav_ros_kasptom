@@ -44,15 +44,13 @@ class CapoController:
 
     def start(self):
         rospy.init_node("capo2_controller", anonymous=True)
-        rate = rospy.Rate(5)  # 10hz
+        rate = rospy.Rate(10)  # 10hz
 
         while not rospy.is_shutdown():
+            self.update_joints_state()
+            rate.sleep()
             current_head_rotation_degrees = self._head_driver.get_head_rotation()
             self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
-
-            self.update_joints_state()
-
-            rate.sleep()
 
     def update_joints_state(self):
         left_wheel_speed = self.wheels_controller.get_left_wheel_speed()
