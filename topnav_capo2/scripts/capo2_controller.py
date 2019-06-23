@@ -65,7 +65,7 @@ class CapoController:
         requested_head_rotation = self.head_controller.get_requested_head_rotation()
         if self._prev_head_rotation_radians != requested_head_rotation:
             self._prev_head_rotation_radians = requested_head_rotation
-            self._head_driver.set_head_rotation(requested_head_rotation)
+            self._head_driver.set_head_rotation(requested_head_rotation / math.pi * 180.0)
 
 
 if __name__ == '__main__':

@@ -17,8 +17,8 @@ class HeadController:
                                                                  callback=self.set_head_rotation)
         self.rotation_joint_state_publisher = rospy.Publisher(CAPO_JOINT_STATES, JointState, queue_size=1)
 
-    def set_head_rotation(self, message_rotation_degrees):
-        self._requested_head_rotation_radians = message_rotation_degrees.data * 180 / math.pi
+    def set_head_rotation(self, message_rotation_radians):
+        self._requested_head_rotation_radians = message_rotation_radians.data
         # rospy.loginfo("head rotation: %.2f" % self.driver.get_head_rotation())
         # print "head rotation: %.2f" % self.driver.get_head_rotation()
 
