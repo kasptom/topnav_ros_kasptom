@@ -44,7 +44,7 @@ class CapoController:
 
     def start(self):
         rospy.init_node("capo2_controller", anonymous=True)
-        rate = rospy.Rate(10)  # 10hz
+        rate = rospy.Rate(5)  # 10hz
 
         while not rospy.is_shutdown():
             current_head_rotation_degrees = self._head_driver.get_head_rotation()
