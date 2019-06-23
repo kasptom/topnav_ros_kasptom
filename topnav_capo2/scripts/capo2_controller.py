@@ -49,7 +49,6 @@ class CapoController:
         while not rospy.is_shutdown():
             current_head_rotation_degrees = self._head_driver.get_head_rotation()
             self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
-            self.head_controller.publish_head_rotation(current_head_rotation_degrees)
 
             self.update_joints_state()
 
