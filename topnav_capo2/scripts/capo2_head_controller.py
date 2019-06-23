@@ -2,35 +2,32 @@
 import math
 
 import rospy
-from std_msgs.msg import Float64, Header
 from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64, Header
 
 from constants.topic_names import HEAD_JOINT_TOPIC, CAPO_JOINT_STATES
-from driver.maestro.maestro_head_driver import MaestroHeadDriver
 
 
 class HeadController:
 
-    def __init__(self, servo, lock):
-        self.driver = MaestroHeadDriver(servo)
-        self.lock = lock
-
+    def __init__(self):
+        self._requested_head_rotation_radians = None
         self.rotation_joint_change_subscriber = rospy.Subscriber(HEAD_JOINT_TOPIC, Float64,
                                                                  queue_size=1,
                                                                  callback=self.set_head_rotation)
         self.rotation_joint_state_publisher = rospy.Publisher(CAPO_JOINT_STATES, JointState, queue_size=1)
 
-    def set_head_rotation(self, value):
-        self.driver.set_head_rotation(value.data * 180 / math.pi)
+    def set_head_rotation(self, message_rotation_degrees):
+        self._requested_head_rotation_radians = message_rotation_degrees.data * 180 / math.pi
         # rospy.loginfo("head rotation: %.2f" % self.driver.get_head_rotation())
         # print "head rotation: %.2f" % self.driver.get_head_rotation()
 
-    def publish_head_rotation(self):
-        self.lock.acquire()
-        head_rotation = self.driver.get_head_rotation()
-        self.lock.release()
+    def get_requested_head_rotation(self):
+        return self._requested_head_rotation_radians
+
+    def publish_head_rotation(self, rotation_radians):
         # print "publish head rotation: %.2f" % head_rotation
-        message = self._create_joint_state_messsage(head_rotation / 180.0 * math.pi)
+        message = self._create_joint_state_messsage(rotation_radians)
         self.rotation_joint_state_publisher.publish(message)
 
     @staticmethod
