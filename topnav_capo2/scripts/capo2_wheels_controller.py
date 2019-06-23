@@ -34,7 +34,6 @@ class CapoWheelsController:
         with self.lock:
             self.left_right_counter += 1
             self.left_wheel_velocity = value.data
-            self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
 
             if self.left_right_counter == 0:
                 self.driver.set_velocity(self.left_wheel_velocity, self.right_wheel_velocity)
