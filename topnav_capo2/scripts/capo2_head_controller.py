@@ -11,7 +11,7 @@ from constants.topic_names import HEAD_JOINT_TOPIC, CAPO_JOINT_STATES
 class HeadController:
 
     def __init__(self):
-        self._requested_head_rotation_radians = None
+        self._requested_head_rotation_radians = 0.0
         self.rotation_joint_change_subscriber = rospy.Subscriber(HEAD_JOINT_TOPIC, Float64,
                                                                  queue_size=1,
                                                                  callback=self.set_head_rotation)
