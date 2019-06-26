@@ -44,7 +44,7 @@ class MaestroHeadDriver(IHeadDriver):
                     self._MAX_TARGET[1] - self._MID_TARGET[1]) * (
                                    self._MIN_ANGLE / 2 - angle_degrees) / (self._ANGULAR_SERVO_RANGE / 2)
 
-        print 'Setting head rotation to %f' % angle_degrees
+        # print 'Setting head rotation to %f' % angle_degrees
         self._servo.setTarget(self._UPPER_SERVO_CHANNEL, int(upper_target))
         self._servo.setTarget(self._LOWER_SERVO_CHANNEL, int(lower_target))
         # print 'lower target: %d, upper target: %d' % (lower_target, upper_target)
