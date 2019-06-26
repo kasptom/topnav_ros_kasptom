@@ -1,0 +1,13 @@
+<launch>
+
+    <!--<include file="$(find topnav_capo2)/launch/opencv_videostream.launch"/>-->
+    <!-- Obsolete: use opencv_videostream -->
+    <include file="$(find topnav_capo2)/launch/camera.launch" />
+
+    <node name="capo2_controller"
+          pkg="topnav_capo2"
+          type="capo2_controller.py"
+          respawn="false" output="screen"/>
+
+    <!--<include file="$(find topnav_capo2)/launch/aruco_detector_no_preview.launch"/>-->
+</launch>
