@@ -16,7 +16,5 @@
         </include>
     </group>
 
-    <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
-
-    <include file="$(find topnav_capo2)/launch/aruco_detector_no_preview.launch"/>
+    <!--<include file="$(find topnav_capo2)/launch/aruco_detector_no_preview.launch"/>-->
 </launch>
