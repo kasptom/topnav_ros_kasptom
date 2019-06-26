@@ -13,7 +13,8 @@ class MaestroWheelsDriver(IWheelsDriver):
         self.left_max = left_max
         self.left_mid = left_mid
         self.left_min = left_min
-        self._servo = servo
+        self._servo = None
+        self._initialize_servos(servo)
 
     def set_velocity(self, left_wheel, right_wheel):
         left_wheel_target = int(left_wheel * 250 + self.left_mid)
@@ -41,3 +42,8 @@ class MaestroWheelsDriver(IWheelsDriver):
     def stop_driver(self):
         self.stop_wheels()
         self._servo.close()
+
+    def _initialize_servos(self, servo):
+        self._servo = servo
+        self._servo.setAcceleration(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 128)
+        self._servo.setAcceleration(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 128)
