@@ -45,5 +45,5 @@ class MaestroWheelsDriver(IWheelsDriver):
 
     def _initialize_servos(self, servo):
         self._servo = servo
-        self._servo.setAcceleration(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 128)
-        self._servo.setAcceleration(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 128)
+        self._servo.setAccel(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 128)
+        self._servo.setAccel(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 128)
