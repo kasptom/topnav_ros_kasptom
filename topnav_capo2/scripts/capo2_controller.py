@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import math
+import time
 from serial import SerialException
 from threading import Lock
 
@@ -78,6 +79,9 @@ class CapoController:
 
 if __name__ == '__main__':
     try:
+        print 'Starting the main node in 5.0 seconds'
+        time.sleep(5.0)
+        print 'starting ...'
         controller = CapoController()
         controller.start()
     except rospy.ROSInterruptException:
