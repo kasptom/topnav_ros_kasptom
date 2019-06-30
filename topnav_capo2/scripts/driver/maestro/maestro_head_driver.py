@@ -73,7 +73,7 @@ class MaestroHeadDriver(IHeadDriver):
             angle_degrees += (self._ANGULAR_SERVO_RANGE / 2) * (
                     float(self._MID_TARGET[1] - upper_position) / (self._MID_TARGET[1] - self._MIN_TARGET[1])
             )
-
+        print 'servos\' read head rotation: %d' % angle_degrees
         return angle_degrees
 
     def reset_head_rotation(self):
