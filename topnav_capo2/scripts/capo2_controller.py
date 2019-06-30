@@ -49,8 +49,8 @@ class CapoController:
         while not rospy.is_shutdown():
             try:
                 current_head_rotation_degrees = self._head_driver.get_head_rotation()
-                print 'servos\' read head rotation: %d' % current_head_rotation_degrees
-            except:
+                # print 'servos\' read head rotation: %d' % current_head_rotation_degrees
+            except SerialException:
                 current_head_rotation_degrees = 0
                 print 'could not read head rotation'
             self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
