@@ -56,6 +56,7 @@ class CapoController:
                     self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
                 except SerialException:
                     print 'could not read head rotation'
+                    raise
             else:
                 self.update_joints_state()
             is_reading = not is_reading
