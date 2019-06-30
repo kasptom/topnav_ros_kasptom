@@ -64,6 +64,30 @@ def test_head_channels(head_channels):
 
 test_head_channels([2, 3])
 
+
+def test_head_and_wheels_channels(wheels_channels, head_channels):
+    print 'testing head servos: %s ...' % str(head_channels)
+    time.sleep(1.0)
+    print '... start ...'
+    for i in range(1, 10):
+        time.sleep(1.0)
+        for channel_id in wheels_channels:
+            if i % 2 == 0:
+                servo.setTarget(channel_id, 6400)
+            else:
+                servo.setTarget(channel_id, 5400)
+
+        for channel_id in head_channels:
+            if i % 2 == 0:
+                servo.setTarget(channel_id, 6400)
+            else:
+                servo.setTarget(channel_id, 5400)
+            print 'position %d' % servo.getPosition(channel_id)
+    print '... end'
+
+
+test_head_and_wheels_channels([0, 1], [2, 3])
+
 #   servo.setTarget(1, 5400)
 # upper = servo.getPosition(2)
 #    lower = servo.getPosition(3)
