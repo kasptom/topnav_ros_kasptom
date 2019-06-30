@@ -40,8 +40,8 @@ def test_channel(channel_ids):
 
 
 test_channel([0])
-test_channel([5])
-test_channel([0, 5])
+test_channel([1])
+test_channel([0, 1])
 
 #   servo.setTarget(1, 5400)
 # upper = servo.getPosition(2)
