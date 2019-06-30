@@ -6,7 +6,7 @@ class MaestroWheelsDriver(IWheelsDriver):
     _LEFT_WHEEL_CHANNEL = 1
     _WHEEL_SPEED = 60
     _WHEEL_ACCELERATION = 0
-    _VELOCITY_COEFFICIENT = 100
+    _VELOCITY_COEFFICIENT = 125
 
     def __init__(self, servo,
                  left_min=4000, left_mid=6000, left_max=8000, right_min=4000, right_mid=6000, right_max=8000):
