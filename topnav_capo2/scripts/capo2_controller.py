@@ -36,7 +36,7 @@ class CapoController:
         except SerialException:
             raise
 
-        self._wheels_driver = MaestroWheelsDriver(self._servo, 5000, 5900, 6800, 5000, 5900, 6800)
+        self._wheels_driver = MaestroWheelsDriver(self._servo, 5100, 5950, 6800, 5100, 5950, 6800)
         self._head_driver = MaestroHeadDriver(self._servo)
 
         self.head_controller = HeadController()
