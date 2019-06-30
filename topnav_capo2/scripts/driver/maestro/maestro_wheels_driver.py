@@ -26,10 +26,10 @@ class MaestroWheelsDriver(IWheelsDriver):
         left_wheel_target = self.left_max if left_wheel_target > self.left_max else left_wheel_target
         right_wheel_target = self.right_max if right_wheel_target > self.right_max else right_wheel_target
 
-        if left_wheel == 0:
-            left_wheel_target = 0
-        if right_wheel == 0:
-            right_wheel_target = 0
+        # if left_wheel == 0:
+        #     left_wheel_target = 0
+        # if right_wheel == 0:
+        #     right_wheel_target = 0
 
         print("Setting wheel servos (%d, %d) (%d, %d)" % (MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, left_wheel_target,
                                                           MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, right_wheel_target))
@@ -45,5 +45,5 @@ class MaestroWheelsDriver(IWheelsDriver):
 
     def _initialize_servos(self, servo):
         self._servo = servo
-        self._servo.setAccel(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 128)
-        self._servo.setAccel(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 128)
+        # self._servo.setAccel(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 128)
+        # self._servo.setAccel(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 128)
