@@ -14,6 +14,8 @@
 static const std::string TOPIC_NAME_LASER_HOUGH = "/capo/laser/hough"; // NOLINT
 static const std::string TOPIC_NAME_LASER_ANGLE_RANGE = "/capo/laser/angle_range"; // NOLINT
 
+static const double NOISE_RANGE = 0.09;
+
 class LaserScanTransceiver {
 public:
     LaserScanTransceiver();
@@ -31,6 +33,12 @@ private:
 
     topnav_msgs::AngleRangesMsg_<std::allocator<void>>
     create_angle_range_message(std::vector<AngleRange> polar_coordinates);
+
+    void filter_out_noise(std::vector<AngleRange> &vector);
+
+    bool is_noise(AngleRange &range);
+
+    bool is_nan(const AngleRange &angle_range) const;
 };
 
 

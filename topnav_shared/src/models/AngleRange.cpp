@@ -12,3 +12,7 @@ double AngleRange::get_angle() const {
 double AngleRange::get_range() const {
     return range;
 }
+
+void AngleRange::set_range(double range) {
+    this->range = range;
+}

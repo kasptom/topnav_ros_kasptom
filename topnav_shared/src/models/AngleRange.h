@@ -10,6 +10,8 @@ public:
 
     double get_range() const;
 
+    void set_range(double range);
+
 private:
     double angle;
     double range;
