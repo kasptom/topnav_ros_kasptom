@@ -4,6 +4,8 @@ from driver.interface_wheels_driver import IWheelsDriver
 class MaestroWheelsDriver(IWheelsDriver):
     _RIGHT_WHEEL_CHANNEL = 0
     _LEFT_WHEEL_CHANNEL = 1
+    _WHEEL_SPEED = 60
+    _WHEEL_ACCELERATION = 0
 
     def __init__(self, servo,
                  left_min=4000, left_mid=6000, left_max=8000, right_min=4000, right_mid=6000, right_max=8000):
@@ -45,7 +47,8 @@ class MaestroWheelsDriver(IWheelsDriver):
 
     def _initialize_servos(self, servo):
         self._servo = servo
-        self._servo.setAccel(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 0)
-        self._servo.setAccel(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 0)
-        self._servo.setSpeed(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, 60)
-        self._servo.setSpeed(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, 60)
+        self._servo.setAccel(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, MaestroWheelsDriver._WHEEL_ACCELERATION)
+        self._servo.setAccel(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, MaestroWheelsDriver._WHEEL_ACCELERATION)
+
+        self._servo.setSpeed(MaestroWheelsDriver._LEFT_WHEEL_CHANNEL, MaestroWheelsDriver._WHEEL_SPEED)
+        self._servo.setSpeed(MaestroWheelsDriver._RIGHT_WHEEL_CHANNEL, MaestroWheelsDriver._WHEEL_SPEED)
