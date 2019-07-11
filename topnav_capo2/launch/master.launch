@@ -4,5 +4,7 @@
     <node name="capo2_clock"
           pkg="topnav_capo2"
           type="capo2_clock.py"
-          respawn="false" output="screen"/>
+          respawn="false" output="screen">
+        <param name="clock_publish_rate_hz" value="10"/>
+    </node>
 </launch>
