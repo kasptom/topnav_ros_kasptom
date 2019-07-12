@@ -36,6 +36,7 @@
     <xacro:property name="laserSamplesCount" value="61"/>
     <xacro:property name="laserMinAngle" value="${-2*pi/3}"/>
     <xacro:property name="laserMaxAngle" value="${2*pi/3}"/>
+    <xacro:property name="visualizeLaser" value="false" />
 
     <xacro:if value="$(arg use_real_camera)">
         <xacro:property name="cameraFileName" value="camera_real.gazebo" />
