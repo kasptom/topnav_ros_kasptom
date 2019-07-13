@@ -30,4 +30,4 @@ if __name__ == '__main__':
         publisher = Capo2Clock()
         publisher.start()
     except rospy.ROSInterruptException:
-        raise
+        print 'clock interrupted - stopping...'
