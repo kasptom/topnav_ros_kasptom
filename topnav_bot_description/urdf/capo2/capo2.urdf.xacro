@@ -8,13 +8,22 @@
     <xacro:property name="caseWidth" value="${0.135 * scale}" />
     <xacro:property name="caseLength" value="${0.18 * scale}" />
     <xacro:property name="caseHeight" value="${0.12 * scale}" />
-    <xacro:property name="caseWeight" value="${4 * scale}"/>
+    <xacro:property name="caseWeight" value="${1.0 * scale}"/>
+
+    <xacro:property name="batteryWidth" value="${0.13 * scale}" />
+    <xacro:property name="batteryLength" value="${0.04 * scale}" />
+    <xacro:property name="batteryHeight" value="${0.05 * scale}" />
+    <xacro:property name="batteryWeight" value="${0.5 * scale}"/>
+    <xacro:property name="batteryOffset" value="${-0.065 * scale}" />
+    <xacro:property name="batteryHeightOffset" value="${-0.03 * scale}" />
+
     <xacro:property name="wheelDiam" value="${0.09 * scale}" />
     <xacro:property name="wheelWidth" value="${0.01 * scale}"/>
     <xacro:property name="wheelCaseGap" value="${0.0008 * scale}"/>
     <xacro:property name="wheelToMiddleWidth" value="${(caseWidth + wheelWidth)/2 + wheelCaseGap}"/>
     <xacro:property name="wheelToMiddleLength" value="${caseLength/2 - 0.06 * scale}"/>
     <xacro:property name="wheelWeight" value="${0.15 * scale}" />
+    <xacro:property name="smallWheelWeight" value="${0.001 * scale}" />
 
     <xacro:property name="headDiam" value="${0.05 * scale}" />
     <xacro:property name="headHeight" value="${0.08 * scale}" />
@@ -31,7 +40,7 @@
     <xacro:property name="hokuyoHeightOffset" value="${0.03 * scale}" />
 
     <xacro:property name="casterWheelRadius" value="${0.01 * scale}"/>
-    <xacro:property name="casterWheelWeight" value="${1.0 * scale}"/>
+    <xacro:property name="casterWheelWeight" value="${0.05 * scale}"/>
 
     <xacro:property name="laserSamplesCount" value="61"/>
     <xacro:property name="laserMinAngle" value="${-2*pi/3}"/>
@@ -63,14 +72,14 @@
         </visual>
 
         <inertial>
+            <xacro:property name="d" value="${caseLength}" />
             <xacro:property name="w" value="${caseWidth}" />
             <xacro:property name="h" value="${caseHeight}" />
-            <xacro:property name="d" value="${caseLength}" />
             <xacro:property name="m" value="${caseWeight}" />
             <mass value="${m}" />
-            <inertia ixx="${(1/12)*m*(h*h+d*d)}" ixy="0.0" ixz="0.0"
-                     iyy="${(1/12)*m*(w*w+h*h)}" iyz="0.0"
-                     izz="${(1/12)*m*(w*w+d*d)}" />
+            <inertia ixx="${(1/12)*(h*h+w*w)}" ixy="0.0" ixz="0.0"
+                     iyy="${(1/12)*(d*d+h*h)}" iyz="0.0"
+                     izz="${(1/12)*(w*w+d*d)}" />
         </inertial>
 
         <collision>
@@ -79,6 +88,47 @@
             </geometry>
         </collision>
     </link>
+    <gazebo reference="base_link">
+        <material>Gazebo/Wood</material>
+    </gazebo>
+
+    <!--battery -->
+    <link name ="battery">
+        <visual>
+            <geometry>
+                <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+
+        <inertial>
+            <xacro:property name="d" value="${batteryLength}" />
+            <xacro:property name="w" value="${batteryWidth}" />
+            <xacro:property name="h" value="${batteryHeight}" />
+            <xacro:property name="m" value="${batteryWeight}" />
+            <mass value="${m}" />
+           <inertia ixx="${(1/12)*(h*h+w*w)}" ixy="0.0" ixz="0.0"
+                     iyy="${(1/12)*(d*d+h*h)}" iyz="0.0"
+                     izz="${(1/12)*(w*w+d*d)}" />
+        </inertial>
+
+        <collision>
+            <geometry>
+                <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="base_battery_joint" type="fixed">
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <parent link="base_link"/>
+        <child link="battery"/>
+        <origin rpy="0 0 0" xyz="${batteryOffset} 0.0 ${batteryHeightOffset}"/>
+    </joint>
+    <gazebo reference="battery">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <!-- battery -->
+
 
     <xacro:include filename="../capo/head/capo.head.xacro" />
 
@@ -124,9 +174,9 @@
                 <xacro:property name="m" value="${mass}" />
 
                 <mass value="${m}" />
-                <inertia ixx="${(1/12)*m*(3*r*r+h*h)}" ixy="0.0" ixz="0.0"
-                         iyy="${0.5*m*r*r}" iyz="0.0"
-                         izz="${(1/12)*m*(3*r*r+h*h)}" />
+                <inertia ixx="${(1/12)*(3*r*r+h*h)}" ixy="0.0" ixz="0.0"
+                         iyy="${(1/2)*r*r}" iyz="0.0"
+                         izz="${(1/12)*(3*r*r+h*h)}"/>
             </inertial>
         </link>
         <joint name="${prefix}_${suffix}_wheel_joint" type="continuous">
@@ -151,7 +201,7 @@
             <!-- http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo -->
             <mu1 value="40.0"/>
             <mu2 value="20.0"/>
-            <kp value="1000000.0" />
+            <kp value="10000000.0" />
             <kd value="1.0" />
             <!--<fdir1>0 0 1</fdir1>-->
             <!--<material>Gazebo/Black</material>-->
@@ -160,8 +210,8 @@
         </gazebo>
     </xacro:macro>
 
-    <xacro:wheel prefix="rear" suffix="left" origX="${-wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
-    <xacro:wheel prefix="rear" suffix="right" origX="${-wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="0.0" mass="${wheelWeight}" diam="0.01" width="0.01"/>
+    <xacro:wheel prefix="rear" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth + wheelWidth}" origZ="-0.025" mass="${smallWheelWeight}" diam="0.01" width="0.005"/>
+    <xacro:wheel prefix="rear" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth - wheelWidth}" origZ="-0.025" mass="${smallWheelWeight}" diam="0.01" width="0.005"/>
     <xacro:wheel prefix="front" suffix="left" origX="${wheelToMiddleLength}" origY="${wheelToMiddleWidth}" origZ="-0.025" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
     <xacro:wheel prefix="front" suffix="right" origX="${wheelToMiddleLength}" origY="${-wheelToMiddleWidth}" origZ="-0.025" mass="${wheelWeight}" diam="${wheelDiam}" width="${wheelWidth}"/>
 
@@ -178,9 +228,9 @@
                 <xacro:property name="r" value="${casterWheelRadius}"/>
                 <xacro:property name="m" value="${casterWheelWeight}"/>
                 <mass value="${m}"/>
-                <inertia ixx="${(2/5)*m*r*r}" ixy="0.0" ixz="0.0"
-                         iyy="${(2/5)*m*r*r}" iyz="0.0"
-                         izz="${(2/5)*m*r*r}"/>
+                <inertia ixx="${(2/5)*r*r}" ixy="0.0" ixz="0.0"
+                         iyy="${(2/5)*r*r}" iyz="0.0"
+                         izz="${(2/5)*r*r}"/>
             </inertial>
             <collision>
                 <geometry>
@@ -206,8 +256,8 @@
         </joint>
     </xacro:macro>
 
-    <xacro:caster_wheel prefix="left" origX="-0.08" origY="0.04" origZ="${scale * -0.06}"/>
-    <xacro:caster_wheel prefix="right" origX="-0.08" origY="-0.04" origZ="${scale * -0.06}"/>
+    <xacro:caster_wheel prefix="center" origX="-0.08" origY="0.0" origZ="${scale * -0.06}"/>
+
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
