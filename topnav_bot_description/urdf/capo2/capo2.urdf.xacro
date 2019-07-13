@@ -256,8 +256,6 @@
         </joint>
     </xacro:macro>
 
-    <!--<xacro:caster_wheel prefix="left" origX="-0.08" origY="0.04" origZ="${scale * -0.06}"/>-->
-    <!--<xacro:caster_wheel prefix="right" origX="-0.08" origY="-0.04" origZ="${scale * -0.06}"/>-->
     <xacro:caster_wheel prefix="center" origX="-0.08" origY="0.0" origZ="${scale * -0.06}"/>
 
 
