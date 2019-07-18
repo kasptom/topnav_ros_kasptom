@@ -1,4 +1,10 @@
 <launch>
     <node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>
     <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+    <node name="capo2_clock"
+          pkg="topnav_capo2"
+          type="capo2_clock.py"
+          respawn="false" output="screen">
+        <param name="clock_publish_rate_hz" value="10"/>
+    </node>
 </launch>

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import math
+import time
 from serial import SerialException
 from threading import Lock
 
@@ -36,7 +37,7 @@ class CapoController:
         except SerialException:
             raise
 
-        self._wheels_driver = MaestroWheelsDriver(self._servo, 5000, 5900, 6800, 5000, 5900, 6800)
+        self._wheels_driver = MaestroWheelsDriver(self._servo, 5100, 5950, 6800, 5100, 5950, 6800)
         self._head_driver = MaestroHeadDriver(self._servo)
 
         self.head_controller = HeadController()
@@ -46,10 +47,20 @@ class CapoController:
         rospy.init_node("capo2_controller", anonymous=True)
         rate = rospy.Rate(10)  # 10hz
 
+        is_reading = True
+
         while not rospy.is_shutdown():
-            current_head_rotation_degrees = self._head_driver.get_head_rotation()
-            self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
-            self.update_joints_state()
+            if is_reading:
+                try:
+                    current_head_rotation_degrees = self._head_driver.get_head_rotation()
+                    # print 'servos\' read head rotation: %d' % current_head_rotation_degrees
+                    self.head_controller.publish_head_rotation(current_head_rotation_degrees / 180.0 * math.pi)
+                except SerialException:
+                    print 'could not read head rotation'
+                    raise
+            else:
+                self.update_joints_state()
+            is_reading = not is_reading
             rate.sleep()
 
     def update_joints_state(self):
@@ -68,6 +79,9 @@ class CapoController:
 
 if __name__ == '__main__':
     try:
+        print 'Starting the main node in 5.0 seconds'
+        time.sleep(5.0)
+        print 'starting ...'
         controller = CapoController()
         controller.start()
     except rospy.ROSInterruptException:

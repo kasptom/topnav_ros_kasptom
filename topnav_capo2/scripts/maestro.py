@@ -8,28 +8,6 @@ PY2 = version_info[0] == 2   #Running Python 2.x?
 # Maestro Servo Controller
 #---------------------------
 #
-# The MIT License (MIT)
-#
-# Copyright (c) 2016 Steven L. Jacobs
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-#
 # Support for the Pololu Maestro line of servo controllers
 #
 # Steven Jacobs -- Aug 2013
@@ -52,7 +30,7 @@ class Controller:
     # example, '/dev/ttyACM2' or for Windows, something like 'COM3'.
     def __init__(self,ttyStr='/dev/ttyACM0',device=0x0c):
         # Open the command port
-        self.usb = serial.Serial(ttyStr, timeout=1.0)
+        self.usb = serial.Serial(ttyStr)
         # Command lead-in and device number are sent for each Pololu serial command.
         self.PololuCmd = chr(0xaa) + chr(device)
         # Track target position for each servo. The function isMoving() will

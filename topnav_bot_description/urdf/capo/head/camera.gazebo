@@ -8,7 +8,7 @@
             <camera name="head">
                 <!--<horizontal_fov>1.3962634</horizontal_fov>-->
                 <!-- FIXME this is not the FOV which complies with the c930 camera but works better with ArUco (why?)-->
-                <horizontal_fov>1.03</horizontal_fov>
+                <horizontal_fov>0.56</horizontal_fov>
                 <image>
                     <width>320</width>
                     <height>240</height>

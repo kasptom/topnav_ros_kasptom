@@ -19,6 +19,8 @@ LaserScanTransceiver::LaserScanTransceiver() {
 void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
     std::vector<AngleRange> polarCoordinates = HokuyoUtils::map_laser_scan_to_range_angle_data(msg, parameters);
 
+    filter_out_noise(polarCoordinates);
+
     std::vector<std::vector<int>> accumulator = create_accumulator(parameters);
 
     update_hough_space_accumulator(polarCoordinates, accumulator, parameters);
@@ -28,6 +30,14 @@ void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::Con
 
     topnav_msgs::HoughAcc hough_message = create_hough_message(accumulator);
     hough_space_publisher.publish(hough_message);
+}
+
+void LaserScanTransceiver::filter_out_noise(std::vector<AngleRange> &angle_ranges) {
+    for (auto &angle_range : angle_ranges) {
+        if (is_noise(angle_range)) {
+            angle_range.set_range(NAN);
+        }
+    }
 }
 
 topnav_msgs::HoughAcc LaserScanTransceiver::create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix) {
@@ -55,3 +65,9 @@ LaserScanTransceiver::create_angle_range_message(std::vector<AngleRange> polar_c
 
     return msg;
 }
+
+bool LaserScanTransceiver::is_noise(AngleRange &angle_range) {
+    return is_nan(angle_range) || angle_range.get_range() < NOISE_RANGE;
+}
+
+bool LaserScanTransceiver::is_nan(const AngleRange &angle_range) const { return angle_range.get_range() != angle_range.get_range(); }
