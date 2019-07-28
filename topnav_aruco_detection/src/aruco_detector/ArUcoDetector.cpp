@@ -80,7 +80,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
             for (int i = 0; i < ids.size(); i++) {
                 aruco::drawAxis(
                         image, cameraMatrix, distortionCoefficients, rVectors[i], tVectors[i],
-                        MARKER_LENGTH_METERS * 0.5f);
+                        MARKER_LENGTH_METERS);
             }
 
         }
