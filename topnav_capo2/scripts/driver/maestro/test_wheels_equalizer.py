@@ -33,3 +33,7 @@ class TestWheelsEqualizer(TestCase):
     def test_equalize_handle_zero_target(self):
         equalized = self.equalizer.equalize_right_target(0, 5960)
         self.assertEqual(0, equalized)
+
+    def test_equalize_handle_middle_target(self):
+        equalized = self.equalizer.equalize_right_target(5960, 5960)
+        self.assertEqual(5960, equalized)

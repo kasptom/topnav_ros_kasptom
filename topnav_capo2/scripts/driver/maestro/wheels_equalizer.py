@@ -46,7 +46,7 @@ class WheelsEqualizer:
                 for target in targets_map]
 
     def find_left_lower_bound(self, symmetric_left_target):
-        return max(filter(lambda target_pair: target_pair[LEFT_WHEEL_SERVO_MAP_IDX] <= symmetric_left_target,
+        return max(filter(lambda target_pair: target_pair[LEFT_WHEEL_SERVO_MAP_IDX] < symmetric_left_target,
                           self.targets_map))
 
     def find_left_upper_bound(self, symmetric_left_target):
