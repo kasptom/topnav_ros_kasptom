@@ -25,10 +25,10 @@ class MaestroWheelsDriver(IWheelsDriver):
         left_wheel_target = int(left_wheel * MaestroWheelsDriver._VELOCITY_COEFFICIENT + self.left_mid)
         right_wheel_target = int(-right_wheel * MaestroWheelsDriver._VELOCITY_COEFFICIENT + self.right_mid)
 
-        right_wheel_target = self._equalizer.equalize_right_target(right_wheel_target, self.right_mid)
-
         left_wheel_target = self.left_min if left_wheel_target < self.left_min else left_wheel_target
         right_wheel_target = self.right_min if right_wheel_target < self.right_min else right_wheel_target
+
+        right_wheel_target = self._equalizer.equalize_right_target(right_wheel_target, self.right_mid)
 
         left_wheel_target = self.left_max if left_wheel_target > self.left_max else left_wheel_target
         right_wheel_target = self.right_max if right_wheel_target > self.right_max else right_wheel_target
