@@ -1,4 +1,5 @@
 from driver.interface_wheels_driver import IWheelsDriver
+from driver.maestro.wheels_equalizer import WheelsEqualizer, CAPO_2_WHEELS_MAP
 
 
 class MaestroWheelsDriver(IWheelsDriver):
@@ -17,6 +18,7 @@ class MaestroWheelsDriver(IWheelsDriver):
         self.left_mid = left_mid
         self.left_min = left_min
         self._servo = None
+        self._equalizer = WheelsEqualizer(CAPO_2_WHEELS_MAP)
         self._initialize_servos(servo)
 
     def set_velocity(self, left_wheel, right_wheel):
@@ -25,6 +27,8 @@ class MaestroWheelsDriver(IWheelsDriver):
 
         left_wheel_target = self.left_min if left_wheel_target < self.left_min else left_wheel_target
         right_wheel_target = self.right_min if right_wheel_target < self.right_min else right_wheel_target
+
+        right_wheel_target = self._equalizer.equalize_right_target(right_wheel_target, self.right_mid)
 
         left_wheel_target = self.left_max if left_wheel_target > self.left_max else left_wheel_target
         right_wheel_target = self.right_max if right_wheel_target > self.right_max else right_wheel_target
