@@ -13,7 +13,7 @@
 using namespace cv;
 using namespace std;
 
-ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, bool visualize) {
+ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize) {
     bool initOk = init(cameraConfigFileName);
     if (!initOk) {
         ROS_ERROR("Invalid camera file: %s\n specify the full path of the camera config file (c930.yaml)",
@@ -21,6 +21,15 @@ ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, bool visualize) {
         return;
     } else {
         ROS_INFO("Successfully set camera config: %s", cameraConfigFileName.c_str());
+    }
+
+    initOk = initArUcos(arUcoSizesFilePath);
+    if (!initOk) {
+        ROS_ERROR("Invalid ArUco sizes file: %s\n specify the full path of the camera config file (*.txt)",
+                  arUcoSizesFilePath.c_str());
+        return;
+    } else {
+        ROS_INFO("Successfully set ArUco sizes file: %s", arUcoSizesFilePath.c_str());
     }
 
     this->visualize = visualize;
@@ -101,6 +110,12 @@ bool ArUcoDetector::init(std::string filename) {
     return ArUcoDetector::readCameraParameters(std::move(filename));
 }
 
+
+bool ArUcoDetector::initArUcos(std::string arUcoSizesFileName) {
+    loadArUcoSizes(std::move(arUcoSizesFileName));
+    return true;
+}
+
 bool ArUcoDetector::readCameraParameters(std::string filename) {
     FileStorage fs(filename, FileStorage::READ);
     if (!fs.isOpened())
@@ -121,6 +136,7 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
 
         double distance;
         Vec3d camera_position = ArUcoLocator::calculatePosition(rvectors[i], tvectors[i], &distance);
+        resizeMarker(camera_position, arUcoSizesMap[marker.id]);
 
         vector<cv::Point2f> marker_corners = corners[i];
         for (int j = 0; j < 3; j++)
@@ -142,8 +158,34 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
     return markers_msg;
 }
 
+void ArUcoDetector::loadArUcoSizes(std::string file_name) {
+    string line;
+    ifstream arUcoFile (file_name);
+
+    if (arUcoFile.is_open())
+    {
+        char * pEnd;
+        while ( getline (arUcoFile,line) )
+        {
+            auto arUcoId = static_cast<int>(std::strtol(line.c_str(), &pEnd, 10));
+            double arUcoSize = std::strtod(pEnd, nullptr);
+            arUcoSizesMap[arUcoId] = arUcoSize;
+        }
+        arUcoFile.close();
+    }
+
+    else cout << "Unable to open file";
+}
+
+void ArUcoDetector::resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSize) {
+    for (int i = 0; i < 3; i++) {
+        cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS);
+    }
+}
+
 int main(int argc, char **argv) {
     string cameraConfigFilePath;
+    string arUcoSizesFilePath;
     bool visualize = true;
 
     /* argv[0], and argv[argc - 1] and argv[argc - 2] are reserved for ROS
@@ -158,7 +200,11 @@ int main(int argc, char **argv) {
     }
 
     if (argc > 4) {
-        visualize = strcmp("true", argv[2]) == 0;
+        arUcoSizesFilePath = argv[2];
+    }
+
+    if (argc > 5) {
+        visualize = strcmp("true", argv[3]) == 0;
     }
 
 
@@ -166,12 +212,17 @@ int main(int argc, char **argv) {
         cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
     }
 
+    if (arUcoSizesFilePath.find(".txt") == string::npos) {
+        arUcoSizesFilePath = FileUtils::get_file_path_under_exe_dir("aruco_sizes.txt");
+    }
+
     ROS_INFO("config file: %s", cameraConfigFilePath.c_str());
+    ROS_INFO("ArUco sizes file: %s", arUcoSizesFilePath.c_str());
     ROS_INFO("visualize: %s", visualize ? "true" : "false");
 
     ros::init(argc, argv, "aruco_detector");
 
-    ArUcoDetector detector(cameraConfigFilePath, visualize);
+    ArUcoDetector detector(cameraConfigFilePath, arUcoSizesFilePath, visualize);
     ros::spin();
     return 0;
 //    // ---

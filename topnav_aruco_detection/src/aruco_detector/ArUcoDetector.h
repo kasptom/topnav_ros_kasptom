@@ -13,7 +13,7 @@ static const std::string ARUCO_OPENCV_WINDOW_NAME = "Aruco detection preview"; /
 
 class ArUcoDetector {
 public:
-    ArUcoDetector(std::string cameraConfigFileName, bool visualize);
+    ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize);
 
     void camera_image_callback(const sensor_msgs::Image::ConstPtr &msg);
 
@@ -28,6 +28,8 @@ private:
     cv::Mat cameraMatrix;
     cv::Mat distortionCoefficients;
 
+    std::map<int, double> arUcoSizesMap;
+
     ros::NodeHandle nodeHandle;
     ros::Subscriber camera_subscriber;
     ros::Publisher detection_publisher;
@@ -35,6 +37,12 @@ private:
     bool visualize;
 
     bool init(std::string fileName);
+
+    bool initArUcos(std::string arUcoSizesFileName);
+
+    void loadArUcoSizes(std::string file_name);
+
+    void resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSize);
 };
 
 
