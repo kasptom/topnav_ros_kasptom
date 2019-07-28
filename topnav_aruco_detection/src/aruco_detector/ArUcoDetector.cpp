@@ -15,6 +15,8 @@ using namespace std;
 
 ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize) {
     bool initOk = init(cameraConfigFileName);
+    magicArUcoCoefficient = MAGIC_COEFFICIENT;
+
     if (!initOk) {
         ROS_ERROR("Invalid camera file: %s\n specify the full path of the camera config file (c930.yaml)",
                   cameraConfigFileName.c_str());
@@ -169,6 +171,11 @@ void ArUcoDetector::loadArUcoSizes(std::string file_name) {
         {
             auto arUcoId = static_cast<int>(std::strtol(line.c_str(), &pEnd, 10));
             double arUcoSize = std::strtod(pEnd, nullptr);
+
+            if (arUcoId == MAGIC_COEFFICIENT_ID) {
+                magicArUcoCoefficient = arUcoSize;
+            }
+
             arUcoSizesMap[arUcoId] = arUcoSize;
         }
         arUcoFile.close();
@@ -179,7 +186,7 @@ void ArUcoDetector::loadArUcoSizes(std::string file_name) {
 
 void ArUcoDetector::resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSize) {
     for (int i = 0; i < 3; i++) {
-        cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS) * MAGIC_COEFFICIENT;
+        cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS) * magicArUcoCoefficient;
     }
 }
 

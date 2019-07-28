@@ -8,7 +8,8 @@
 #include <constants/topic_names.h>
 
 static const float MARKER_LENGTH_METERS = 0.15;
-static const float MAGIC_COEFFICIENT = 0.5; // :V
+static const float MAGIC_COEFFICIENT = 0.46; // :V
+static const float MAGIC_COEFFICIENT_ID = -56;
 
 static const std::string ARUCO_OPENCV_WINDOW_NAME = "Aruco detection preview"; // NOLINT
 
@@ -30,6 +31,7 @@ private:
     cv::Mat distortionCoefficients;
 
     std::map<int, double> arUcoSizesMap;
+    double magicArUcoCoefficient;
 
     ros::NodeHandle nodeHandle;
     ros::Subscriber camera_subscriber;
