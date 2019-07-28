@@ -2,7 +2,7 @@
 <!-- Driving using topological navigation (specify start and end marker) -->
 <launch>
     <include file="$(find topnav_gazebo)/launch/capo.launch">
-        <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
+        <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_obstacles_test.world"/>
         <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
         <arg name="use_real_camera" value="false"/>
         <arg name="capo_x" value="-4.8526"/>
