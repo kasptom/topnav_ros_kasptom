@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Driving using topological navigation (specify start and end marker) -->
+<launch>
+    <include file="$(find topnav_gazebo)/launch/capo.launch">
+        <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_obstacles_test.world"/>
+        <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
+        <arg name="use_real_camera" value="false"/>
+        <arg name="capo_x" value="-4.8526"/>
+        <arg name="capo_y" value="0.3739"/>
+        <arg name="capo_z" value="0.2"/>
+        <arg name="capo_yaw_rads" value="3.14"/>
+    </include>
+
+    <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
+
+    <node name="lines_preview" pkg="topnav_charts" type="lines_preview"/>
+
+    <!-- At most one option  -->
+    <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
+    <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
+
+    <!-- run the ArUco detection using roslaunch topnav_capo2 aruco_detector.launch-->
+    <!--<node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>-->
+</launch>
