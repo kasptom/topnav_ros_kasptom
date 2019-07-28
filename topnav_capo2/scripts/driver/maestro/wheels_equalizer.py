@@ -22,6 +22,8 @@ class WheelsEqualizer:
         self.targets_map = self.rescale_for_maestro(targets_map)
 
     def equalize_right_target(self, initial_target, mid_target):
+        if initial_target == 0:
+            return initial_target
         symmetric_left_target = mid_target + (mid_target - initial_target)
         left_lower_bound = self.find_left_lower_bound(symmetric_left_target)
         left_upper_bound = self.find_left_upper_bound(symmetric_left_target)
