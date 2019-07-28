@@ -8,6 +8,7 @@
 #include <constants/topic_names.h>
 
 static const float MARKER_LENGTH_METERS = 0.15;
+static const float MAGIC_COEFFICIENT = 0.5; // :V
 
 static const std::string ARUCO_OPENCV_WINDOW_NAME = "Aruco detection preview"; // NOLINT
 

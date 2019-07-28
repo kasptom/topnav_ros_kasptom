@@ -179,7 +179,7 @@ void ArUcoDetector::loadArUcoSizes(std::string file_name) {
 
 void ArUcoDetector::resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSize) {
     for (int i = 0; i < 3; i++) {
-        cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS);
+        cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS) * MAGIC_COEFFICIENT;
     }
 }
 
