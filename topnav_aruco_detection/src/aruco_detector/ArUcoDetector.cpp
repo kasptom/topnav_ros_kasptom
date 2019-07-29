@@ -174,9 +174,9 @@ void ArUcoDetector::loadArUcoSizes(std::string file_name) {
 
             if (arUcoId == MAGIC_COEFFICIENT_ID) {
                 magicArUcoCoefficient = arUcoSize;
+            } else {
+                arUcoSizesMap[arUcoId] = arUcoSize;
             }
-
-            arUcoSizesMap[arUcoId] = arUcoSize;
         }
         arUcoFile.close();
     }
