@@ -5,10 +5,10 @@
         <arg name="world" value="$(find topnav_gazebo)/worlds/topnav_01_obstacles_test.world"/>
         <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro"/>
         <arg name="use_real_camera" value="false"/>
-        <arg name="capo_x" value="-4.8526"/>
-        <arg name="capo_y" value="0.3739"/>
+        <arg name="capo_x" value="1.0"/>
+        <arg name="capo_y" value="-4.0"/>
         <arg name="capo_z" value="0.2"/>
-        <arg name="capo_yaw_rads" value="3.14"/>
+        <arg name="capo_yaw_rads" value="1.57"/>
     </include>
 
     <!--<node name="hough_space_preview" pkg="topnav_charts" type="hough_space_preview"/>-->
