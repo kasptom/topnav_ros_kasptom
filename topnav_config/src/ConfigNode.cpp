@@ -18,6 +18,7 @@ topnav_msgs::TopNavConfigMsg ConfigNode::create_config_message(topnav_config::to
     message.deriv_coeff_angle = config.pd_Kd_ang;
     message.prop_coeff_dist = config.pd_Kp_dst;
     message.deriv_coeff_dist = config.pd_Kd_dst;
+    message.hough_max_point_range = config.hough_max_point_range;
     return message;
 }
 

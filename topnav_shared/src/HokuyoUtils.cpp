@@ -11,6 +11,8 @@ LaserParameters HokuyoUtils::read_laser_parameters(const sensor_msgs::LaserScan:
 
     ROS_INFO("Beam count: %zu", parameters.get_beam_count());
     ROS_INFO("Angle step: %f", parameters.get_angle_step());
+    ROS_INFO("Min range: %.2f", parameters.get_range_min());
+    ROS_INFO("Max range: %.2f", parameters.get_range_max());
     ROS_INFO("done");
     return parameters;
 }

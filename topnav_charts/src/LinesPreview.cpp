@@ -3,10 +3,13 @@
 #include <HokuyoUtils.h>
 #include "LinesPreview.h"
 #include <constants/topic_names.h>
+#include <constants/limits.h>
 
 LinesPreview::LinesPreview() {
     sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
     parameters = HokuyoUtils::read_laser_parameters(ptr);
+
+    update_range_circles(HOUGH_DEFAULT_MAX_POINT_RANGE);
 
     houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000,
                                                   &LinesPreview::onHoughSpaceAccumulatorUpdated, this);
@@ -97,7 +100,23 @@ std::vector<sf::RectangleShape> LinesPreview::get_points() {
     return points;
 }
 
+sf::CircleShape LinesPreview::get_max_range_circle() {
+    return max_range_circle;
+}
+
 void LinesPreview::on_configuration_message_received(const topnav_msgs::TopNavConfigMsg &msg) {
     line_detection_votes_threshold = msg.line_detection_threshold;
     ROS_INFO("LinesPreview: line detecion votes threshold changed to: %d", line_detection_votes_threshold);
+    update_range_circles(msg.hough_max_point_range);
+    ROS_INFO("LinesPreview: max Hough point range to: %.2f", msg.hough_max_point_range);
+}
+
+void LinesPreview::update_range_circles(double max_hough_point_range) {
+    auto circle_radius = static_cast<float>((max_hough_point_range / HOKUYO_MAX_AVAILABLE_RANGE_METERS) * (LIDAR_PREVIEW_HEIGHT / 2.0));
+    max_range_circle = sf::CircleShape(circle_radius);
+    max_range_circle.setFillColor(sf::Color::Transparent);
+    max_range_circle.setOrigin(circle_radius, circle_radius);
+    max_range_circle.setPosition(LIDAR_PREVIEW_WIDTH / 2.0f, LIDAR_PREVIEW_HEIGHT / 2.0f);
+    max_range_circle.setOutlineThickness(2);
+    max_range_circle.setOutlineColor(sf::Color::Yellow);
 }
