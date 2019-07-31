@@ -5,6 +5,7 @@
 #include <models/AngleRange.h>
 
 static double HOUGH_SPACE_THETA_RANGE = 2 * M_PI;
+static double HOUGH_MAX_LIDAR_POINT_METERS = 1.5;
 
 void
 update_hough_space_accumulator(const std::vector<AngleRange> &polarCoordinates,

@@ -2,6 +2,7 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 #include "lines_preview_node.h"
 #include "LinesPreview.h"
 
@@ -25,6 +26,7 @@ int main(int argc, char **argv) {
         }
 
         window.clear();
+        window.draw(preview.get_max_range_circle());
 
         for (const sf::RectangleShape &rectangle : preview.get_lines()) {
             window.draw(rectangle);

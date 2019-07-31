@@ -3,3 +3,4 @@ float64 prop_coeff_angle
 float64 deriv_coeff_angle
 float64 prop_coeff_dist
 float64 deriv_coeff_dist
+float64 hough_max_point_range

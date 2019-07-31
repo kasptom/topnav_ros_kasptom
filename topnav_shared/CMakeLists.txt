@@ -135,7 +135,7 @@ include_directories(
          src/constants/topic_names.h
          src/topology/FieldOfViewRegion.cpp src/topology/RelativePosition.cpp src/topology/Distance.cpp
          src/FileUtils.cpp
-         src/FileUtils.h)
+         src/FileUtils.h src/constants/limits.h)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
