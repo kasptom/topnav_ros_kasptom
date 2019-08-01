@@ -1,0 +1,8 @@
+<launch>
+
+    <node name="capo2_logger"
+          pkg="topnav_capo2"
+          type="capo2_position_tracker.py"
+          respawn="false" output="screen"/>
+
+</launch>

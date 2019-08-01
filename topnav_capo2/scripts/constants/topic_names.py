@@ -5,3 +5,8 @@ FRONT_RIGHT_WHEEL_TOPIC = "/capo_front_right_wheel_controller/command"
 
 HEAD_JOINT_TOPIC = "/capo_head_rotation_controller/command"
 CAPO_JOINT_STATES = '/joint_states'
+
+TOPNAV_FEEDBACK_TOPIC = '/topnav/feedback'
+TOPNAV_GUIDELINES_TOPIC = 'topnav/guidelines'
+
+GAZEBO_MODEL_STATES_TOPIC = "/gazebo/model_states"
