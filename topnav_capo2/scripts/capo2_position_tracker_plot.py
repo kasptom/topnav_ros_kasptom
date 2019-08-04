@@ -103,6 +103,7 @@ def get_sections(log_entries):
             drive_section = Section(log_entry.strategy_name, colors[STRATEGY_TO_LABEL_IDX[log_entry.strategy_name]])
         prev_strategy_name = log_entry.strategy_name
         drive_section.add_point(log_entry.position)
+    drive_sections.append(drive_section)
 
     return drive_sections
 
