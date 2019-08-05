@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Map for the SLAM and navigation test -->
+<launch>
+    <include file="$(find topnav_gazebo)/launch/turtlebot_world.launch">
+        <arg name="world_file" value="$(find topnav_gazebo)/worlds/topnav_01_test.world"/>
+        <arg name="turtle_x" value="1.0"/>
+        <arg name="turtle_y" value="-4.0"/>
+        <arg name="turtle_z" value="0.2"/>
+        <arg name="turtle_yaw_rads" value="1.57"/>
+    </include>
+</launch>
