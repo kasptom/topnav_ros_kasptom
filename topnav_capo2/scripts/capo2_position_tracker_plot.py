@@ -156,14 +156,18 @@ class Plotter:
 
 plotter = Plotter()
 
-plotter.plot_path_comparison('data/capo_position2019-08-01 02:58:1564621127.csv',
-                             'data/capo_position2019-08-01 03:10:1564621857.csv',
-                             'with_and_without_obstacles_2019-08-01.svg')
+# plotter.plot_path_comparison('data/capo_position2019-08-01 02:58:1564621127.csv',
+#                              'data/capo_position2019-08-01 03:10:1564621857.csv',
+#                              'with_and_without_obstacles_2019-08-01.svg')
+#
+# plotter.plot_path_comparison('data/capo_position2019-08-04 10:53:1564908808.csv',
+#                              'data/capo_position2019-08-04 11:27:1564910871.csv',
+#                              'with_and_without_obstacles_2019-08-04.svg')
+#
+# plotter.plot_path_comparison('data/turtlebot_position2019-08-05 23:39:1565041179.csv',
+#                              'data/turtlebot_position2019-08-05 23:45:1565041559.csv',
+#                              'tutlebot_with_and_without_obstacles_2019-08-05.svg', True)
 
-plotter.plot_path_comparison('data/capo_position2019-08-04 10:53:1564908808.csv',
-                             'data/capo_position2019-08-04 11:27:1564910871.csv',
-                             'with_and_without_obstacles_2019-08-04.svg')
-
-plotter.plot_path_comparison('data/turtlebot_position2019-08-05 23:39:1565041179.csv',
-                             'data/turtlebot_position2019-08-05 23:45:1565041559.csv',
-                             'tutlebot_with_and_without_obstacles_2019-08-05.svg', True)
+plotter.plot_path_comparison('turtlebot_position2019-08-06 00:27:1565044072.csv',
+                             'turtlebot_position2019-08-06 00:34:1565044464.csv',
+                             'tutlebot_with_and_without_obstacles_2019-08-06.svg', True)
