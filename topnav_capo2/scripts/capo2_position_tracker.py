@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 from datetime import datetime
 import time
 
@@ -13,11 +14,12 @@ ROBOT_MODEL_NAME = 'capo'
 
 
 class PositionTracker:
-    def __init__(self):
+    def __init__(self, robot_model_name=ROBOT_MODEL_NAME):
         self.csv_position_log = None
         self.prev_log_time = None
         self.current_feedback = 'N/A'
         self.current_guideline = 'N/A'
+        self.robot_model_name = robot_model_name
 
         self.model_states_subscriber = rospy.Subscriber(GAZEBO_MODEL_STATES_TOPIC, ModelStates, queue_size=1,
                                                         callback=self.log_capo_position)
@@ -46,7 +48,7 @@ class PositionTracker:
             return
 
         self.prev_log_time = time.time()
-        robot_model_name_idx = message_model_states.name.index(ROBOT_MODEL_NAME)
+        robot_model_name_idx = message_model_states.name.index(self.robot_model_name)
         robot_pose = message_model_states.pose[robot_model_name_idx]
         robot_twist = message_model_states.twist[robot_model_name_idx]
 
@@ -83,7 +85,10 @@ class PositionTracker:
 
 if __name__ == '__main__':
     try:
-        tracker = PositionTracker()
+        if len(sys.argv) > 1:
+            tracker = PositionTracker(robot_model_name=sys.argv[1])
+        else:
+            tracker = PositionTracker()
         tracker.start()
     except rospy.ROSInterruptException:
         raise
