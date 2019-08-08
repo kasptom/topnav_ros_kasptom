@@ -11,16 +11,14 @@
 #include <topnav_msgs/AngleRangesMsg.h>
 #include <topnav_msgs/TopNavConfigMsg.h>
 #include <constants/limits.h>
+#include <constants/topic_names.h>
 #include <models/AngleRange.h>
-
-static const std::string TOPIC_NAME_LASER_HOUGH = "/capo/laser/hough"; // NOLINT
-static const std::string TOPIC_NAME_LASER_ANGLE_RANGE = "/capo/laser/angle_range"; // NOLINT
 
 static const double NOISE_RANGE = 0.09;
 
-class LaserScanTransceiver {
+class LaserScanConverter {
 public:
-    LaserScanTransceiver();
+    LaserScanConverter();
 
     void laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg);
 

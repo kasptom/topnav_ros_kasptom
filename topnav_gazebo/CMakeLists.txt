@@ -39,11 +39,11 @@ target_link_libraries(world_reset_publisher ${catkin_LIBRARIES})
 add_executable(world_reset_subscriber src/world_reset/world_reset_subscriber.cpp src/world_reset/topnav_world_reset.h)
 target_link_libraries(world_reset_subscriber ${catkin_LIBRARIES})
 
-add_executable(capo_laser_scan_transceiver
-        src/capo_line_follower/hough_lidar.h
-        src/capo_line_follower/hough_lidar.cpp
-        src/capo_line_follower/LaserScanTransceiver.h
-        src/capo_line_follower/LaserScanTransceiver.cpp
-        src/capo_line_follower/laser_scan_transceiver.cpp
+add_executable(laser_scan_converter
+        src/laser_scan_converter/hough_lidar.h
+        src/laser_scan_converter/hough_lidar.cpp
+        src/laser_scan_converter/LaserScanConverter.h
+        src/laser_scan_converter/LaserScanConverter.cpp
+        src/laser_scan_converter/laser_scan_converter.cpp
         )
-target_link_libraries(capo_laser_scan_transceiver ${catkin_LIBRARIES})
+target_link_libraries(laser_scan_converter ${catkin_LIBRARIES})

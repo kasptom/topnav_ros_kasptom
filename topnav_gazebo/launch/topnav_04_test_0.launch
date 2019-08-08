@@ -9,8 +9,9 @@
     <arg name="capo_yaw_rads" value="1.57"/>
   </include>
 
-
-  <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+  <group ns="converter">
+    <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+  </group>
 
   <!-- At most one option  -->
   <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->

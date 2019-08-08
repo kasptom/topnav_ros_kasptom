@@ -18,5 +18,7 @@
     <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
     <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_nav.launch"/>
 
-    <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+    <group ns="converter">
+        <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
+    </group>
 </launch>

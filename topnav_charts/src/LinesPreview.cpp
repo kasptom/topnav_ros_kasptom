@@ -6,17 +6,17 @@
 #include <constants/limits.h>
 
 LinesPreview::LinesPreview() {
-    sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
+    sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>(TOPIC_NAME_CAPO_LASER_SCAN);
     parameters = HokuyoUtils::read_laser_parameters(ptr);
 
     update_range_circles(HOUGH_DEFAULT_MAX_POINT_RANGE);
 
-    houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000,
+    houghAccumulatorSubscriber = handle.subscribe(TOPIC_NAME_CAPO_LASER_HOUGH, 1000,
                                                   &LinesPreview::onHoughSpaceAccumulatorUpdated, this);
     topnavConfigSubscriber = handle.subscribe(TOPIC_NAME_TOPNAV_CONFIG, 1000,
                                               &LinesPreview::on_configuration_message_received, this);
 
-    laserPointsSubscriber = handle.subscribe("/capo/laser/scan", 1000, &LinesPreview::onLaserPointsUpdated, this);
+    laserPointsSubscriber = handle.subscribe(TOPIC_NAME_CAPO_LASER_SCAN, 1000, &LinesPreview::onLaserPointsUpdated, this);
 }
 
 std::vector<sf::RectangleShape> LinesPreview::get_lines() {
