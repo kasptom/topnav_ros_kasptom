@@ -6,9 +6,9 @@ class MaestroHeadDriver(IHeadDriver):
     def __init__(self, servo):
         self._LOWER_SERVO_CHANNEL = 2
         self._UPPER_SERVO_CHANNEL = 3
-        self._MIN_TARGET = [2000, 2000]
-        self._MAX_TARGET = [10000, 10000]
-        self._MID_TARGET = [6000, 6000]
+        self._MIN_TARGET = [2300, 2300]
+        self._MAX_TARGET = [9900, 9900]
+        self._MID_TARGET = [6100, 6100]
         self._SERVO_SPEED = 12
         self._MIN_ANGLE = -180
         self._MAX_ANGLE = 180
