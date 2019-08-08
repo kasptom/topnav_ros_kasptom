@@ -55,7 +55,7 @@ class Section:
 
 class Plotter:
     def __init__(self):
-        self.is_turtlebot = False
+        self.is_turtlebot = (False, False)
 
     @staticmethod
     def flatten_log(csv_file_name):
@@ -72,7 +72,7 @@ class Plotter:
                     curr_log += line
             return flattened
 
-    def convert_to_entry(self, entry_string):
+    def convert_to_entry(self, entry_string, subplot_index):
         parts = entry_string.split(',')
         timestamp = float(parts[0].replace('T:', ''))
         position = (float(parts[2]), float(parts[3]), float(parts[4]))
@@ -81,10 +81,10 @@ class Plotter:
         angular = (float(parts[14]), float(parts[15]), float(parts[16]))
         feedback = entry_string[entry_string.index('FB:'): entry_string.index('GL:')]
         guideline = entry_string[entry_string.index('GL'):]
-        strategy_name = self.get_strategy_name(guideline)
+        strategy_name = self.get_strategy_name(guideline, subplot_index)
         return LogEntry(timestamp, position, orientation, linear, angular, feedback, guideline, strategy_name)
 
-    def get_strategy_name(self, guideline):
+    def get_strategy_name(self, guideline, subplot_index):
         start_token = "guideline_type:"
         end_token = "parameters"
         try:
@@ -93,7 +93,7 @@ class Plotter:
                 .replace("\"", '')
         except ValueError:
             print 'strategy name not found'
-            return 'TURTLEBOT' if self.is_turtlebot else 'N/A'
+            return 'TURTLEBOT' if self.is_turtlebot[subplot_index] else 'N/A'
 
     @staticmethod
     def get_sections(log_entries):
@@ -112,13 +112,13 @@ class Plotter:
 
         return drive_sections
 
-    def plot_path_comparison(self, first_csv, second_scv, plot_file_name, is_turtlebot=False):
+    def plot_path_comparison(self, first_csv, second_scv, plot_file_name, is_turtlebot=(False, False)):
         self.is_turtlebot = is_turtlebot
         flattened_logs = self.flatten_log(first_csv)
-        entries = [self.convert_to_entry(entry) for entry in flattened_logs]
+        entries = [self.convert_to_entry(entry, 0) for entry in flattened_logs]
 
         flattened_logs_2 = self.flatten_log(second_scv)
-        entries_2 = [self.convert_to_entry(entry) for entry in flattened_logs_2]
+        entries_2 = [self.convert_to_entry(entry, 1) for entry in flattened_logs_2]
 
         sections = self.get_sections(entries)
         sections_2 = self.get_sections(entries_2)
@@ -166,8 +166,12 @@ plotter = Plotter()
 #
 # plotter.plot_path_comparison('data/turtlebot_position2019-08-05 23:39:1565041179.csv',
 #                              'data/turtlebot_position2019-08-05 23:45:1565041559.csv',
-#                              'tutlebot_with_and_without_obstacles_2019-08-05.svg', True)
+#                              'tutlebot_with_and_without_obstacles_2019-08-05.svg', (True, True))
+#
+# plotter.plot_path_comparison('data/turtlebot_position2019-08-06 00:27:1565044072.csv',
+#                              'data/turtlebot_position2019-08-06 00:34:1565044464.csv',
+#                              'data/tutlebot_with_and_without_obstacles_2019-08-06.svg', (True, True))
 
-plotter.plot_path_comparison('turtlebot_position2019-08-06 00:27:1565044072.csv',
-                             'turtlebot_position2019-08-06 00:34:1565044464.csv',
-                             'tutlebot_with_and_without_obstacles_2019-08-06.svg', True)
+plotter.plot_path_comparison('data/turtlebot_position2019-08-06 04:10:1565057451.csv',
+                             'data/capo_position2019-08-06 04:24:1565058261.csv',
+                             'turtlebot_vs_capo_2019-08-06.svg', (True, False))
