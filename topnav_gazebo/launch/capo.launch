@@ -36,7 +36,7 @@
 
     <node pkg="image_view" type="image_view" name="latency_image_view" args="image:=/capo/camera1_real/image_raw"  if="$(arg use_real_camera)"/>
 
-    <node name="capo2_clock"
+    <node name="capo/clock"
           pkg="topnav_capo2"
           type="capo2_clock.py"
           respawn="false" output="screen">
