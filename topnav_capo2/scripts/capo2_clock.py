@@ -4,10 +4,11 @@ import rospy
 import time
 from std_msgs.msg import UInt64
 
-TOPIC_NAME_CAPO_CLOCK = "capo/clock"
-NODE_NAME = "capo/clock"
+ROBOT_NAMESPACE = "capo"
+TOPIC_NAME_CAPO_CLOCK = "clock"
+NODE_NAME = "clock"
 CAPO_CLOCK_DEFAULT_RATE_HZ = 10
-ROS_LAUNCH_PARAM_NAME_CLOCK_PUBLISH_RATE = "/%s/clock_publish_rate_hz" % NODE_NAME
+ROS_LAUNCH_PARAM_NAME_CLOCK_PUBLISH_RATE = "/%s/%s/clock_publish_rate_hz" % (ROBOT_NAMESPACE, NODE_NAME)
 
 
 class Capo2Clock:
@@ -17,7 +18,7 @@ class Capo2Clock:
         print 'publishing clock with %d [Hz] rate' % self.publish_rate
 
     def start(self):
-        rospy.init_node("capo/clock/publisher", anonymous=True)
+        rospy.init_node("clock_publisher", anonymous=True)
         rate = rospy.Rate(CAPO_CLOCK_DEFAULT_RATE_HZ)
 
         while not rospy.is_shutdown():

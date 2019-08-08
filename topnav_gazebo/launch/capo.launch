@@ -36,12 +36,14 @@
 
     <node pkg="image_view" type="image_view" name="latency_image_view" args="image:=/capo/camera1_real/image_raw"  if="$(arg use_real_camera)"/>
 
-    <node name="capo/clock"
-          pkg="topnav_capo2"
-          type="capo2_clock.py"
-          respawn="false" output="screen">
-        <param name="clock_publish_rate_hz" value="10"/>
-    </node>
+    <group ns="capo">
+        <node name="clock"
+              pkg="topnav_capo2"
+              type="capo2_clock.py"
+              respawn="false" output="screen">
+            <param name="clock_publish_rate_hz" value="10"/>
+        </node>
+    </group>
 
     <!-- At most one option  -->
     <!--<include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>-->
