@@ -1,26 +1,26 @@
 #include <sensor_msgs/LaserScan.h>
 #include <ros/ros.h>
 #include <std_msgs/Empty.h>
-#include "LaserScanTransceiver.h"
+#include "LaserScanConverter.h"
 #include "hough_lidar.h"
 #include <topnav_msgs/TestMessage.h>
 #include <topnav_msgs/AngleRangesMsg.h>
 #include <HokuyoUtils.h>
 #include <constants/topic_names.h>
 
-LaserScanTransceiver::LaserScanTransceiver() {
-    sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>("/capo/laser/scan");
+LaserScanConverter::LaserScanConverter() {
+    sensor_msgs::LaserScan::ConstPtr ptr = ros::topic::waitForMessage<sensor_msgs::LaserScan>(TOPIC_NAME_CAPO_LASER_SCAN);
     parameters = HokuyoUtils::read_laser_parameters(ptr);
-    laser_scan_subscriber = handle.subscribe("/capo/laser/scan", 1000, &LaserScanTransceiver::laser_scan_callback,
+    laser_scan_subscriber = handle.subscribe(TOPIC_NAME_CAPO_LASER_SCAN, 1000, &LaserScanConverter::laser_scan_callback,
                                              this);
     topnav_config_subscriber = handle.subscribe(TOPIC_NAME_TOPNAV_CONFIG, 1000,
-                                                &LaserScanTransceiver::topnav_config_callback, this);
+                                                &LaserScanConverter::topnav_config_callback, this);
 
-    hough_space_publisher = handle.advertise<topnav_msgs::HoughAcc>(TOPIC_NAME_LASER_HOUGH, 1000);
+    hough_space_publisher = handle.advertise<topnav_msgs::HoughAcc>(TOPIC_NAME_CAPO_LASER_HOUGH, 1000);
     angle_range_lidar_publisher = handle.advertise<topnav_msgs::AngleRangesMsg>(TOPIC_NAME_LASER_ANGLE_RANGE, 1000);
 }
 
-void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
+void LaserScanConverter::laser_scan_callback(const sensor_msgs::LaserScan::ConstPtr &msg) {
     std::vector<AngleRange> polarCoordinates = HokuyoUtils::map_laser_scan_to_range_angle_data(msg, parameters);
 
     filter_out_noise(polarCoordinates);
@@ -37,12 +37,12 @@ void LaserScanTransceiver::laser_scan_callback(const sensor_msgs::LaserScan::Con
     hough_space_publisher.publish(hough_message);
 }
 
-void LaserScanTransceiver::topnav_config_callback(const topnav_msgs::TopNavConfigMsg::ConstPtr &msg) {
-    ROS_INFO("LaserScanTransceiver: changing hough_max_point_range to: %.2f[m]", msg->hough_max_point_range);
+void LaserScanConverter::topnav_config_callback(const topnav_msgs::TopNavConfigMsg::ConstPtr &msg) {
+    ROS_INFO("LaserScanConverter: changing hough_max_point_range to: %.2f[m]", msg->hough_max_point_range);
     hough_max_point_range = msg->hough_max_point_range;
 }
 
-void LaserScanTransceiver::filter_out_noise(std::vector<AngleRange> &angle_ranges) {
+void LaserScanConverter::filter_out_noise(std::vector<AngleRange> &angle_ranges) {
     for (auto &angle_range : angle_ranges) {
         if (is_noise(angle_range)) {
             angle_range.set_range(NAN);
@@ -50,7 +50,7 @@ void LaserScanTransceiver::filter_out_noise(std::vector<AngleRange> &angle_range
     }
 }
 
-void LaserScanTransceiver::filter_out_too_far_points(std::vector<AngleRange> &angleRanges) {
+void LaserScanConverter::filter_out_too_far_points(std::vector<AngleRange> &angleRanges) {
     for (auto &angle_range: angleRanges) {
         if (angle_range.get_range() > hough_max_point_range) {
             angle_range.set_range(NAN);
@@ -58,7 +58,7 @@ void LaserScanTransceiver::filter_out_too_far_points(std::vector<AngleRange> &an
     }
 }
 
-topnav_msgs::HoughAcc LaserScanTransceiver::create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix) {
+topnav_msgs::HoughAcc LaserScanConverter::create_hough_message(std::vector<std::vector<int>> rhoThetaMatrix) {
     topnav_msgs::HoughAcc msg;
 
     for (int i = 0; i < rhoThetaMatrix.size(); i++) {
@@ -73,7 +73,7 @@ topnav_msgs::HoughAcc LaserScanTransceiver::create_hough_message(std::vector<std
 }
 
 topnav_msgs::AngleRangesMsg_<std::allocator<void>>
-LaserScanTransceiver::create_angle_range_message(std::vector<AngleRange> polar_coordinates) {
+LaserScanConverter::create_angle_range_message(std::vector<AngleRange> polar_coordinates) {
     topnav_msgs::AngleRangesMsg msg;
 
     for (auto &polar_coordinate : polar_coordinates) {
@@ -84,8 +84,8 @@ LaserScanTransceiver::create_angle_range_message(std::vector<AngleRange> polar_c
     return msg;
 }
 
-bool LaserScanTransceiver::is_noise(AngleRange &angle_range) {
+bool LaserScanConverter::is_noise(AngleRange &angle_range) {
     return is_nan(angle_range) || angle_range.get_range() < NOISE_RANGE;
 }
 
-bool LaserScanTransceiver::is_nan(const AngleRange &angle_range) const { return angle_range.get_range() != angle_range.get_range(); }
+bool LaserScanConverter::is_nan(const AngleRange &angle_range) const { return angle_range.get_range() != angle_range.get_range(); }

@@ -5,6 +5,7 @@
 #include <ros/ros.h>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <topnav_msgs/HoughAcc.h>
+#include <constants/topic_names.h>
 
 static const int LIDAR_PREVIEW_WIDTH = 480;
 static const int LIDAR_PREVIEW_HEIGHT = 480;

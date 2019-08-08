@@ -1,6 +1,8 @@
 <launch>
-    <node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>
-    <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector" args="none $(find topnav_capo2)/launch/aruco_sizes_capo2.txt true"/>
+    <group ns="converter">
+        <node name="laser_scan_converter" pkg="topnav_gazebo" type="laser_scan_converter"/>
+        <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector" args="none $(find topnav_capo2)/launch/aruco_sizes_capo2.txt true"/>
+    </group>
 
     <group ns="capo">
         <node name="ticker"

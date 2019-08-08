@@ -36,7 +36,9 @@
     <node pkg="image_view" type="image_view" name="latency_image_view" args="image:=/capo/camera1_real/image_raw"  if="$(arg use_real_camera)"/>
 
     <!-- launched in master_gazebo.launch -->
-    <!--<node name="capo_laser_scan_transceiver" pkg="topnav_gazebo" type="capo_laser_scan_transceiver"/>-->
+    <!--<group ns="converter">-->
+        <!--<node name="laser_scan_converter" pkg="topnav_gazebo" type="laser_scan_converter"/>-->
+    <!--</group>-->
 
     <!-- launched in master_gazebo.launch -->
     <!--<group ns="capo">-->

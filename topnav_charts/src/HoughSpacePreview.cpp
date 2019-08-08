@@ -2,7 +2,7 @@
 #include "HoughSpacePreview.h"
 
 HoughSpacePreview::HoughSpacePreview() {
-    houghAccumulatorSubscriber = handle.subscribe("/capo/laser/hough", 1000,
+    houghAccumulatorSubscriber = handle.subscribe(TOPIC_NAME_CAPO_LASER_HOUGH, 1000,
                                                   &HoughSpacePreview::onHoughSpaceAccumulatorUpdated, this);
 }
 
