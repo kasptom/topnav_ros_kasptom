@@ -40,11 +40,11 @@
 
     <!-- launched in master_gazebo.launch -->
     <!--<group ns="capo">-->
-        <!--<node name="clock"-->
+        <!--<node name="ticker"-->
               <!--pkg="topnav_capo2"-->
-              <!--type="capo2_clock.py"-->
+              <!--type="capo2_ticker.py"-->
               <!--respawn="false" output="screen">-->
-            <!--<param name="clock_publish_rate_hz" value="10"/>-->
+            <!--<param name="ticker_publish_rate_hz" value="10"/>-->
         <!--</node>-->
     <!--</group>-->
 

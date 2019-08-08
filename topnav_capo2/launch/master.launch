@@ -3,11 +3,11 @@
     <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector" args="none $(find topnav_capo2)/launch/aruco_sizes_capo2.txt true"/>
 
     <group ns="capo">
-        <node name="clock"
+        <node name="ticker"
               pkg="topnav_capo2"
-              type="capo2_clock.py"
+              type="capo2_ticker.py"
               respawn="false" output="screen">
-            <param name="clock_publish_rate_hz" value="10"/>
+            <param name="ticker_publish_rate_hz" value="10"/>
         </node>
     </group>
 </launch>
