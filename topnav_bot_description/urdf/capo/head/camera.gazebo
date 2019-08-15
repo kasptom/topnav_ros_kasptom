@@ -7,11 +7,11 @@
             <update_rate>10.0</update_rate>
             <camera name="head">
                 <!--<horizontal_fov>1.3962634</horizontal_fov>-->
-                <!-- FIXME this is not the FOV which complies with the c930 camera but works better with ArUco (why?)-->
-                <horizontal_fov>1.03</horizontal_fov>
+                <!-- 640x480 ==> horizontal_fov = (pi/2) * 640 / sqrt(640^2 + 480^2)-->
+                <horizontal_fov>1.256</horizontal_fov>
                 <image>
-                    <width>320</width>
-                    <height>240</height>
+                    <width>640</width>
+                    <height>480</height>
                     <format>R8G8B8</format>
                 </image>
                 <clip>
@@ -39,11 +39,16 @@
                 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
                 <frameName>camera_link</frameName>
                 <hackBaseline>0.07</hackBaseline>
-                <distortionK1>1.0808655412260015e-01</distortionK1>
-                <distortionK2>-2.7156751932089240e-01</distortionK2>
-                <distortionK3>-5.7111917727329926e-04</distortionK3>
-                <distortionT1>7.0058416314089239e-03</distortionT1>
-                <distortionT2>3.9927076218923579e-01</distortionT2>
+                <!--<distortionK1>1.0808655412260015e-01</distortionK1>-->
+                <!--<distortionK2>-2.7156751932089240e-01</distortionK2>-->
+                <!--<distortionK3>-5.7111917727329926e-04</distortionK3>-->
+                <!--<distortionT1>7.0058416314089239e-03</distortionT1>-->
+                <!--<distortionT2>3.9927076218923579e-01</distortionT2>-->
+                <distortionK1>4.1531680750973396e-02</distortionK1>
+                <distortionK2>1.3306371297359704e-01</distortionK2>
+                <distortionK3>-1.5256745493880967e-03</distortionK3>
+                <distortionT1>3.4014071471613464e-03</distortionT1>
+                <distortionT2>-5.4775177342577852e-01</distortionT2>
             </plugin>
         </sensor>
         <material>Gazebo/Black</material>
