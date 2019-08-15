@@ -38,3 +38,7 @@ add_executable(aruco_detector
         src/aruco_model/Marker.h
         src/aruco_model/Marker.cpp)
 target_link_libraries(aruco_detector ${catkin_LIBRARIES} ${OpenCV_LIBS})
+
+add_executable(camera_calibration
+        src/camera_calibration/camera_calibration.cpp)
+target_link_libraries(camera_calibration ${OpenCV_LIBS})

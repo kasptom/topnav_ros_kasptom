@@ -68,7 +68,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
     try {
         Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(
                 aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
-        aruco::detectMarkers(image, dictionary, corners, ids, detectorParameters, rejected);
+        aruco::detectMarkers(image, dictionary, corners, ids, detectorParameters, rejected, cameraMatrix, distortionCoefficients);
 
         long numberOfMarkers = ids.size();
         if (numberOfMarkers > 0) {
@@ -92,7 +92,7 @@ void ArUcoDetector::camera_image_callback(const sensor_msgs::Image::ConstPtr &ms
 
     } catch (cv::Exception &exception) {
         cerr << exception.msg << endl;
-        ROS_ERROR("Error during aruco detection");
+        ROS_ERROR("Error [%d] during aruco detection at line %d, %s", exception.code, exception.line, exception.msg.c_str());
     }
 
     if (visualize) {
@@ -139,6 +139,7 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
         double distance;
         Vec3d camera_position = ArUcoLocator::calculatePosition(rvectors[i], tvectors[i], &distance);
         resizeMarker(camera_position, arUcoSizesMap[marker.id]);
+//        print_position(const_cast<char *>("1st position"), camera_position, distance);
 
         vector<cv::Point2f> marker_corners = corners[i];
         for (int j = 0; j < 3; j++)
@@ -188,6 +189,10 @@ void ArUcoDetector::resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSi
     for (int i = 0; i < 3; i++) {
         cameraPosition[i] *= (realMarkerSize / MARKER_LENGTH_METERS) * magicArUcoCoefficient;
     }
+}
+
+void ArUcoDetector::print_position(char *label, cv::Vec3d &cameraPosition, double distance) {
+    ROS_INFO("%s (%.2f, %.2f, %.2f), d=%.2f", label, cameraPosition[0], cameraPosition[1], cameraPosition[2], distance);
 }
 
 int main(int argc, char **argv) {
