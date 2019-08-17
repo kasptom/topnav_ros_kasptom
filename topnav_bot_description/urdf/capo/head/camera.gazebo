@@ -39,16 +39,11 @@
                 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
                 <frameName>camera_link</frameName>
                 <hackBaseline>0.07</hackBaseline>
-                <!--<distortionK1>1.0808655412260015e-01</distortionK1>-->
-                <!--<distortionK2>-2.7156751932089240e-01</distortionK2>-->
-                <!--<distortionK3>-5.7111917727329926e-04</distortionK3>-->
-                <!--<distortionT1>7.0058416314089239e-03</distortionT1>-->
-                <!--<distortionT2>3.9927076218923579e-01</distortionT2>-->
-                <distortionK1>4.1531680750973396e-02</distortionK1>
-                <distortionK2>1.3306371297359704e-01</distortionK2>
-                <distortionK3>-1.5256745493880967e-03</distortionK3>
-                <distortionT1>3.4014071471613464e-03</distortionT1>
-                <distortionT2>-5.4775177342577852e-01</distortionT2>
+                <distortionK1>8.3813685255006945e-02</distortionK1>
+                <distortionK2>-2.1779702755097616e-01</distortionK2>
+                <distortionK3>-1.4201826199992326e-03</distortionK3>
+                <distortionT1>1.3123117911732589e-03</distortionT1>
+                <distortionT2>9.1878877187839644e-02</distortionT2>
             </plugin>
         </sensor>
         <material>Gazebo/Black</material>
