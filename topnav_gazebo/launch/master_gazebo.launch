@@ -1,8 +1,11 @@
 <launch>
     <group ns="converter">
         <node name="laser_scan_converter" pkg="topnav_gazebo" type="laser_scan_converter"/>
-        <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
     </group>
+    <include file="$(find topnav_capo2)/launch/aruco_detector.launch">
+        <arg name="visualize" value="true"/>
+        <arg name="print_distance" value="false"/>
+    </include>
 
     <group ns="capo">
         <node name="ticker"

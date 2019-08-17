@@ -7,8 +7,8 @@
             <update_rate>10.0</update_rate>
             <camera name="head">
                 <!--<horizontal_fov>1.3962634</horizontal_fov>-->
-                <!-- 640x480 ==> horizontal_fov = (pi/2) * 640 / sqrt(640^2 + 480^2)-->
-                <horizontal_fov>1.256</horizontal_fov>
+                <!-- 640x480 ==> horizontal_fov = (pi/2) * 640 / sqrt(640^2 + 480^2) = 1.256... in theory-->
+                <horizontal_fov>1.08</horizontal_fov>
                 <image>
                     <width>640</width>
                     <height>480</height>
