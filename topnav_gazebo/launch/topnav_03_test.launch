@@ -6,9 +6,10 @@
     <arg name="model" value="$(find topnav_bot_description)/urdf/capo2/capo2.urdf.xacro" />
   </include>
 
-  <group ns="converter">
-    <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector"/>
-  </group>
+  <include file="$(find topnav_capo2)/launch/aruco_detector.launch">
+    <arg name="visualize" value="true"/>
+    <arg name="print_distance" value="true"/>
+  </include>
 
   <!-- At most one option  -->
   <include file="$(find topnav_gazebo)/launch/capo_joints_controllers_pilot.launch"/>

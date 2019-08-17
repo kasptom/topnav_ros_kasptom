@@ -1,6 +1,6 @@
 <launch>
     <!-- launch video stream -->
-    <arg name="camera_dev_video_id" default="0"/>
+    <arg name="camera_dev_video_id" default="1"/>
     <arg name="visualize" default="false"/>
     <group ns="capo">
         <include file="$(find video_stream_opencv)/launch/camera.launch">
@@ -18,9 +18,7 @@
             <arg name="frame_id" value="capo2_camera"/>
             <!-- camera info loading, take care as it needs the "file:///" at the start , e.g.:
             "file:///$(find your_camera_package)/config/your_camera.yaml" -->
-            <!--<arg name="camera_info_url" value="file://$(find topnav_capo2)/config/c930.yaml" />-->
             <!--<arg name="camera_info_url" value="file://$(find topnav_capo2)/config/test_calibration.yaml"/>-->
-            <arg name="camera_info_url" value="file://$(find topnav_capo2)/config/c930_plumb_mob_2.yaml"/>
 
             <!-- flip the image horizontally (mirror it) -->
             <arg name="flip_horizontal" value="false"/>
@@ -33,4 +31,8 @@
             <arg name="visualize" value="$(arg visualize)"/>
         </include>
     </group>
+    <node name="camera_calibration"
+          pkg="camera_calibration"
+          type="cameracalibrator.py"
+          respawn="false" output="screen" args="--size 9x6 --square 0.0238 image:=capo/camera1/image_raw camera:=camera1 --no-service-check"/>
 </launch>

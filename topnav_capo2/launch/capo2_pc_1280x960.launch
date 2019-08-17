@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find topnav_capo2)/launch/camera.launch">
+        <arg name="camera_id" value="1"/>
+        <arg name="camera_width" value="1280"/>
+        <arg name="camera_height" value="960"/>
+    </include>
+</launch>

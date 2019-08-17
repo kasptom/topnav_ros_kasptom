@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find topnav_capo2)/launch/camera.launch">
+        <arg name="camera_id" value="1"/>
+    </include>
+</launch>

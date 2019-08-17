@@ -26,7 +26,9 @@ public:
      */
     void printLocation(Vec3d location);
 
-    static Mat calculatePosition(const Vec3d &rotation, const Vec3d &translation, double* distance);
+    static Mat calculatePosition(const Vec3d &rotation, const Vec3d &translation);
+
+    static double calculateDistance(Vec3d position);
 
 private:
     void init();

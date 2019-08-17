@@ -1,6 +1,13 @@
 <launch>
+    <arg name="camera_id" default="0"/>
+    <arg name="camera_width" default="640"/>
+    <arg name="camera_height" default="480"/>
     <node name="capo2_camera_publisher"
           pkg="topnav_capo2"
           type="capo2_camera_publisher.py"
-          respawn="false" output="screen"/>
+          respawn="false" output="screen">
+        <param name="camera_id" value="$(arg camera_id)"/>
+        <param name="camera_width" value="$(arg camera_width)"/>
+        <param name="camera_height" value="$(arg camera_height)"/>
+    </node>
 </launch>

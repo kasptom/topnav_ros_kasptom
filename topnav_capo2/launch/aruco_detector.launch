@@ -1,5 +1,8 @@
 <launch>
+    <arg name="visualize" default="true"/>
+    <arg name="print_distance" default="false"/>
+    <arg name="aruco_sizes_txt" default="none"/>
     <group ns="converter">
-        <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector" output="screen"/>
+        <node name="aruco_detector" pkg="topnav_aruco_detection" type="aruco_detector" args="none $(arg aruco_sizes_txt) $(arg visualize) $(arg print_distance)" output="screen"/>
     </group>
 </launch>
