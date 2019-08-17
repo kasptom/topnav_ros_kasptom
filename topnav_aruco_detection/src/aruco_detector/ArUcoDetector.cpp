@@ -13,7 +13,7 @@
 using namespace cv;
 using namespace std;
 
-ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize) {
+ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize, bool printDistance) {
     bool initOk = init(cameraConfigFileName);
     magicArUcoCoefficient = MAGIC_COEFFICIENT;
 
@@ -35,6 +35,7 @@ ArUcoDetector::ArUcoDetector(std::string cameraConfigFileName, std::string arUco
     }
 
     this->visualize = visualize;
+    this->printDistance = printDistance;
     camera_subscriber = nodeHandle.subscribe(TOPIC_NAME_CAPO_CAMERA_RAW_IMAGE, 1, &ArUcoDetector::camera_image_callback, this);
     detection_publisher = nodeHandle.advertise<topnav_msgs::MarkersMsg>(TOPIC_NAME_ARUCO_DETECTION, 1000);
 }
@@ -137,9 +138,13 @@ ArUcoDetector::create_marker_detection_message(std::vector<int> ar_uco_ids, std:
         marker.id = ar_uco_ids[i];
 
         double distance;
-        Vec3d camera_position = ArUcoLocator::calculatePosition(rvectors[i], tvectors[i], &distance);
+        Vec3d camera_position = ArUcoLocator::calculatePosition(rvectors[i], tvectors[i]);
         resizeMarker(camera_position, arUcoSizesMap[marker.id]);
-//        print_position(const_cast<char *>("1st position"), camera_position, distance);
+
+        if (printDistance) {
+            printPosition(const_cast<char *>("1st position"), camera_position,
+                          ArUcoLocator::calculateDistance(camera_position));
+        }
 
         vector<cv::Point2f> marker_corners = corners[i];
         for (int j = 0; j < 3; j++)
@@ -191,14 +196,15 @@ void ArUcoDetector::resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSi
     }
 }
 
-void ArUcoDetector::print_position(char *label, cv::Vec3d &cameraPosition, double distance) {
-    ROS_INFO("%s (%.2f, %.2f, %.2f), d=%.2f", label, cameraPosition[0], cameraPosition[1], cameraPosition[2], distance);
+void ArUcoDetector::printPosition(char *label, cv::Vec3d &cameraPosition, double d) {
+    ROS_INFO("%s (%.2f, %.2f, %.2f), d=%.2f", label, cameraPosition[0], cameraPosition[1], cameraPosition[2], d);
 }
 
 int main(int argc, char **argv) {
     string cameraConfigFilePath;
     string arUcoSizesFilePath;
     bool visualize = true;
+    bool printDistance = false;
 
     /* argv[0], and argv[argc - 1] and argv[argc - 2] are reserved for ROS
      (node file path, node name and log file path respectively)
@@ -219,6 +225,9 @@ int main(int argc, char **argv) {
         visualize = strcmp("true", argv[3]) == 0;
     }
 
+    if (argc > 6) {
+        printDistance = strcmp("true", argv[4]) == 0;
+    }
 
     if (cameraConfigFilePath.find(".yaml") == string::npos) {
         cameraConfigFilePath = FileUtils::get_file_path_under_exe_dir("c930.yaml");
@@ -231,10 +240,12 @@ int main(int argc, char **argv) {
     ROS_INFO("config file: %s", cameraConfigFilePath.c_str());
     ROS_INFO("ArUco sizes file: %s", arUcoSizesFilePath.c_str());
     ROS_INFO("visualize: %s", visualize ? "true" : "false");
+    ROS_INFO("print distance: %s", printDistance ? "true" : "false");
 
     ros::init(argc, argv, "aruco_detector");
 
-    ArUcoDetector detector(cameraConfigFilePath, arUcoSizesFilePath, visualize);
+    ArUcoDetector detector(cameraConfigFilePath, arUcoSizesFilePath, visualize, printDistance);
+    namedWindow(ARUCO_OPENCV_WINDOW_NAME, WindowFlags::WINDOW_KEEPRATIO);
     ros::spin();
     return 0;
 //    // ---

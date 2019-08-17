@@ -4,11 +4,8 @@ import rospy
 import time
 from std_msgs.msg import UInt64
 
-ROBOT_NAMESPACE = "capo"
-TOPIC_NAME_CAPO_TICKER = "ticker"
-NODE_NAME = "ticker"
-CAPO_TICKER_DEFAULT_RATE_HZ = 10
-ROS_LAUNCH_PARAM_NAME_TICKER_PUBLISH_RATE = "/%s/%s/ticker_publish_rate_hz" % (ROBOT_NAMESPACE, NODE_NAME)
+from constants.parameter_names import CAPO_TICKER_DEFAULT_RATE_HZ, TOPIC_NAME_CAPO_TICKER, \
+    ROS_LAUNCH_PARAM_NAME_TICKER_PUBLISH_RATE
 
 
 class Capo2Ticker:

@@ -9,8 +9,9 @@
 
 static const float MARKER_LENGTH_METERS = 0.15;
 
-//static const float MAGIC_COEFFICIENT = 0.46; // :V
-static const float MAGIC_COEFFICIENT = 1.0;
+//static const float MAGIC_COEFFICIENT = 0.46; // 320x240, 2017
+//static const float MAGIC_COEFFICIENT = 0.935; // 640x480, 2017
+static const float MAGIC_COEFFICIENT = 1.0; // 640x480, 2019-08-17
 
 static const float MAGIC_COEFFICIENT_ID = -56;
 
@@ -18,7 +19,7 @@ static const std::string ARUCO_OPENCV_WINDOW_NAME = "Aruco detection preview"; /
 
 class ArUcoDetector {
 public:
-    ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize);
+    ArUcoDetector(std::string cameraConfigFileName, std::string arUcoSizesFilePath, bool visualize, bool printDistance);
 
     void camera_image_callback(const sensor_msgs::Image::ConstPtr &msg);
 
@@ -41,6 +42,7 @@ private:
     ros::Publisher detection_publisher;
 
     bool visualize;
+    bool printDistance;
 
     bool init(std::string fileName);
 
@@ -50,7 +52,7 @@ private:
 
     void resizeMarker(cv::Vec3d &cameraPosition, double &realMarkerSize);
 
-    void print_position(char *label, cv::Vec3d &cameraPosition, double d);
+    void printPosition(char *label, cv::Vec3d &cameraPosition, double d);
 };
 
 

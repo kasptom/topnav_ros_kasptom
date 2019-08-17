@@ -3,19 +3,20 @@ import cv2
 
 from webcam_video_stream import WebcamVideoStream
 from interface_camera import ICamera
-from constants.preview import CAM_PREVIEW_WIDTH, CAM_PREVIEW_HEIGHT
 
 
 class CameraV3(ICamera):
-    def __init__(self, camera_id):
+    def __init__(self, camera_id, camera_width, camera_height):
         self.vs = None
         self.capture = None
         self.camera_id = camera_id
+        self.camera_width = camera_width
+        self.camera_height = camera_height
 
     def open(self):
         self.capture = cv2.VideoCapture(self.camera_id)
-        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_PREVIEW_WIDTH)
-        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_PREVIEW_HEIGHT)
+        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.camera_width)
+        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.camera_height)
         self.vs = WebcamVideoStream(self.capture)
         self.vs.start()
 
