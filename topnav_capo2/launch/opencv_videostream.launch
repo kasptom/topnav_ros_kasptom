@@ -20,7 +20,7 @@
             "file:///$(find your_camera_package)/config/your_camera.yaml" -->
             <!--<arg name="camera_info_url" value="file://$(find topnav_capo2)/config/c930.yaml" />-->
             <!--<arg name="camera_info_url" value="file://$(find topnav_capo2)/config/test_calibration.yaml"/>-->
-            <arg name="camera_info_url" value="file://$(find topnav_capo2)/config/c930_plumb_mob.yaml"/>
+            <arg name="camera_info_url" value="file://$(find topnav_capo2)/config/c930_plumb_mob_2.yaml"/>
 
             <!-- flip the image horizontally (mirror it) -->
             <arg name="flip_horizontal" value="false"/>

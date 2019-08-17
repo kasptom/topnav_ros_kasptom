@@ -1,0 +1,4 @@
+<launch>
+    <node name="camera_calibration" pkg="topnav_aruco_detection" type="camera_calibration" args="-w=9 -h=6 -s=0.02525
+     -n=50 -o=/tmp/c930_new.yaml 1" output="screen"/>
+</launch>
